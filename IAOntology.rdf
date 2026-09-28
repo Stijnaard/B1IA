@@ -33,12 +33,105 @@
     
 
 
+    <!-- http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#affectsPerson -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#affectsPerson">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#HealthConditions"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#Person"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#allergicTo -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#allergicTo">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#Person"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#Ingredient"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#associatedWithHoliday -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#associatedWithHoliday">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#Tradition"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#Holiday"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#availableOn -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#availableOn">
+        <owl:inverseOf rdf:resource="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#streams"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#Movie"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#belongsToGroup -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#belongsToGroup"/>
+    
+
+
     <!-- http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#belongsToTeam -->
 
     <owl:ObjectProperty rdf:about="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#belongsToTeam">
+        <owl:inverseOf rdf:resource="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#hasPlayer"/>
         <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
         <rdfs:domain rdf:resource="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#Player"/>
         <rdfs:range rdf:resource="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#Team"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#canEat -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#canEat">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#Person"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#Food"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#celebratedIn -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#celebratedIn">
+        <owl:inverseOf rdf:resource="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#recognizesHoliday"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#Holiday"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#Country"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#competesAgainst -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#competesAgainst">
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#SymmetricProperty"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#Team"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#Team"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#containsIngredient -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#containsIngredient">
+        <owl:inverseOf rdf:resource="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#ingredientOf"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#Food"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#Ingredient"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#containsPlace -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#containsPlace">
+        <owl:inverseOf rdf:resource="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#locatedIn"/>
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#TransitiveProperty"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#Place"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#Place"/>
     </owl:ObjectProperty>
     
 
@@ -53,11 +146,74 @@
     
 
 
+    <!-- http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#discussesTopic -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#discussesTopic"/>
+    
+
+
     <!-- http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#doesSport -->
 
     <owl:ObjectProperty rdf:about="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#doesSport">
         <rdfs:domain rdf:resource="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#Person"/>
         <rdfs:range rdf:resource="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#Sport"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#employedBy -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#employedBy">
+        <owl:inverseOf rdf:resource="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#employs"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#Person"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#Company"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#employs -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#employs">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#Company"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#Person"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#hasCitizen -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#hasCitizen">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#Country"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#Person"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#hasGenre -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#hasGenre">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#Movie"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#Genre"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#hasHeadOfState -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#hasHeadOfState">
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#InverseFunctionalProperty"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#Country"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#HeadOfState"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#hasLandmark -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#hasLandmark">
+        <owl:inverseOf rdf:resource="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#isLandmarkIn"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#Cities"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#Landmarks"/>
     </owl:ObjectProperty>
     
 
@@ -81,6 +237,16 @@
     
 
 
+    <!-- http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#hasParticipant -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#hasParticipant">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#League"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#Player"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#Team"/>
+    </owl:ObjectProperty>
+    
+
+
     <!-- http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#hasPartnershipWith -->
 
     <owl:ObjectProperty rdf:about="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#hasPartnershipWith">
@@ -91,11 +257,47 @@
     
 
 
+    <!-- http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#hasPlayer -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#hasPlayer">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#Team"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#Player"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#hasResult -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#hasResult">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#Match"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#MatchResult"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#hasRitual -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#hasRitual">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#League"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#Rituals"/>
+    </owl:ObjectProperty>
+    
+
+
     <!-- http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#hasRules -->
 
     <owl:ObjectProperty rdf:about="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#hasRules">
         <rdfs:domain rdf:resource="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#Sport"/>
         <rdfs:range rdf:resource="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#SportRules"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#hasSymptom -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#hasSymptom">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#Diseases"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#Symptoms"/>
     </owl:ObjectProperty>
     
 
@@ -129,6 +331,15 @@
     
 
 
+    <!-- http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#ingredientOf -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#ingredientOf">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#Ingredient"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#Food"/>
+    </owl:ObjectProperty>
+    
+
+
     <!-- http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#isCapitalOf -->
 
     <owl:ObjectProperty rdf:about="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#isCapitalOf">
@@ -144,7 +355,6 @@
     <!-- http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#isCitizenOf -->
 
     <owl:ObjectProperty rdf:about="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#isCitizenOf">
-        <rdfs:domain rdf:resource="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#HeadOfState"/>
         <rdfs:domain rdf:resource="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#Person"/>
         <rdfs:range rdf:resource="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#Country"/>
     </owl:ObjectProperty>
@@ -154,7 +364,10 @@
     <!-- http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#isCityIn -->
 
     <owl:ObjectProperty rdf:about="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#isCityIn">
+        <rdfs:subPropertyOf rdf:resource="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#locatedIn"/>
         <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#Cities"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#Country"/>
     </owl:ObjectProperty>
     
 
@@ -179,11 +392,11 @@
     
 
 
-    <!-- http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#isLeadBy -->
+    <!-- http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#isLeagueOfSport -->
 
-    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#isLeadBy">
-        <rdfs:domain rdf:resource="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#Country"/>
-        <rdfs:range rdf:resource="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#HeadOfState"/>
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#isLeagueOfSport">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#League"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#Sport"/>
     </owl:ObjectProperty>
     
 
@@ -205,12 +418,96 @@
     
 
 
+    <!-- http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#isPartOfLeague -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#isPartOfLeague">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#Team"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#League"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#locatedIn -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#locatedIn">
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#TransitiveProperty"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#Place"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#Place"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#originatedIn -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#originatedIn">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#Diseases"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#Cities"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#producedBy -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#producedBy">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#Movie"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#Company"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#recognizesHoliday -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#recognizesHoliday">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#Country"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#Holiday"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#servedBy -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#servedBy">
+        <owl:inverseOf rdf:resource="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#serves"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#Food"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#Company"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#serves -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#serves">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#Company"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#Food"/>
+    </owl:ObjectProperty>
+    
+
+
     <!-- http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#sharesBorderWith -->
 
     <owl:ObjectProperty rdf:about="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#sharesBorderWith">
         <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#SymmetricProperty"/>
         <rdfs:domain rdf:resource="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#Country"/>
         <rdfs:range rdf:resource="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#Country"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#spreadsTo -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#spreadsTo">
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#TransitiveProperty"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#Place"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#Place"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#streams -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#streams">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#StreamingServices"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#Movie"/>
     </owl:ObjectProperty>
     
 
@@ -249,6 +546,15 @@
 
     <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#hasFamousFood">
         <rdfs:domain rdf:resource="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#Cities"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#hasOutcome -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#hasOutcome">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#MatchResult"/>
         <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
     </owl:DatatypeProperty>
     
@@ -301,10 +607,18 @@
     
 
 
+    <!-- http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#hasScore -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#hasScore">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#MatchResult"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+    </owl:DatatypeProperty>
+    
+
+
     <!-- http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#hasSkillLevel -->
 
     <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#hasSkillLevel">
-        <rdfs:subPropertyOf rdf:resource="http://www.w3.org/2002/07/owl#topDataProperty"/>
         <rdfs:domain rdf:resource="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#Player"/>
         <rdfs:range rdf:resource="http://www.w3.org/2000/01/rdf-schema#Literal"/>
     </owl:DatatypeProperty>
@@ -405,20 +719,23 @@
             </owl:Class>
         </owl:equivalentClass>
         <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#Person"/>
-        <owl:disjointWith rdf:resource="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#Elder"/>
     </owl:Class>
     
 
 
     <!-- http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#Cities -->
 
-    <owl:Class rdf:about="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#Cities"/>
+    <owl:Class rdf:about="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#Cities">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#Place"/>
+    </owl:Class>
     
 
 
     <!-- http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#Company -->
 
-    <owl:Class rdf:about="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#Company"/>
+    <owl:Class rdf:about="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#Company">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#Organisation"/>
+    </owl:Class>
     
 
 
@@ -432,7 +749,9 @@
 
     <!-- http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#Country -->
 
-    <owl:Class rdf:about="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#Country"/>
+    <owl:Class rdf:about="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#Country">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#Place"/>
+    </owl:Class>
     
 
 
@@ -450,30 +769,10 @@
     
 
 
-    <!-- http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#Elder -->
+    <!-- http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#Diseases -->
 
-    <owl:Class rdf:about="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#Elder">
-        <owl:equivalentClass>
-            <owl:Class>
-                <owl:intersectionOf rdf:parseType="Collection">
-                    <rdf:Description rdf:about="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#Adult"/>
-                    <owl:Restriction>
-                        <owl:onProperty rdf:resource="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#hasAge"/>
-                        <owl:someValuesFrom>
-                            <rdfs:Datatype>
-                                <owl:onDatatype rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
-                                <owl:withRestrictions rdf:parseType="Collection">
-                                    <rdf:Description>
-                                        <xsd:minInclusive rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">65</xsd:minInclusive>
-                                    </rdf:Description>
-                                </owl:withRestrictions>
-                            </rdfs:Datatype>
-                        </owl:someValuesFrom>
-                    </owl:Restriction>
-                </owl:intersectionOf>
-            </owl:Class>
-        </owl:equivalentClass>
-        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#Adult"/>
+    <owl:Class rdf:about="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#Diseases">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#Health"/>
     </owl:Class>
     
 
@@ -492,6 +791,14 @@
     
 
 
+    <!-- http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#FastFood -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#FastFood">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#Food"/>
+    </owl:Class>
+    
+
+
     <!-- http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#Food -->
 
     <owl:Class rdf:about="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#Food"/>
@@ -506,15 +813,37 @@
     
 
 
+    <!-- http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#Genre -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#Genre"/>
+    
+
+
     <!-- http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#HeadOfState -->
 
-    <owl:Class rdf:about="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#HeadOfState"/>
+    <owl:Class rdf:about="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#HeadOfState">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#Person"/>
+    </owl:Class>
     
 
 
     <!-- http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#Health -->
 
     <owl:Class rdf:about="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#Health"/>
+    
+
+
+    <!-- http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#HealthConditions -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#HealthConditions">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#Health"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#Holiday -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#Holiday"/>
     
 
 
@@ -532,9 +861,17 @@
     
 
 
+    <!-- http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#Ingredient -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#Ingredient"/>
+    
+
+
     <!-- http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#InternationalOrganisations -->
 
-    <owl:Class rdf:about="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#InternationalOrganisations"/>
+    <owl:Class rdf:about="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#InternationalOrganisations">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#Organisation"/>
+    </owl:Class>
     
 
 
@@ -562,7 +899,9 @@
 
     <!-- http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#Landmarks -->
 
-    <owl:Class rdf:about="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#Landmarks"/>
+    <owl:Class rdf:about="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#Landmarks">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#Place"/>
+    </owl:Class>
     
 
 
@@ -575,6 +914,18 @@
     <!-- http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#League -->
 
     <owl:Class rdf:about="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#League"/>
+    
+
+
+    <!-- http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#Match -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#Match"/>
+    
+
+
+    <!-- http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#MatchResult -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#MatchResult"/>
     
 
 
@@ -594,6 +945,18 @@
     
 
 
+    <!-- http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#Movie -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#Movie"/>
+    
+
+
+    <!-- http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#Organisation -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#Organisation"/>
+    
+
+
     <!-- http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#OtherHeadOfState -->
 
     <owl:Class rdf:about="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#OtherHeadOfState">
@@ -610,9 +973,23 @@
     
 
 
+    <!-- http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#Pain -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#Pain">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#Symptoms"/>
+    </owl:Class>
+    
+
+
     <!-- http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#Person -->
 
     <owl:Class rdf:about="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#Person"/>
+    
+
+
+    <!-- http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#Place -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#Place"/>
     
 
 
@@ -659,6 +1036,12 @@
     
 
 
+    <!-- http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#Rituals -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#Rituals"/>
+    
+
+
     <!-- http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#Sport -->
 
     <owl:Class rdf:about="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#Sport"/>
@@ -671,11 +1054,25 @@
     
 
 
+    <!-- http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#StreamingServices -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#StreamingServices">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#Company"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#Symptoms -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#Symptoms">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#Health"/>
+    </owl:Class>
+    
+
+
     <!-- http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#Team -->
 
-    <owl:Class rdf:about="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#Team">
-        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#League"/>
-    </owl:Class>
+    <owl:Class rdf:about="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#Team"/>
     
 
 
@@ -692,6 +1089,12 @@
     <owl:Class rdf:about="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#Toys">
         <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#Industry"/>
     </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#Tradition -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#Tradition"/>
     
 
 
@@ -765,6 +1168,24 @@
         <IAOntology:isPublicOwned rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</IAOntology:isPublicOwned>
         <IAOntology:numOfEmployees rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">400</IAOntology:numOfEmployees>
         <IAOntology:producesProduct>research</IAOntology:producesProduct>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#company:mcdonalds -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#company:mcdonalds">
+        <rdf:type rdf:resource="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#Company"/>
+        <IAOntology:headquarteredIn rdf:resource="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#country:us"/>
+        <IAOntology:serves rdf:resource="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#food:burger"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#company:netflix -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#company:netflix">
+        <rdf:type rdf:resource="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#StreamingServices"/>
     </owl:NamedIndividual>
     
 
@@ -862,10 +1283,24 @@
     
 
 
+    <!-- http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#disease:flue -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#disease:flue">
+        <rdf:type rdf:resource="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#Diseases"/>
+    </owl:NamedIndividual>
+    
+
+
     <!-- http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#food:burger -->
 
     <owl:NamedIndividual rdf:about="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#food:burger">
-        <rdf:type rdf:resource="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#Food"/>
+        <rdf:type rdf:resource="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#FastFood"/>
+        <IAOntology:containsIngredient rdf:resource="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#ingredient:beef"/>
+        <IAOntology:containsIngredient rdf:resource="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#ingredient:flour"/>
+        <IAOntology:containsIngredient rdf:resource="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#ingredient:letuce"/>
+        <IAOntology:containsIngredient rdf:resource="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#ingredient:onion"/>
+        <IAOntology:containsIngredient rdf:resource="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#ingredient:pickle"/>
+        <IAOntology:containsIngredient rdf:resource="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#ingredient:tomato"/>
     </owl:NamedIndividual>
     
 
@@ -882,6 +1317,126 @@
 
     <owl:NamedIndividual rdf:about="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#food:pizza">
         <rdf:type rdf:resource="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#Food"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#genre:comedy -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#genre:comedy">
+        <rdf:type rdf:resource="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#Genre"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#genre:drama -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#genre:drama">
+        <rdf:type rdf:resource="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#Genre"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#genre:fantasy -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#genre:fantasy">
+        <rdf:type rdf:resource="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#Genre"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#genre:scifi -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#genre:scifi">
+        <rdf:type rdf:resource="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#Genre"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#healthcondition:proteinDeficiency -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#healthcondition:proteinDeficiency">
+        <rdf:type rdf:resource="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#HealthConditions"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#holiday:christmas -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#holiday:christmas">
+        <rdf:type rdf:resource="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#Holiday"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#holiday:easter -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#holiday:easter">
+        <rdf:type rdf:resource="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#Holiday"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#holiday:hunnaka -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#holiday:hunnaka">
+        <rdf:type rdf:resource="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#Holiday"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#holiday:nye -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#holiday:nye">
+        <rdf:type rdf:resource="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#Holiday"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#ingredient:beef -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#ingredient:beef">
+        <rdf:type rdf:resource="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#Ingredient"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#ingredient:flour -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#ingredient:flour">
+        <rdf:type rdf:resource="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#Ingredient"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#ingredient:letuce -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#ingredient:letuce">
+        <rdf:type rdf:resource="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#Ingredient"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#ingredient:onion -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#ingredient:onion">
+        <rdf:type rdf:resource="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#Ingredient"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#ingredient:pickle -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#ingredient:pickle">
+        <rdf:type rdf:resource="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#Ingredient"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#ingredient:tomato -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#ingredient:tomato">
+        <rdf:type rdf:resource="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#Ingredient"/>
     </owl:NamedIndividual>
     
 
@@ -1002,6 +1557,38 @@
 
     <owl:NamedIndividual rdf:about="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#league:hoofdklasse">
         <rdf:type rdf:resource="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#League"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#movie:LOTR -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#movie:LOTR">
+        <rdf:type rdf:resource="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#Movie"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#movie:greenBook -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#movie:greenBook">
+        <rdf:type rdf:resource="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#Movie"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#movie:hungerGames -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#movie:hungerGames">
+        <rdf:type rdf:resource="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#Movie"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#movie:starWars -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#movie:starWars">
+        <rdf:type rdf:resource="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#Movie"/>
     </owl:NamedIndividual>
     
 
@@ -1130,6 +1717,30 @@
     
 
 
+    <!-- http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#symptom:fever -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#symptom:fever">
+        <rdf:type rdf:resource="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#Symptoms"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#symptom:headAche -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#symptom:headAche">
+        <rdf:type rdf:resource="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#Pain"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#symptom:musleAche -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#symptom:musleAche">
+        <rdf:type rdf:resource="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#Pain"/>
+    </owl:NamedIndividual>
+    
+
+
     <!-- http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#team:ajax -->
 
     <owl:NamedIndividual rdf:about="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#team:ajax">
@@ -1162,6 +1773,30 @@
     
 
 
+    <!-- http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#tradition:christmasDinner -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#tradition:christmasDinner">
+        <rdf:type rdf:resource="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#Tradition"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#tradition:christmasTree -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#tradition:christmasTree">
+        <rdf:type rdf:resource="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#Tradition"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#tradition:fireworks -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#tradition:fireworks">
+        <rdf:type rdf:resource="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#Tradition"/>
+    </owl:NamedIndividual>
+    
+
+
     <!-- 
     ///////////////////////////////////////////////////////////////////////////////////////
     //
@@ -1176,27 +1811,6 @@
             <rdf:Description rdf:about="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#Cities"/>
             <rdf:Description rdf:about="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#Company"/>
             <rdf:Description rdf:about="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#Country"/>
-            <rdf:Description rdf:about="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#Currencies"/>
-            <rdf:Description rdf:about="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#Event"/>
-            <rdf:Description rdf:about="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#Food"/>
-            <rdf:Description rdf:about="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#HeadOfState"/>
-            <rdf:Description rdf:about="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#Health"/>
-            <rdf:Description rdf:about="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#Industry"/>
-            <rdf:Description rdf:about="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#InternationalOrganisations"/>
-            <rdf:Description rdf:about="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#Job"/>
-            <rdf:Description rdf:about="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#Landmarks"/>
-            <rdf:Description rdf:about="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#Languages"/>
-            <rdf:Description rdf:about="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#Person"/>
-            <rdf:Description rdf:about="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#Sport"/>
-        </owl:members>
-    </rdf:Description>
-    <rdf:Description>
-        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#AllDisjointClasses"/>
-        <owl:members rdf:parseType="Collection">
-            <rdf:Description rdf:about="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#Cities"/>
-            <rdf:Description rdf:about="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#Company"/>
-            <rdf:Description rdf:about="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#Country"/>
-            <rdf:Description rdf:about="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#Currencies"/>
             <rdf:Description rdf:about="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#Event"/>
             <rdf:Description rdf:about="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#Food"/>
             <rdf:Description rdf:about="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#HeadOfState"/>
@@ -1205,41 +1819,6 @@
             <rdf:Description rdf:about="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#Job"/>
             <rdf:Description rdf:about="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#Landmarks"/>
             <rdf:Description rdf:about="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#Languages"/>
-            <rdf:Description rdf:about="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#Person"/>
-            <rdf:Description rdf:about="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#Sport"/>
-        </owl:members>
-    </rdf:Description>
-    <rdf:Description>
-        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#AllDisjointClasses"/>
-        <owl:members rdf:parseType="Collection">
-            <rdf:Description rdf:about="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#Cities"/>
-            <rdf:Description rdf:about="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#Company"/>
-            <rdf:Description rdf:about="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#Country"/>
-            <rdf:Description rdf:about="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#Event"/>
-            <rdf:Description rdf:about="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#Food"/>
-            <rdf:Description rdf:about="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#HeadOfState"/>
-            <rdf:Description rdf:about="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#Health"/>
-            <rdf:Description rdf:about="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#Industry"/>
-            <rdf:Description rdf:about="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#Job"/>
-            <rdf:Description rdf:about="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#Landmarks"/>
-            <rdf:Description rdf:about="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#Languages"/>
-            <rdf:Description rdf:about="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#Sport"/>
-        </owl:members>
-    </rdf:Description>
-    <rdf:Description>
-        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#AllDisjointClasses"/>
-        <owl:members rdf:parseType="Collection">
-            <rdf:Description rdf:about="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#Cities"/>
-            <rdf:Description rdf:about="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#Company"/>
-            <rdf:Description rdf:about="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#Country"/>
-            <rdf:Description rdf:about="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#Event"/>
-            <rdf:Description rdf:about="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#Food"/>
-            <rdf:Description rdf:about="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#Health"/>
-            <rdf:Description rdf:about="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#Industry"/>
-            <rdf:Description rdf:about="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#Job"/>
-            <rdf:Description rdf:about="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#Landmarks"/>
-            <rdf:Description rdf:about="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#Languages"/>
-            <rdf:Description rdf:about="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#Person"/>
             <rdf:Description rdf:about="http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#Sport"/>
         </owl:members>
     </rdf:Description>
