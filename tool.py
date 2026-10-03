@@ -23,8 +23,11 @@ def check_claim(onto_path: str, negated_claim: str) -> (None|bool):
         raise Exception('The base ontology is inconcistent') from e
 
     graph = isolated_world.as_rdflib_graph()
-    with onto:
-        graph.update(negated_claim)
+    try:
+        with onto:
+            graph.update(negated_claim)
+    except Exception as e:
+        raise Exception('invalid sparql') from e
 
     try:
         sync_reasoner(isolated_world)
