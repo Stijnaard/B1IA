@@ -1,0 +1,6 @@
+PREFIX : <http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#>
+
+INSERT DATA {
+    :baby_adult a :Adult ;
+                :hasAge 10 .
+}
