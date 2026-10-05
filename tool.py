@@ -1,9 +1,7 @@
 # Run this file by using the cmd: 'python tool.py IAOntology.rdf negated_claim.sparql'
-# where the IAOntology.rdf should correspond to the ontology file, and negated_claim.sparql should correspond to a file containing a valid sparql version of the negated claim you're trying to confirm
-
-
-
-
+# where the IAOntology.rdf should correspond to the ontology file,
+# and negated_claim.sparql should correspond to a file containing a valid sparql version of the negated claim you're trying to confirm
+# Make sure Java is installed (to path if using venv on windows)
 
 import argparse
 from owlready2 import get_ontology, World, sync_reasoner, OwlReadyInconsistentOntologyError
@@ -15,7 +13,6 @@ def check_claim(onto_path: str, negated_claim: str) -> (None|bool):
     #specify an isloated world for the modification to the ontology to be setup in
     isolated_world = World()
     onto = isolated_world.get_ontology(onto_path).load()
-    
     
     try:
         sync_reasoner(isolated_world)
@@ -35,9 +32,6 @@ def check_claim(onto_path: str, negated_claim: str) -> (None|bool):
         return True # as the negation is inconsitent, the claim must be consistent
 
     return None # the claim may be true, may not be
-    
-
-
 
 def main():
     parser = argparse.ArgumentParser()
@@ -54,8 +48,5 @@ def main():
 
     print(result)
 
-
 if __name__ == "__main__":
     main()
-
-
