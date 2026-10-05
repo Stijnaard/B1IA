@@ -1,9 +1,6 @@
 # Run this file by using the cmd: 'python tool.py IAOntology.rdf negated_claim.sparql'
 # where the IAOntology.rdf should correspond to the ontology file, and negated_claim.sparql should correspond to a file containing a valid sparql version of the negated claim you're trying to confirm
-
-
-
-
+# Make sure Java is installed (to path if using venv on windows)
 
 import argparse
 from owlready2 import get_ontology, World, sync_reasoner, OwlReadyInconsistentOntologyError
@@ -57,5 +54,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
-
