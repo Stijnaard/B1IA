@@ -1,0 +1,2 @@
+class PromptGenerator:
+    pass
