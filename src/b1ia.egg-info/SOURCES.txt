@@ -1,0 +1,9 @@
+README.md
+pyproject.toml
+src/CI_project/__init__.py
+src/CI_project/model.py
+src/b1ia.egg-info/PKG-INFO
+src/b1ia.egg-info/SOURCES.txt
+src/b1ia.egg-info/dependency_links.txt
+src/b1ia.egg-info/requires.txt
+src/b1ia.egg-info/top_level.txt
