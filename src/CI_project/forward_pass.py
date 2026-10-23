@@ -14,6 +14,6 @@ class ForwardFlower:
                  self.summary_prompt_generator = summary_prompt_generator
                  self.revision_prompt_generator = revision_prompt_generator
 
-    def forward(self, previous_summary: Optional[str] = None, previous_inconsistent_queries: Optional[Iterable[str]] = None) -> tuple[str, Iterable[str], Iterable[str]]:
-        pass
+    def iteratively_generate_summary(self) -> tuple[str, Iterable[str], Iterable[str]]:
+        return "fake summary #1", ['inconsistent query 1', 'inconsistent query 2'], []
 
