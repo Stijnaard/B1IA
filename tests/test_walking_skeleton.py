@@ -1,4 +1,4 @@
-from CI_project import LLM, Dataset, construct_dataset, Agent, ForwardFlower 
+from CI_project import LLM, Dataset, construct_dataset, Agent, ForwardFlower, OntologyChecker
 from pathlib import Path
 import pytest
 
@@ -7,7 +7,10 @@ def test_walking_skeleton():
     # 1. instantiation:
     model: LLM = LLM("liquid/lfm2.5-1.2b", "http://localhost:1234/v1")
     dataset_folder: Path = Path(".") / "datasets"
+    ontology_path: Path = Path('.') / 'IAOntology.rdf'
     remaining_attempts: int = 2
+
+    ontology_checker: OntologyChecker = OntologyChecker(ontology_path)
 
     # 2. construct the christmas data:
     christmas_data: Dataset = construct_dataset(dataset_folder = dataset_folder, topic="christmas")
@@ -20,6 +23,7 @@ def test_walking_skeleton():
     forward_mover = ForwardFlower(christmas_data,
                                 summary_agent,
                                 query_agent,
+                                ontology_checker,
                                 remaining_attempts)
     
     # 5. keep trying to construct the best summary until no more attempts, or satisfying summary:

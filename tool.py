@@ -4,7 +4,7 @@
 # Make sure Java is installed (to path if using venv on windows)
 
 import argparse
-from owlready2 import get_ontology, World, sync_reasoner, OwlReadyInconsistentOntologyError
+from owlready2 import World, sync_reasoner, OwlReadyInconsistentOntologyError
 
 
 # assumes a sparql string for negated claim
