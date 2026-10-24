@@ -1,4 +1,4 @@
-from CI_project import LLM, Dataset, construct_dataset, PromptGenerator, ForwardFlower 
+from CI_project import LLM, Dataset, construct_dataset, Agent, ForwardFlower 
 from pathlib import Path
 import pytest
 
@@ -13,14 +13,13 @@ def test_walking_skeleton():
     christmas_data: Dataset = construct_dataset(dataset_folder = dataset_folder, topic="christmas")
     
     # 3. construct the prompt generators:
-    summary_prompt_generator = PromptGenerator()
-    revision_prompt_generator = PromptGenerator()
+    summary_agent = Agent(model)
+    query_agent = Agent(model)
 
     # 4. construct the forward mover:
-    forward_mover = ForwardFlower(model,
-                                christmas_data,
-                                summary_prompt_generator,
-                                revision_prompt_generator,
+    forward_mover = ForwardFlower(christmas_data,
+                                summary_agent,
+                                query_agent,
                                 remaining_attempts)
     
     # 5. keep trying to construct the best summary until no more attempts, or satisfying summary:
