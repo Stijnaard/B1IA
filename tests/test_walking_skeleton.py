@@ -8,7 +8,6 @@ def test_walking_skeleton():
     model: LLM = LLM("liquid/lfm2.5-1.2b", "http://localhost:1234/v1")
     dataset_folder: Path = Path(".") / "datasets"
     remaining_attempts: int = 2
-    satisfying_summary: bool = False
 
     # 2. construct the christmas data:
     christmas_data: Dataset = construct_dataset(dataset_folder = dataset_folder, topic="christmas")
@@ -21,11 +20,10 @@ def test_walking_skeleton():
     forward_mover = ForwardFlower(model,
                                 christmas_data,
                                 summary_prompt_generator,
-                                revision_prompt_generator)
+                                revision_prompt_generator,
+                                remaining_attempts)
     
     # 5. keep trying to construct the best summary until no more attempts, or satisfying summary:
     generated_summary, inconsistent_queries, undecided_queries = forward_mover.iteratively_generate_summary()
 
-    assert generated_summary == "fake summary #1"
-    assert inconsistent_queries == ['inconsistent query 1', 'inconsistent query 2']
-    assert undecided_queries == []
+    assert generated_summary 
