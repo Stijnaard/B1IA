@@ -1,23 +1,27 @@
-from CI_project import LLM, Dataset, construct_dataset, Agent, ForwardFlower 
+from CI_project import LLM, Dataset, construct_dataset, Agent, ForwardFlower
 from pathlib import Path
 import pytest
 
 @pytest.mark.acceptance
 def test_walking_skeleton():
+    """This is the high-level acceptance test that gives a rough overview of how the program works.
+    While I do think I have a """
     # 1. instantiation:
     model: LLM = LLM("liquid/lfm2.5-1.2b", "http://localhost:1234/v1")
     dataset_folder: Path = Path(".") / "datasets"
     remaining_attempts: int = 2
 
     # 2. construct the christmas data:
-    christmas_data: Dataset = construct_dataset(dataset_folder = dataset_folder, topic="christmas")
+    data: Dataset = construct_dataset(dataset_folder = dataset_folder, topic="christmas")
     
     # 3. construct the prompt generators:
-    summary_agent = Agent(model)
-    query_agent = Agent(model)
+    summary_agent = Agent(model, data)
+    query_agent = Agent(model, data)
+
+
 
     # 4. construct the forward mover:
-    forward_mover = ForwardFlower(christmas_data,
+    forward_mover = ForwardFlower(data,
                                 summary_agent,
                                 query_agent,
                                 remaining_attempts)
