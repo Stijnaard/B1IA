@@ -46,7 +46,7 @@ def main():
     with open(args.claim, "r") as f:
         negated_claim = f.read()
 
-    result = check_claim(args.ontology, negated_claim)
+    result = check_ontology(args.ontology, negated_claim)
 
     print(result)
 

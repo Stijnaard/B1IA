@@ -1,0 +1,112 @@
+{
+  "duration": 25.218351125717163,
+  "state": {
+    "user_prompt": "TODO",
+    "tweets": "/home/leon/Documents/GitHub/B1IA/inputs/Netflix_clean.txt",
+    "summary_count": 2,
+    "summary": "Several users express excitement about renewing their Netflix subscriptions to watch specific shows like The Walking Dead or movies such as John Wayne Gacy. Many tweets describe relaxing at home in sweats or bed, often alone or with a partner, while binge-watching series like How I Met Your Mother and American Horror Story. Some individuals complain about technical issues preventing them from loading content or note that certain titles like Super Troopers are no longer available on the platform. A few users mention sharing passwords with friends or trading credentials for other streaming services like HBO GO to access desired content. Conversely, a small number of tweets criticize Netflix for having poor recommendations, lacking good movies, or being unavailable due to account restrictions.",
+    "queries": [
+      {
+        "query": {
+          "query": "Netflix and watches some (The Walking Dead)"
+        },
+        "result": "violation"
+      },
+      {
+        "query": {
+          "query": "Netflix and watches some (John Wayne Gacy)"
+        },
+        "result": "not_verifyable"
+      },
+      {
+        "query": {
+          "query": "Netflix and watches some (How I Met Your Mother)"
+        },
+        "result": "not_verifyable"
+      },
+      {
+        "query": {
+          "query": "Netflix and watches some (American Horror Story)"
+        },
+        "result": "not_verifyable"
+      },
+      {
+        "query": {
+          "query": "Netflix and watches some (Super Troopers)"
+        },
+        "result": "verified"
+      }
+    ],
+    "verified": [
+      "Netflix and watches some (The Walking Dead)",
+      "Netflix and watches some (John Wayne Gacy)",
+      "Netflix and watches some (How I Met Your Mother)",
+      "Netflix and watches some (American Horror Story)",
+      "Netflix and watches some (Super Troopers)"
+    ],
+    "violations": [],
+    "not_verifiable": [],
+    "history": {
+      "user_prompt": "TODO",
+      "tweets": "/home/leon/Documents/GitHub/B1IA/inputs/Netflix_clean.txt",
+      "summary_count": 1,
+      "summary": "Several users express excitement about renewing their Netflix subscriptions to watch specific shows like The Walking Dead or movies such as John Wayne Gacy. Many tweets describe relaxing at home in sweats or bed, often alone or with a partner, while binge-watching series like How I Met Your Mother and American Horror Story. Some individuals complain about technical issues preventing them from loading content or note that certain titles like Super Troopers are no longer available on the platform. A few users mention sharing passwords with friends or trading credentials for other streaming services like HBO GO to access desired content. Conversely, a small number of tweets criticize Netflix for having poor recommendations, lacking good movies, or being unavailable due to account restrictions.",
+      "queries": [
+        {
+          "query": {
+            "query": "Netflix and watches some (The Walking Dead)"
+          },
+          "result": "not_verifyable"
+        },
+        {
+          "query": {
+            "query": "Netflix and watches some (John Wayne Gacy)"
+          },
+          "result": "not_verifyable"
+        },
+        {
+          "query": {
+            "query": "Netflix and watches some (How I Met Your Mother)"
+          },
+          "result": "verified"
+        },
+        {
+          "query": {
+            "query": "Netflix and watches some (American Horror Story)"
+          },
+          "result": "verified"
+        },
+        {
+          "query": {
+            "query": "Netflix and watches some (Super Troopers)"
+          },
+          "result": "violation"
+        }
+      ],
+      "verified": [
+        "Netflix and watches some (How I Met Your Mother)",
+        "Netflix and verified"
+      ],
+      "violations": [
+        "Netflix and watches some (Super Troopers)"
+      ],
+      "not_verifiable": [
+        "Netflix and watches some (The Walking Dead)",
+        "Netflix and watches some (John Wayne Gacy)",
+        "Netflix and watches some (HBO GO)",
+        "Netflix and watches some (poor recommendations)"
+      ],
+      "history": {
+        "user_prompt": "TODO",
+        "tweets": "/home/leon/Documents/GitHub/B1IA/inputs/Netflix_clean.txt",
+        "summary_count": 0,
+        "summary": "",
+        "queries": [],
+        "verified": [],
+        "violations": [],
+        "not_verifiable": [],
+        "history": null
+      }
+    }
+  }
+}
