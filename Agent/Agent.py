@@ -13,6 +13,7 @@ from langchain_groq import ChatGroq
 from langchain_ollama import ChatOllama
 from langchain.tools import tool
 from langgraph.graph import StateGraph, START, END
+from owlready2 import World
 from pydantic import BaseModel, Field
 #from tool import check_ontology
 
@@ -33,7 +34,19 @@ with open(sum_prompt_path, 'r', encoding='utf-8') as f:
 ver_prompt_path = BASE_DIR / config['PROMPTS']['VERIFICATION']
 with open(ver_prompt_path, 'r', encoding='utf-8') as f:
     VERIFICATION_PROMPT = f.read()
+ONTOLOGY_PATH = config['ONTOLOGY']['PATH']
+
+def read_ontology():
+    world = World(ONTOLOGY_PATH)
+    classes = list(world.classes())
+    properties = list(world.properties())
+    data_properties = list(world.data_properties())
+    return f'The ontology has the following classes:\n{classes}\nThe following properties:\n{properties}\nAnd the following data properties:\n{data_properties}'
+VERIFICATION_PROMPT += f'\n{read_ontology}'
+
 LOG_PATH = BASE_DIR / config['LOGGING']['PATH']
+
+
 # setup llm connection
 
 def load_llm(llm_type: str = 'groq'):
@@ -107,10 +120,18 @@ def summarize(state: State, llm):
     return State(state.user_prompt, state.tweets, state.summary_count+1, response.content, history = state)
 
 
-def build_prompt(user_prompt: str, tweets: Path):
+def build_prompt(state: State):
     """"Assumes tweets is a complete filepath"""
-    with open(tweets, 'r', encoding='utf-8') as f:
-        return f"{user_prompt}\n{f.readlines()}"
+    with open(state.tweets, 'r', encoding='utf-8') as f:
+        tweets = f.readlines()
+
+    res = f"{state.user_prompt}\n{tweets}"
+    if len(state.violations) != 0 and state.summary_count != 0:
+        res += f"\nThe previous sumary was:\n{state.history.summary}"
+        res += f"\nIn the previous itteration the following counterfactual statements were found:"
+        for violation in state.violations:
+            res += f"\n{violation}"
+    return res
 
 def extract_queries(messages) -> list[dict]:
     results = {m.tool_call_id: m.content for m in messages if isinstance(m, ToolMessage)}
