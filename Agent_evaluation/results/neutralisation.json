@@ -1,0 +1,53 @@
+{
+  "metadata": {
+    "average_sentiment_proportions": {
+      "summary": {
+        "positive": 0.4,
+        "negative": 0.4,
+        "neutral": 0.2
+      },
+      "input": {
+        "positive": 0.213,
+        "negative": 0.1574,
+        "neutral": 0.6296
+      }
+    },
+    "total_events_processed": 1,
+    "events_with_summaries": 1,
+    "events_with_input": 1
+  },
+  "events": {
+    "christmas": {
+      "sentiment_analysis": {
+        "summary": {
+          "sentiment_counts": {
+            "positive": 2,
+            "negative": 2,
+            "neutral": 1
+          },
+          "sentiment_proportions": {
+            "positive": 0.4,
+            "negative": 0.4,
+            "neutral": 0.2
+          },
+          "total_sentences": 5,
+          "skipped_sentences": 0
+        },
+        "input": {
+          "sentiment_counts": {
+            "positive": 23,
+            "negative": 17,
+            "neutral": 68
+          },
+          "sentiment_proportions": {
+            "positive": 0.213,
+            "negative": 0.1574,
+            "neutral": 0.6296
+          },
+          "total_sentences": 108,
+          "skipped_sentences": 0
+        }
+      }
+    }
+  }
+}
