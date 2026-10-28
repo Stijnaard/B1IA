@@ -5,11 +5,13 @@
 
 import argparse
 from owlready2 import get_ontology, World, sync_reasoner, OwlReadyInconsistentOntologyError
-
+from langchain.tools import tool
 
 # assumes a sparql string for negated claim
 
-def check_claim(onto_path: str, negated_claim: str) -> (None|bool):
+@tool
+def check_ontology(onto_path: str, negated_claim: str) -> (None|bool):
+    "checks if the query holds in the ontology, returns verified when entailed, violation when a counterexample or contradiction is found and not_verifyable when it holds only due to the open world assumption" 
     #specify an isloated world for the modification to the ontology to be setup in
     isolated_world = World()
     onto = isolated_world.get_ontology(onto_path).load()
@@ -44,7 +46,7 @@ def main():
     with open(args.claim, "r") as f:
         negated_claim = f.read()
 
-    result = check_claim(args.ontology, negated_claim)
+    result = check_ontology(args.ontology, negated_claim)
 
     print(result)
 

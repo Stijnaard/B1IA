@@ -2,5 +2,6 @@ owlready2
 rdflib
 langchain-openai
 langchain_groq
+langchain_ollama
 langgraph
 langchain
