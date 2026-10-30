@@ -13,7 +13,7 @@ from langchain_groq import ChatGroq
 from langchain_ollama import ChatOllama
 from langchain.tools import tool
 from langgraph.graph import StateGraph, START, END
-from owlready2 import World
+from owlready2 import World, sync_reasoner, OwlReadyInconsistentOntologyError
 from pydantic import BaseModel, Field
 #from tool import check_ontology
 
@@ -37,14 +37,18 @@ with open(ver_prompt_path, 'r', encoding='utf-8') as f:
 ONTOLOGY_PATH = config['ONTOLOGY']['PATH']
 
 def read_ontology():
-    world = World(ONTOLOGY_PATH)
+    world = World()
+    ontology = world.get_ontology(ONTOLOGY_PATH).load()
     classes = list(world.classes())
     properties = list(world.properties())
     data_properties = list(world.data_properties())
     return f'The ontology has the following classes:\n{classes}\nThe following properties:\n{properties}\nAnd the following data properties:\n{data_properties}'
 VERIFICATION_PROMPT += f'\n{read_ontology}'
 
+TRANSLATION_PROMPT = config['PROMPTS']['TRANSLATION']
+
 LOG_PATH = BASE_DIR / config['LOGGING']['PATH']
+
 
 
 # setup llm connection
@@ -93,7 +97,7 @@ class State:
 # tools
 import random
 @tool
-def check_ontology(query: str) -> str:
+def check_ontology_dumm(query: str) -> str:
     "checks if the query holds in the ontology, returns verified when entailed, violation when a counterexample or contradiction is found and not_verifyable when it holds only due to the open world assumption" 
     x = random.randint(0,2)
     if x == 0:
@@ -104,8 +108,53 @@ def check_ontology(query: str) -> str:
         return 'not_verifyable'
 
     # need to catch actual error and return them as text for the agent to retry failed queries
-    
 
+
+@tool
+def check_ontology(query: str, llm) -> str:
+    """checks if the query holds in the ontology, returns verified when entailed, violation when a counterexample or contradiction is found and not_verifyable when it holds only due to the open world assumption"""
+    try:
+        # step 1: translate query into machine usable syntax
+        response = llm.invoke([
+            SystemMessage(TRANSLATION_PROMPT),
+            HumanMessage(query)
+        ])
+        queries = json.load(response.content)
+        # step 2: check the sparql queries
+        def check_query(query):
+                #Returns False on contradiction, True otherwise
+                isolated_world = World()
+                onto = isolated_world.get_ontology(ONTOLOGY_PATH).load()
+        
+                try:
+                    sync_reasoner(isolated_world)
+                except OwlReadyInconsistentOntologyError as e:
+                    raise Exception('the base ontology is inconsitent') from e
+        
+                graph = isolated_world.as_rdflib_graph()
+                try:
+                    with onto:
+                        graph.update(query)
+                except Exception as e:
+                    raise Exception('invalid sparql') from e
+        
+                try:
+                    sync_reasoner(isolated_world)
+                except OwlReadyInconsistentOntologyError as e:
+                    return False
+                
+                return True
+        
+        for query in queries['negated']:
+            if check_query(query): #if any negated query returns a False, it's contradicted, and thus the original query is verified
+                return 'verified'
+        for query in queries['regular']:
+            if check_query(query):
+                return 'violation'
+        return 'not_verifyable' 
+    
+    except Exception as e:
+        return f'Something went wrong, here is the stacktrace:\n{e}' #returns stack trace to calling agent to allow it to fix it's response
 
 # work nodes
 
@@ -113,7 +162,7 @@ def summarize(state: State, llm):
     # send prompt to LLM (no agent needed, this is a single linear call)
     response = llm.invoke([
         SystemMessage(SUMMARIZATION_PROMPT),
-        HumanMessage(build_prompt(state.user_prompt, state.tweets))
+        HumanMessage(build_prompt(state))
     ])
 
     # make new state, storing historical state, incrementing the sumarycount and adding the LLM response
