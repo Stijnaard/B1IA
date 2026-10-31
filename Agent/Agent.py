@@ -1,6 +1,7 @@
 from __future__ import annotations #allows for recursive type annotations
 
 import json
+import traceback
 from configparser import ConfigParser
 from dataclasses import dataclass, field, asdict
 from datetime import datetime
@@ -80,6 +81,11 @@ class Verification(BaseModel):
     violations: list[str] = Field(default_factory=list, description="Claims where a contradiction or counterexample exists")
     not_verifiable: list[str] = Field(default_factory=list, description="Claims that hold only due to the open world assumption")
 
+class SparQLQueries(BaseModel):
+    negated: list[str] = Field(default_factory=list, description='List of negated sparql queries')
+    regular: list[str] = Field(default_factory=list, description='List of regular sparql qieries')
+
+
 @dataclass
 class State:
     user_prompt: str
@@ -111,15 +117,18 @@ def check_ontology_dumm(query: str) -> str:
 
 
 @tool
-def check_ontology(query: str, llm) -> str:
+def check_ontology(query: str) -> str:
     """checks if the query holds in the ontology, returns verified when entailed, violation when a counterexample or contradiction is found and not_verifyable when it holds only due to the open world assumption"""
+    print(f'tool used with query:{query}')
+    llm = load_llm('ollama').with_structured_output(SparQLQueries)
     try:
         # step 1: translate query into machine usable syntax
         response = llm.invoke([
             SystemMessage(TRANSLATION_PROMPT),
             HumanMessage(query)
         ])
-        queries = json.load(response.content)
+
+        queries = response
         # step 2: check the sparql queries
         def check_query(query):
                 #Returns False on contradiction, True otherwise
@@ -145,16 +154,16 @@ def check_ontology(query: str, llm) -> str:
                 
                 return True
         
-        for query in queries['negated']:
+        for query in queries.negated:
             if check_query(query): #if any negated query returns a False, it's contradicted, and thus the original query is verified
                 return 'verified'
-        for query in queries['regular']:
+        for query in queries.regular:
             if check_query(query):
                 return 'violation'
         return 'not_verifyable' 
     
     except Exception as e:
-        return f'Something went wrong, here is the stacktrace:\n{e}' #returns stack trace to calling agent to allow it to fix it's response
+        return f'Something went wrong, here is the stacktrace:\n{traceback.format_exc()}' #returns stack trace to calling agent to allow it to fix it's response
 
 # work nodes
 
