@@ -16,40 +16,9 @@ from langchain.tools import tool
 from langgraph.graph import StateGraph, START, END
 from owlready2 import World, sync_reasoner, OwlReadyInconsistentOntologyError
 from pydantic import BaseModel, Field
-#from tool import check_ontology
 
-
-# Load in configs
-config = ConfigParser()
-
-BASE_DIR = Path(__file__).resolve().parent.parent # root dir of repo
-config.read(BASE_DIR / "config.ini")
-GROQ_API_KEY = config['GROQ']['GROQ_API_KEY']
-CROQ_MODEL = config['GROQ']['MODEL']
-
-OLLAMA_MODEL = config['OLLAMA']['MODEL']
-
-sum_prompt_path = BASE_DIR / config['PROMPTS']['SUMMARIZATION']
-with open(sum_prompt_path, 'r', encoding='utf-8') as f:
-    SUMMARIZATION_PROMPT = f.read()
-ver_prompt_path = BASE_DIR / config['PROMPTS']['VERIFICATION']
-with open(ver_prompt_path, 'r', encoding='utf-8') as f:
-    VERIFICATION_PROMPT = f.read()
-ONTOLOGY_PATH = config['ONTOLOGY']['PATH']
-
-def read_ontology():
-    world = World()
-    ontology = world.get_ontology(ONTOLOGY_PATH).load()
-    classes = list(world.classes())
-    properties = list(world.properties())
-    data_properties = list(world.data_properties())
-    return f'The ontology has the following classes:\n{classes}\nThe following properties:\n{properties}\nAnd the following data properties:\n{data_properties}'
-VERIFICATION_PROMPT += f'\n{read_ontology}'
-
-TRANSLATION_PROMPT = config['PROMPTS']['TRANSLATION']
-
-LOG_PATH = BASE_DIR / config['LOGGING']['PATH']
-
+from configs import BASE_DIR, GROQ_API_KEY, CROQ_MODEL, OLLAMA_MODEL, SUMMARIZATION_PROMPT, VERIFICATION_PROMPT, ONTOLOGY_PATH, TRANSLATION_PROMPT, LOG_PATH
+from tool2 import check_ontology
 
 
 # setup llm connection
@@ -115,60 +84,6 @@ def check_ontology_dumm(query: str) -> str:
 
     # need to catch actual error and return them as text for the agent to retry failed queries
 
-
-@tool
-def check_ontology(query: str) -> str:
-    """checks if the query holds in the ontology, returns verified when entailed, violation when a counterexample or contradiction is found and not_verifyable when it holds only due to the open world assumption"""
-    print(f'tool used with query:{query}')
-    llm = ChatOllama(
-        model = OLLAMA_MODEL,
-        base_url='http://127.0.0.1:11434',
-        temperature=0,
-        reasoning=True,
-        client_kwargs={'timeout':9000}
-    ).with_structured_output(SparQLQueries)
-    #llm = load_llm('ollama').with_structured_output(SparQLQueries)
-    try:
-        # step 1: translate query into machine usable syntax
-        response = llm.invoke([
-            SystemMessage(TRANSLATION_PROMPT),
-            HumanMessage(query)
-        ])
-
-        queries = response
-        # step 2: check the sparql queries
-        def check_query(query):
-                #Returns False on contradiction, True otherwise
-                isolated_world = World()
-                onto = isolated_world.get_ontology(ONTOLOGY_PATH).load()
-        
-                try:
-                    sync_reasoner(isolated_world)
-                except OwlReadyInconsistentOntologyError as e:
-                    raise Exception('the base ontology is inconsitent') from e
-        
-                graph = isolated_world.as_rdflib_graph()
-                try:
-                    with onto:
-                        return graph.ask(query)
-                except Exception as e:
-                    raise Exception(f'invalid sparql: {query}') from e
-        
-                try:
-                    sync_reasoner(isolated_world)
-                except OwlReadyInconsistentOntologyError as e:
-                    return False
-        
-        for query in queries.negated:
-            if check_query(query): #if any negated query returns a False, it's contradicted, and thus the original query is verified
-                return 'verified'
-        for query in queries.regular:
-            if check_query(query):
-                return 'violation'
-        return 'not_verifyable' 
-    
-    except Exception as e:
-        return f'Something went wrong, here is the stacktrace:\n{traceback.format_exc()}' #returns stack trace to calling agent to allow it to fix it's response
 
 # work nodes
 

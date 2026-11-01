@@ -1,54 +1,72 @@
-# Run this file by using the cmd: 'python tool.py IAOntology.rdf negated_claim.sparql'
-# where the IAOntology.rdf should correspond to the ontology file,
-# and negated_claim.sparql should correspond to a file containing a valid sparql version of the negated claim you're trying to confirm
-# Make sure Java is installed (to path if using venv on windows)
-
-import argparse
-from owlready2 import get_ontology, World, sync_reasoner, OwlReadyInconsistentOntologyError
 from langchain.tools import tool
+from langchain_ollama import ChatOllama
+from langchain.messages import SystemMessage, HumanMessage
+from owlready2 import World, OwlReadyInconsistentOntologyError, sync_reasoner
 
-# assumes a sparql string for negated claim
+from configs import OLLAMA_MODEL, ONTOLOGY_PATH, BASE_DIR
 
 @tool
-def check_ontology(onto_path: str, negated_claim: str) -> (None|bool):
+def check_ontology(query: str) -> str:
     "checks if the query holds in the ontology, returns verified when entailed, violation when a counterexample or contradiction is found and not_verifyable when it holds only due to the open world assumption" 
-    #specify an isloated world for the modification to the ontology to be setup in
-    isolated_world = World()
-    onto = isolated_world.get_ontology(onto_path).load()
+    print(f'checking query: {query}')
+    llm = ChatOllama(
+        model=OLLAMA_MODEL,
+        temperature=0,
+        reasoning=True,
+        num_ctx=8192*2,
+        client_kwargs={'timeout': 900}
+    )
+
+    # Get negated normal form
+    system_prompt= "The user prompt will be a manchester OWL query, your job is to respond with the negation normal form. Use the Tableau algorithm. In your output only respond with the negated query in manchester owl syntax, if you need to respond with multiple queries due to the tablue algorithm seperate them with comma's."
+    response = llm.invoke([
+        SystemMessage(system_prompt),
+        HumanMessage(query)
+    ])
+    queries = [query]+ response.content.split(',')
+    print(f'nnf queries: {queries}')
+    # Translate into sparql
+    sparQL_queries = []
+    for q in queries:
+        system_prompt2 = "The user prompt will be a manchester OWL query, it is your job to translate it into SparQL corresponding with the rdf file below. In your output **only** respond with the sparQL query.\n RDF:\n{rdf}"
+        response2 = llm.invoke([
+            SystemMessage(system_prompt2),
+            HumanMessage(q)
+        ])
+        sparQL_queries.append(response2.content)
+    print(f'sparQL queries: {sparQL_queries}')
+    #Check queries
+
+    if not check_query(sparQL_queries[0]):
+        return 'violation'
+    for sparQL_query in sparQL_queries[1:]:
+        if not check_query(sparQL_query):
+            return 'verified'
+    return 'not_verifyable' 
     
+
+def check_query(query):
+    print(f'feeding query to ontology: {query}')
+    #Returns False on contradiction, True otherwise
+    isolated_world = World()
+    onto = isolated_world.get_ontology(str(BASE_DIR/ONTOLOGY_PATH)).load()
+
     try:
         sync_reasoner(isolated_world)
     except OwlReadyInconsistentOntologyError as e:
-        raise Exception('The base ontology is inconcistent') from e
+        raise Exception('the base ontology is inconsitent') from e
 
     graph = isolated_world.as_rdflib_graph()
     try:
         with onto:
-            graph.update(negated_claim)
+            graph.update(query)
     except Exception as e:
-        raise Exception('invalid sparql') from e
+        print(f'invalid sparql: {query}')
 
     try:
         sync_reasoner(isolated_world)
     except OwlReadyInconsistentOntologyError as e:
-        return True # as the negation is inconsitent, the claim must be consistent
+        return False
+    
+    return True
 
-    return None # the claim may be true, may not be
-
-def main():
-    parser = argparse.ArgumentParser()
-
-    parser.add_argument("ontology")
-    parser.add_argument("claim", help="Path to SPARQL file")
-
-    args = parser.parse_args()
-
-    with open(args.claim, "r") as f:
-        negated_claim = f.read()
-
-    result = check_ontology(args.ontology, negated_claim)
-
-    print(result)
-
-if __name__ == "__main__":
-    main()
