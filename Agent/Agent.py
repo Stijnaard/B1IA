@@ -120,7 +120,14 @@ def check_ontology_dumm(query: str) -> str:
 def check_ontology(query: str) -> str:
     """checks if the query holds in the ontology, returns verified when entailed, violation when a counterexample or contradiction is found and not_verifyable when it holds only due to the open world assumption"""
     print(f'tool used with query:{query}')
-    llm = load_llm('ollama').with_structured_output(SparQLQueries)
+    llm = ChatOllama(
+        model = OLLAMA_MODEL,
+        base_url='http://127.0.0.1:11434',
+        temperature=0,
+        reasoning=True,
+        client_kwargs={'timeout':9000}
+    ).with_structured_output(SparQLQueries)
+    #llm = load_llm('ollama').with_structured_output(SparQLQueries)
     try:
         # step 1: translate query into machine usable syntax
         response = llm.invoke([
@@ -143,16 +150,14 @@ def check_ontology(query: str) -> str:
                 graph = isolated_world.as_rdflib_graph()
                 try:
                     with onto:
-                        graph.update(query)
+                        return graph.ask(query)
                 except Exception as e:
-                    raise Exception('invalid sparql') from e
+                    raise Exception(f'invalid sparql: {query}') from e
         
                 try:
                     sync_reasoner(isolated_world)
                 except OwlReadyInconsistentOntologyError as e:
                     return False
-                
-                return True
         
         for query in queries.negated:
             if check_query(query): #if any negated query returns a False, it's contradicted, and thus the original query is verified
