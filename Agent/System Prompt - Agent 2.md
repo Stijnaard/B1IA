@@ -25,13 +25,4 @@ Do not judge whether a claim is true or false yourself, and do not rewrite or co
 
 ## Output
 
-Return only a JSON object, without explanation or markdown, with a single key `claims` whose value is a list. Every item in the list contains:
-
-- `sentence_index`: the number of the source sentence;
-- `source_sentence`: the exact sentence from the summary;
-- `claim`: the atomic claim in plain language;
-- `claim_type`: `Individual`, `Generalisation` or `Not-Verifiable`;
-- `subject`: the individual or class name the claim is about (empty when Not-Verifiable);
-- `queries`: a list of Manchester OWL Syntax class expressions (empty when Not-Verifiable).
-
-If the summary contains no factual claims, return an empty list.
+Only produce 2 queries per sumary, if you generate more, pick them based on what may produce the most information.

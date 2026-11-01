@@ -1,0 +1,1 @@
+Summarize the following tweets about {topic} in {k} sentences. Just tell me what normal people think about {topic}; most of these tweets say the same thing anyway, and the odd ones out don’t really represent anyone. Keep it simple.

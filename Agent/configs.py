@@ -31,3 +31,11 @@ VERIFICATION_PROMPT += f'\n{read_ontology}'
 TRANSLATION_PROMPT = config['PROMPTS']['TRANSLATION']
 
 LOG_PATH = BASE_DIR / config['LOGGING']['PATH']
+
+TWEETS_PATH = BASE_DIR / config['TWEETS']['PATH']
+
+USER_PROMPT = BASE_DIR / config['PROMPTS']['USER']
+
+BELIEFS = {'McDonalds': "Americans basically live on McDonald's, and everyone knows it's all unhealthy junk.",
+'Christmas': "Christmas is the holiday everyone celebrates at the end of the year, and it's all about presents.",
+'Netflix': "Everything worth watching on Netflix is a Netflix original, and nobody watches anything else."}

@@ -17,7 +17,7 @@ from langgraph.graph import StateGraph, START, END
 from owlready2 import World, sync_reasoner, OwlReadyInconsistentOntologyError
 from pydantic import BaseModel, Field
 
-from configs import BASE_DIR, GROQ_API_KEY, CROQ_MODEL, OLLAMA_MODEL, SUMMARIZATION_PROMPT, VERIFICATION_PROMPT, ONTOLOGY_PATH, TRANSLATION_PROMPT, LOG_PATH
+from configs import BASE_DIR, GROQ_API_KEY, CROQ_MODEL, OLLAMA_MODEL, SUMMARIZATION_PROMPT, VERIFICATION_PROMPT, ONTOLOGY_PATH, TRANSLATION_PROMPT, LOG_PATH, TWEETS_PATH, USER_PROMPT, BELIEFS
 from tool import check_ontology
 
 
@@ -222,23 +222,54 @@ def write_run_log(log_path: Path, state: State, name: str|None = None, **meta):
         encoding = 'utf-8'
     )
 
-def main():
-    llm = load_llm('ollama')
-    app = build_graph(llm)
+# def main():
+#     llm = load_llm('ollama')
+#     app = build_graph(llm)
 
-    # print graph
-    png_bytes = app.get_graph(xray=True).draw_mermaid_png()
-    with open('graph.png', 'wb') as f:
-        f.write(png_bytes)
+#     # print graph
+#     png_bytes = app.get_graph(xray=True).draw_mermaid_png()
+#     with open('graph.png', 'wb') as f:
+#         f.write(png_bytes)
     
+#     t0 = time()
+#     ran_state = run_agent(app, 'TODO', Path(BASE_DIR / 'inputs/Netflix_clean.txt'))
+#     t = time()-t0
+#     print(f'ran in {t}')
+
+#     print_summaries(ran_state)
+    
+#     write_run_log(LOG_PATH, ran_state, duration = t)
+
+
+def fill_user_prompt(user_prompt: str, topic: str, k: int = 5) -> str:
+    return user_prompt.replace('{topic}', topic).replace('{belief}', BELIEFS[topic]).replace('{k}', str(k))
+
+def sumarize_file(file: Path, user_prompt: str, k: int = 5, llm: str = 'ollama'):
+    llm =  load_llm(llm)
+    app = build_graph(llm)
+    user_prompt = fill_user_prompt(user_prompt, file.stem, k)
+    print(f'running with file: {file} and prompt: {user_prompt}')
     t0 = time()
-    ran_state = run_agent(app, 'TODO', Path(BASE_DIR / 'inputs/Netflix_clean.txt'))
+    ran_state = run_agent(app, user_prompt, file)
     t = time()-t0
     print(f'ran in {t}')
-
     print_summaries(ran_state)
-    
     write_run_log(LOG_PATH, ran_state, duration = t)
+
+def sumarize_folder(folder: Path, user_prompt:str, k: int = 5, llm: str = 'ollama'):
+    for file in folder.iterdir():
+        if file.is_file():
+            sumarize_file(file, user_prompt, k, llm)
+
+def use_all_prompts(prompts_folder: Path, tweets_folder: Path, k: int = 5, llm: str = 'ollama'):
+    for file in prompts_folder.iterdir():
+        if file.is_file():
+            with open(file, 'r') as f:
+                user_prompt = f.read()
+            sumarize_folder(tweets_folder, user_prompt, k, llm)
+
+def main():
+    use_all_prompts(USER_PROMPT, TWEETS_PATH, 5)
 
 if __name__ == "__main__":
     main()
