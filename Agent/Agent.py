@@ -18,7 +18,7 @@ from owlready2 import World, sync_reasoner, OwlReadyInconsistentOntologyError
 from pydantic import BaseModel, Field
 
 from configs import BASE_DIR, GROQ_API_KEY, CROQ_MODEL, OLLAMA_MODEL, SUMMARIZATION_PROMPT, VERIFICATION_PROMPT, ONTOLOGY_PATH, TRANSLATION_PROMPT, LOG_PATH
-from tool2 import check_ontology
+from tool import check_ontology
 
 
 # setup llm connection
