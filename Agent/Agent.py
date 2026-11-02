@@ -244,7 +244,7 @@ def write_run_log(log_path: Path, state: State, name: str|None = None, **meta):
 def fill_user_prompt(user_prompt: str, topic: str, k: int = 5) -> str:
     return user_prompt.replace('{topic}', topic).replace('{belief}', BELIEFS[topic]).replace('{k}', str(k))
 
-def sumarize_file(file: Path, user_prompt: str, k: int = 5, llm: str = 'ollama'):
+def sumarize_file(file: Path, user_prompt: str, upc: int, k: int = 5, llm: str = 'ollama'):
     llm =  load_llm(llm)
     app = build_graph(llm)
     user_prompt = fill_user_prompt(user_prompt, file.stem, k)
@@ -254,25 +254,29 @@ def sumarize_file(file: Path, user_prompt: str, k: int = 5, llm: str = 'ollama')
     t = time()-t0
     print(f'ran in {t}')
     print_summaries(ran_state)
-    write_run_log(LOG_PATH, ran_state, duration = t)
+    write_run_log(LOG_PATH, ran_state, name= f'{file.stem}_{upc}.json', duration = t)
 
-def sumarize_folder(folder: Path, user_prompt:str, k: int = 5, llm: str = 'ollama'):
+def sumarize_folder(folder: Path, user_prompt:str, upc: str, k: int = 5, llm: str = 'ollama'):
     for file in folder.iterdir():
         if file.is_file():
-            sumarize_file(file, user_prompt, k, llm)
+            sumarize_file(file, user_prompt, upc, k, llm)
 
 def use_all_prompts(prompts_folder: Path, tweets_folder: Path, k: int = 5, llm: str = 'ollama'):
     for file in prompts_folder.iterdir():
         if file.is_file():
             with open(file, 'r') as f:
                 user_prompt = f.read()
-            sumarize_folder(tweets_folder, user_prompt, k, llm)
+            sumarize_folder(tweets_folder, user_prompt, file.stem, k, llm)
 
 def main():
     use_all_prompts(USER_PROMPT, TWEETS_PATH, 5)
 
 def baseline():
-    sumarize_folder("", TWEETS_PATH)
+    llm = load_llm('ollama')
+    for file in TWEETS_PATH.iterdir():
+        if file.is_file():
+            state = State("", file)
+            write_run_log(LOG_PATH,summarize(state, llm), f'{file.stem}_baseline.json')
 
 if __name__ == "__main__":
     main()
