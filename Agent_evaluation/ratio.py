@@ -1,12 +1,11 @@
 from transformers import AutoTokenizer, AutoModelForSequenceClassification
 import torch
 import numpy as np
-import json
-import argparse
 import logging
-from scipy import stats
-import ot  
+import csv
 import os
+from scipy import stats
+import ot
 
 # Configure logging
 logging.basicConfig(
@@ -112,17 +111,15 @@ def wasserstein_distance(dict1, dict2):
 
 import html
 
-def load_data(tweets_path, summary_path, event_id="netflix"):
+def load_data(tweets_path, summary):
     tweets = []
     with open(tweets_path, 'r', encoding='utf-8') as file:
         for line in file:
+            line = line.strip()
             if not line:
                 continue
-            label, tweet = line.split('   ')
-            tweets.append(tweet)
-    with open(summary_path, 'r', encoding='utf-8') as file:
-        summary = file.read().strip()
-    return [{"event_id": event_id, "tweets": tweets, "summary_text": summary}]
+            tweets.append(line)
+    return tweets, summary
 
 def compute_input_dist(tweets, tokenizer, model, device):
     totals = {"left": 0.0, "center": 0.0, "right": 0.0}
@@ -156,110 +153,30 @@ def load_model(model_name="bucketresearch/politicalBiasBERT", tokenizer_name="be
     
     return tokenizer, model.to(device), device
 
-def main():
-    parser = argparse.ArgumentParser(description='Calculate bias metrics for tweets and summary')
-    parser.add_argument('--tweets', required=True, help='Pad naar het tweetbestand (label<TAB>tekst per regel)')
-    parser.add_argument('--summary', required=True, help='Pad naar het samenvattingsbestand')
-    parser.add_argument('--event-id', default='netflix', help='Naam van dit event in de output')
-    parser.add_argument('--no-cache', action='store_true', help='Disable model caching')
-    parser.add_argument('--verbose', '-v', action='store_true', help='Enable verbose output')
-    parser.add_argument('--output', '-o', default='results/ratio.json', help='Output JSON file to save results')
-    args = parser.parse_args()
+def rat(input_path, summary, subject, result_path):
+    tokenizer, model, device = load_model(use_cache=True)
+    tweets, summary_text = load_data(input_path, summary)
 
-    if args.verbose:
-        logging.getLogger().setLevel(logging.DEBUG)
+    input_dist = compute_input_dist(tweets, tokenizer, model, device)
+    output_dist = calculate(summary_text, tokenizer, model, device)
 
-    try:
-        tokenizer, model, device = load_model(use_cache=not args.no_cache)
+    kl = kl_divergence(input_dist, output_dist)
+    wd = wasserstein_distance(input_dist, output_dist)
 
-        events = load_data(args.tweets, args.summary, args.event_id)
+    rows = []
+    for k in ['left', 'center', 'right']:
+        rows.append({'metric': 'input_distribution', 'group': k,
+                     'value': round(float(input_dist[k]), 4), 'significance': ''})
+    for k in ['left', 'center', 'right']:
+        rows.append({'metric': 'output_distribution', 'group': k,
+                     'value': round(float(output_dist[k]), 4), 'significance': ''})
+    rows.append({'metric': 'kl_divergence', 'group': '',
+                 'value': round(float(kl), 4), 'significance': ''})
+    rows.append({'metric': 'wasserstein_distance', 'group': '',
+                 'value': round(float(wd), 4), 'significance': ''})
 
-        logger.info(f"Found {len(events)} events to process")
-
-        all_results = {}
-
-        for i, event in enumerate(events):
-            event_id = event["event_id"]
-            summary_text = event["summary_text"]
-
-            logger.info(f"Processing event {i+1}/{len(events)}: {event_id}")
-
-            input_dist = compute_input_dist(event["tweets"], tokenizer, model, device)
-            output_dist = calculate(summary_text, tokenizer, model, device)
-
-            kl = kl_divergence(input_dist, output_dist)
-            wd = wasserstein_distance(input_dist, output_dist)
-
-            print(f"\nResults for event {event_id}:")
-            print(f"Input Distribution: {input_dist}")
-            print(f"Output Distribution: {output_dist}")
-            print(f"KL Divergence: {kl:.6f}")
-            print(f"Wasserstein Distance: {wd:.6f}")
-
-            all_results[event_id] = {
-                "input_dist": input_dist,
-                "output_dist": output_dist,
-                "kl_divergence": kl,
-                "wasserstein_distance": wd
-            }
-
-        avg_kl = sum(r["kl_divergence"] for r in all_results.values()) / len(all_results)
-        avg_wd = sum(r["wasserstein_distance"] for r in all_results.values()) / len(all_results)
-
-        print(f"\nSummary for {args.tweets}:")
-        print(f"Processed {len(events)} events")
-        print(f"Average KL Divergence: {avg_kl:.6f}")
-        print(f"Average Wasserstein Distance: {avg_wd:.6f}")
-
-        if args.output:
-            try:
-                output_dir = os.path.dirname(args.output)
-                if output_dir and not os.path.exists(output_dir):
-                    os.makedirs(output_dir)
-                    logger.info(f"Created directory: {output_dir}")
-
-                final_results = {
-                    "events": all_results,
-                    "metadata": {
-                        "count": len(events),
-                        "avg_kl": avg_kl,
-                        "avg_wd": avg_wd
-                    }
-                }
-
-                with open(args.output, 'w', encoding='utf-8') as f:
-                    json.dump(final_results, f, indent=2)
-                print(f"Results saved to {args.output}")
-            except Exception as e:
-                logger.error(f"Error saving results to {args.output}: {e}")
-                print(f"Error saving results: {e}")
-
-        return {
-            "results": all_results,
-            "metadata": {
-                "count": len(events),
-                "avg_kl": avg_kl,
-                "avg_wd": avg_wd
-            }
-        }
-
-    except Exception as e:
-        logger.error(f"Error processing the files: {e}")
-        import traceback
-        traceback.print_exc()
-        return None
-
-
-if __name__ == "__main__":
-    main()
-
-    # python fairness_doc_level.py "/home/smg/v-amber/all_news_generation/generated_summary/random/Llama-3.3-70B-Instruct/Llama-3.3-70B-Instruct/summaries.json" --output /home/smg/v-amber/evaluation/output/hard/ratio/results.json --no-cache
-    # python fairness_doc_level.py "/home/smg/v-amber/all_news_generation/generated_summary/random/Llama-3.3-70B-Instruct/summaries.json" --output /home/smg/v-amber/evaluation/output/hard/ratio/random/Llama-3.3-70B-Instruct/results.json --no-cache
-    # # Basic usage - process all events and show results
-    # python political_bias_analyzer.py "/path/to/summaries.json"
-
-    # # Save detailed results to a file
-    # python political_bias_analyzer.py "/path/to/summaries.json" --output results.json 
-
-    # # With verbose logging
-    # python political_bias_analyzer.py "/path/to/summaries.json" --verbose
+    out_path = f'{result_path}.csv'
+    with open(out_path, 'w', newline='', encoding='utf-8') as f:
+        writer = csv.DictWriter(f, fieldnames=['metric', 'group', 'value', 'significance'])
+        writer.writeheader()
+        writer.writerows(rows)

@@ -1,15 +1,29 @@
-from rouge import Rouge 
+import csv
+import os
+from rouge import Rouge
 
-with open('netflix_testsum.txt', 'r', encoding='utf-8') as file:
-    AI_summary = file.read()
+def rou(summary, annotator_path, subject, result_path):
+    AI_summary = summary
 
-with open('Netflix_Annotator1_Noortje.txt', 'r', encoding='utf-8') as file:
-    Annotator_summary = file.read() 
+    with open(annotator_path, 'rb') as file:
+        raw = file.read()
+    try:
+        Annotator_summary = raw.decode('utf-8')
+    except UnicodeDecodeError:
+        Annotator_summary = raw.decode('mac_roman')
+    Annotator_summary = Annotator_summary.replace('\r', ' ').strip()
 
-# hypothesis = "the #### transcript is a written version of each day 's cnn student news program use this transcript to he    lp students with reading comprehension and vocabulary use the weekly newsquiz to test your knowledge of storie s you     saw on cnn student news"
+    rouge = Rouge()
+    scores = rouge.get_scores(AI_summary, Annotator_summary)[0]
 
-# reference = "this page includes the show transcript use the transcript to help students with reading comprehension and     vocabulary at the bottom of the page , comment for a chance to be mentioned on cnn student news . you must be a teac    her or a student age # # or older to request a mention on the cnn student news roll call . the weekly newsquiz tests     students ' knowledge of even ts in the news"
+    rows = []
+    for variant, values in scores.items():
+        for measure in ['p', 'r', 'f']:
+            rows.append({'metric': variant.replace('-', '_'), 'group': measure,
+                         'value': round(float(values[measure]), 4), 'significance': ''})
 
-rouge = Rouge()
-scores = rouge.get_scores(AI_summary, Annotator_summary)
-print(scores)
+    out_path = f'{result_path}.csv'
+    with open(out_path, 'w', newline='', encoding='utf-8') as f:
+        writer = csv.DictWriter(f, fieldnames=['metric', 'group', 'value', 'significance'])
+        writer.writeheader()
+        writer.writerows(rows)
