@@ -271,7 +271,9 @@ def use_all_prompts(prompts_folder: Path, tweets_folder: Path, k: int = 5, llm: 
 def main():
     use_all_prompts(USER_PROMPT, TWEETS_PATH, 5)
 
+def baseline():
+    sumarize_folder("", TWEETS_PATH)
+
 if __name__ == "__main__":
     main()
-
-
+    baseline()
