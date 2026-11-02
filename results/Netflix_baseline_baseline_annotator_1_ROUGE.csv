@@ -1,0 +1,10 @@
+metric,group,value,significance
+rouge_1,p,0.241,
+rouge_1,r,0.1887,
+rouge_1,f,0.2116,
+rouge_2,p,0.0104,
+rouge_2,r,0.0065,
+rouge_2,f,0.008,
+rouge_l,p,0.2169,
+rouge_l,r,0.1698,
+rouge_l,f,0.1905,
