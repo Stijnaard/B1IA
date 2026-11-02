@@ -25,10 +25,12 @@ def check_ontology(query: str) -> str:
     ])
     queries = [query]+ response.content.split(',')
     print(f'nnf queries: {queries}')
+    with open(BASE_DIR/ONTOLOGY_PATH, 'r') as f:
+        rdf = f.read()
     # Translate into sparql
     sparQL_queries = []
     for q in queries:
-        system_prompt2 = "The user prompt will be a manchester OWL query, it is your job to translate it into SparQL corresponding with the rdf file below. In your output **only** respond with the sparQL query.\n RDF:\n{rdf}"
+        system_prompt2 = f"The user prompt will be a manchester OWL query, it is your job to translate it into SparQL corresponding with the rdf file below. In your output **only** respond with the sparQL query.\n RDF:\n{rdf}"
         response2 = llm.invoke([
             SystemMessage(system_prompt2),
             HumanMessage(q)
