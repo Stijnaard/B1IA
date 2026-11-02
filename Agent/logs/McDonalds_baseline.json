@@ -1,0 +1,23 @@
+{
+  "state": {
+    "user_prompt": "",
+    "tweets": "/home/leon/Documents/GitHub/B1IA/inputs/clean/McDonalds.txt",
+    "summary_count": 1,
+    "summary": "Some users express strong enthusiasm for specific McDonald's items like the McRib, chicken nuggets, and ice cream cones, often sharing stories of eating them immediately after workouts or while waiting in lines. Conversely, several tweets describe negative experiences with the food quality, citing complaints about stale fish fillets, insufficient sauce packets, and a general feeling that the restaurant is disgusting or nasty. Beyond the food itself, customers share frustrations regarding operational issues such as long drive-thru waits, confusing menu hours for breakfast, and rude behavior from staff members like cashiers and security guards. Social interactions at the location range from friendly gestures like receiving free McGriddles to negative encounters involving inappropriate comments from employees or other patrons. Despite these mixed reviews and occasional disgust, many users admit they still crave McDonald's fries and would visit the restaurant even if they knew it was unhealthy or unpopular with others.",
+    "queries": [],
+    "verified": [],
+    "violations": [],
+    "not_verifiable": [],
+    "history": {
+      "user_prompt": "",
+      "tweets": "/home/leon/Documents/GitHub/B1IA/inputs/clean/McDonalds.txt",
+      "summary_count": 0,
+      "summary": "",
+      "queries": [],
+      "verified": [],
+      "violations": [],
+      "not_verifiable": [],
+      "history": null
+    }
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "state": {
+    "user_prompt": "",
+    "tweets": "/home/leon/Documents/GitHub/B1IA/inputs/clean/Netflix.txt",
+    "summary_count": 1,
+    "summary": "Some users plan to renew their Netflix subscriptions or purchase new devices like laptops to continue watching shows. Several tweets describe relaxing at home in sweats or bed while binge-watching series like The Walking Dead and South Park. A few individuals express frustration with technical issues such as the app not loading or finding that certain titles are missing from the library. Others complain about high costs, password sharing disputes, or receiving poor movie recommendations from the platform. Conversely, many users praise Netflix for providing a vast selection of films and shows to enjoy alone or with friends.",
+    "queries": [],
+    "verified": [],
+    "violations": [],
+    "not_verifiable": [],
+    "history": {
+      "user_prompt": "",
+      "tweets": "/home/leon/Documents/GitHub/B1IA/inputs/clean/Netflix.txt",
+      "summary_count": 0,
+      "summary": "",
+      "queries": [],
+      "verified": [],
+      "violations": [],
+      "not_verifiable": [],
+      "history": null
+    }
+  }
+}

@@ -1,0 +1,40 @@
+{
+  "duration": 430.0803892612457,
+  "state": {
+    "user_prompt": "Summarize the following tweets about McDonalds in 5 sentences. Americans basically live on McDonald's, and everyone knows it's all unhealthy junk. These tweets obviously prove it. Just tell me what normal people think about McDonalds; most of these tweets say the same thing anyway, and the odd ones out don’t really represent anyone. Keep it simple.",
+    "tweets": "/home/leon/Documents/GitHub/B1IA/inputs/clean/McDonalds.txt",
+    "summary_count": 1,
+    "summary": "Some users describe McDonald's food as delicious and express a strong desire for items like ice cream cones, dip, and McRib. Other tweets state that the food is nasty, disgusting, or makes people feel sick to their stomachs. Several users complain about specific issues such as small sauce packets, long lines, annoying commercials, and rude staff behavior. A few individuals mention eating McDonald's frequently despite knowing it is unhealthy or wanting to change their diet. The collection of tweets shows a mix of enjoyment, criticism, and casual complaints from different people regarding their experiences at the restaurant.",
+    "queries": [
+      {
+        "query": {
+          "query": "McDonald's and serves some (not FastFood)"
+        },
+        "result": "not_verifyable"
+      },
+      {
+        "query": {
+          "query": "McDonald's and serves some (IceCreamCone)"
+        },
+        "result": "not_verifyable"
+      }
+    ],
+    "verified": [],
+    "violations": [],
+    "not_verifiable": [
+      "McDonald's and serves some (not FastFood)",
+      "McDonald's and serves some (IceCreamCone)"
+    ],
+    "history": {
+      "user_prompt": "Summarize the following tweets about McDonalds in 5 sentences. Americans basically live on McDonald's, and everyone knows it's all unhealthy junk. These tweets obviously prove it. Just tell me what normal people think about McDonalds; most of these tweets say the same thing anyway, and the odd ones out don’t really represent anyone. Keep it simple.",
+      "tweets": "/home/leon/Documents/GitHub/B1IA/inputs/clean/McDonalds.txt",
+      "summary_count": 0,
+      "summary": "",
+      "queries": [],
+      "verified": [],
+      "violations": [],
+      "not_verifiable": [],
+      "history": null
+    }
+  }
+}
