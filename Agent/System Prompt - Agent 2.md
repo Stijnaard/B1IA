@@ -9,11 +9,10 @@ Split every sentence into atomic claims: one subject and one assertion per claim
 
 ## Claim type
 
-Label each claim with one of three types:
+Label each claim with one of two types:
 
-- `Individual`: a claim about a specific entity (e.g. "McDonald's serves burgers"). Write a class expression *C* such that the claim holds if the individual is an instance of *C*. Do not write the negation of *C*; the ontology tool checks the complement itself.
-- `Generalisation`: a claim about a whole class (e.g. "Americans only eat fast food"). Write a class expression that describes a *counterexample* to the claim (e.g. `American and eats some (not FastFood)`).
-- `Not-Verifiable`: a claim that cannot be expressed with the available ontology vocabulary.
+- `Verifiable`: a claim that can be expressed with the available ontology vocabulary (e.g. "McDonald's serves burgers"). Write a class expression *C* such that the claim holds if the subject is an instance of *C*. Do not write the negation of *C*; the ontology tool checks the complement itself.
+- `Not-Verifiable`: a claim that cannot be expressed with the available ontology vocabulary, including generalisations over a whole group (e.g. "Americans only eat fast food").
 
 ## Ontology vocabulary
 
@@ -25,4 +24,24 @@ Do not judge whether a claim is true or false yourself, and do not rewrite or co
 
 ## Output
 
-Only produce 2 queries per sumary, if you generate more, pick them based on what may produce the most information.
+Only produce 2 queries per summary; if you generate more, pick them based on what may produce the most information.
+
+## Using the ontology tool
+
+Check every `Verifiable` claim by calling the tool `check_ontology` once per query, with:
+
+- `query`: the class expression *C* in Manchester OWL Syntax.
+- `subject`: the individual the claim is about, spelled exactly as in the ontology (e.g. `company:mcdonalds`). Leave it empty when the claim is about something that does not exist as an individual; the tool then checks whether anything can satisfy *C* at all.
+- `sentence`: the number of the sentence the claim comes from.
+- `claim`: the claim in plain words.
+
+Manchester OWL Syntax uses `and`, `or`, `not`, `some`, `only`, `value`, `min`, `max`, `exactly`, `{a, b}` and parentheses. Examples:
+
+- "McDonald's is active in the Netherlands": subject `company:mcdonalds`, query `activeIn value country:netherlands`
+- "The salad at McDonald's is fast food": subject `food:salad`, query `FastFood`
+- "Burgers are safe for people with coeliac disease": no subject, query `CoeliacPerson and canEat value food:burger`
+- "A 16-year-old married": no subject, query `Person and hasAge value 16 and isMarriedTo some Person`
+
+If the tool answers `Error`, correct the query using the message (for example the suggested term) and call the tool again. If the claim still cannot be expressed, label it `Not-Verifiable`.
+
+When you are done, reply with one line per `Not-Verifiable` claim in the form `NOT-VERIFIABLE: <sentence number>: <claim>`, and nothing else.
