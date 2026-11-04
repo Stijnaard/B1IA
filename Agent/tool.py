@@ -78,26 +78,57 @@ def get_reasoner() -> SyncReasoner:
     return _reasoner
 
 
-def unknown_terms(text: str) -> list[str]:
-    """Names in the query or subject that do not exist in the ontology.
+NAME_PATTERN = re.compile(r'"[^"]*"|[A-Za-z_][\w:\'.\-]*')
+NAMES_BY_LOWER = {name.lower(): name for name in ONTOLOGY_NAMES}
+
+
+def fix_case(word: str) -> str:
+    """Return the ontology spelling of a name that only differs in upper/lower case."""
+    if word in ONTOLOGY_NAMES:
+        return word
+    return NAMES_BY_LOWER.get(word.lower(), word)
+
+
+def suggestions(word: str) -> list[str]:
+    """Ontology names close to an unknown word, also matching on the part after the colon,
+    so that e.g. 'streamingServices:netflix' suggests 'company:netflix'."""
+    local = word.split(':')[-1].lower()
+    same_local = [n for n in ONTOLOGY_NAMES if n.split(':')[-1].lower() == local]
+    close = difflib.get_close_matches(word, ONTOLOGY_NAMES, 3)
+    return list(dict.fromkeys(same_local + close))[:4]
+
+
+def check_terms(text: str) -> tuple[str, list[str]]:
+    """Fix the capitalisation of known names and list the names that do not exist in the ontology.
 
     The parser accepts any name and would treat a made-up term as a new, empty entity,
     which always gives Unknown. Checking the names first lets the QueryAgent correct them.
     """
-    words = re.findall(r"[A-Za-z_][\w:'.\-]*", re.sub(r'"[^"]*"', '', text))
-    return [w for w in words if w.lower() not in MANCHESTER_KEYWORDS
-            and not w.startswith('xsd:') and w not in ONTOLOGY_NAMES]
+    unknown = []
+
+    def replace(match):
+        word = match.group()
+        if word.startswith('"') or word.lower() in MANCHESTER_KEYWORDS or word.startswith('xsd:'):
+            return word
+        fixed = fix_case(word)
+        if fixed not in ONTOLOGY_NAMES:
+            unknown.append(word)
+        return fixed
+
+    return NAME_PATTERN.sub(replace, text), unknown
 
 
 def evaluate_query(query: str, subject: str = '') -> str:
     """Return ENTAILED, CONTRADICTED or UNKNOWN, or an 'Error: ...' message for invalid input."""
     query, subject = query.strip().strip('`'), (subject or '').strip().strip('`')
 
-    unknown = unknown_terms(query + ' ' + subject)
+    query, unknown_query = check_terms(query)
+    subject, unknown_subject = check_terms(subject)
+    unknown = unknown_query + unknown_subject
     if unknown:
         hints = []
         for w in unknown:
-            close = difflib.get_close_matches(w, ONTOLOGY_NAMES, 3)
+            close = suggestions(w)
             hints.append(f"{w} (did you mean: {', '.join(close)})" if close else w)
         return (f"{ERROR}: these terms do not exist in the ontology: {'; '.join(hints)}. "
                 "Only use terms from the ontology structure, or label the claim Not-Verifiable.")

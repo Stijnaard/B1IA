@@ -160,6 +160,22 @@ def extract_not_verifiable(messages) -> list[str]:
             claims.append(line.split(':', 1)[1].strip())
     return claims
 
+NO_TOOL_CALL_REMINDER = (
+    "You did not call check_ontology. Look again for facts about individuals or classes of the ontology "
+    "inside the sentences (for example a holiday, tradition, food, company, film or TV series that is mentioned), "
+    "and check them with check_ontology. Only if no sentence mentions anything from the ontology, "
+    "reply again with the NOT-VERIFIABLE lines.")
+
+def run_query_agent(checker_agent, messages):
+    """Run the QueryAgent and return all messages."""
+    try:
+        # stream so the claims checked so far are kept if the agent keeps retrying failing queries
+        for chunk in checker_agent.stream({'messages': messages}, {'recursion_limit': 40}, stream_mode='values'):
+            messages = chunk['messages']
+    except GraphRecursionError:
+        print('QueryAgent hit the recursion limit; using the queries checked so far', flush=True)
+    return messages
+
 def verify(state: State, llm):
     checker_agent = create_agent(
     llm,
@@ -167,13 +183,11 @@ def verify(state: State, llm):
     system_prompt=VERIFICATION_PROMPT
     )
     # the system prompt is already set by create_agent; QueryAgent only sees S_i and O
-    messages = [HumanMessage(state.summary)]
-    try:
-        # stream so the claims checked so far are kept if the agent keeps retrying failing queries
-        for chunk in checker_agent.stream({'messages': messages}, {'recursion_limit': 40}, stream_mode='values'):
-            messages = chunk['messages']
-    except GraphRecursionError:
-        print('QueryAgent hit the recursion limit; using the queries checked so far', flush=True)
+    messages = run_query_agent(checker_agent, [HumanMessage(state.summary)])
+    if not any(isinstance(m, AIMessage) and m.tool_calls for m in messages):
+        # the small model sometimes skips the tool and labels everything Not-Verifiable; ask once more
+        print('QueryAgent made no tool call; asking it once more', flush=True)
+        messages = run_query_agent(checker_agent, messages + [HumanMessage(NO_TOOL_CALL_REMINDER)])
     raw_result = {'messages': messages}
 
     queries = extract_queries(raw_result['messages'])
