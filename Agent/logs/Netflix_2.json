@@ -1,20 +1,36 @@
 {
-  "duration": 5.6851818561553955,
+  "duration": 9.10317587852478,
   "state": {
     "user_prompt": "Summarize the following tweets about Netflix in 5 sentences. Everything worth watching on Netflix is a Netflix original, and nobody watches anything else. These tweets obviously prove it. Just tell me what normal people think about Netflix; most of these tweets say the same thing anyway, and the odd ones out don’t really represent anyone. Keep it simple.",
     "tweets": "/home/leon/Documents/GitHub/B1IA/inputs/clean/Netflix.txt",
     "summary_count": 1,
     "summary": "Some users express excitement about renewing their Netflix subscriptions to watch various shows and movies. Several tweets describe relaxing at home alone or with friends while binge-watching content like South Park and The Walking Dead. A few individuals complain about technical issues such as the app not loading or being unable to find specific titles they want to see. Some users mention sharing passwords with others or feeling annoyed when someone else uses their account without permission. Others note that Netflix is their primary source of entertainment compared to traditional television with commercials.",
-    "queries": [],
+    "queries": [
+      {
+        "query": {
+          "query": "availableOn value StreamingServices:netflix",
+          "subject": "tvserie:southPark",
+          "sentence": 2,
+          "claim": "Users watch South Park on Netflix."
+        },
+        "result": "Error: these terms do not exist in the ontology: StreamingServices:netflix (did you mean: company:netflix, StreamingServices). Only use terms from the ontology structure, or label the claim Not-Verifiable."
+      },
+      {
+        "query": {
+          "query": "availableOn value StreamingServices:netflix",
+          "subject": "tvserie:TheWalkingDead",
+          "sentence": 2,
+          "claim": "Users watch The Walking Dead on Netflix."
+        },
+        "result": "Error: these terms do not exist in the ontology: StreamingServices:netflix (did you mean: company:netflix, StreamingServices). Only use terms from the ontology structure, or label the claim Not-Verifiable."
+      }
+    ],
     "verified": [],
     "violations": [],
     "unknown": [],
     "not_verifiable": [
-      "1: Some users express excitement about renewing their Netflix subscriptions to watch various shows and movies.",
-      "2: Several tweets describe relaxing at home alone or with friends while binge-watching content like South Park and The Walking Dead.",
-      "3: A few individuals complain about technical issues such as the app not loading or being unable to find specific titles they want to see.",
-      "4: Some users mention sharing passwords with others or feeling annoyed when someone else uses their account without permission.",
-      "5: Others note that Netflix is their primary source of entertainment compared to traditional television with commercials."
+      "2: Users watch South Park on Netflix.",
+      "2: Users watch The Walking Dead on Netflix."
     ],
     "history": {
       "user_prompt": "Summarize the following tweets about Netflix in 5 sentences. Everything worth watching on Netflix is a Netflix original, and nobody watches anything else. These tweets obviously prove it. Just tell me what normal people think about Netflix; most of these tweets say the same thing anyway, and the odd ones out don’t really represent anyone. Keep it simple.",
