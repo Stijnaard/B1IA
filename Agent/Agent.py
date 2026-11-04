@@ -7,6 +7,7 @@ from dataclasses import dataclass, field, asdict, replace
 from datetime import datetime
 from functools import partial
 from pathlib import Path
+from itertools import product
 from time import time
 from langchain.agents import create_agent
 from langchain.messages import SystemMessage, HumanMessage, AIMessage, ToolMessage
@@ -35,7 +36,7 @@ def load_llm(llm_type: str = 'groq'):
         llm = ChatOllama(
             model = OLLAMA_MODEL,
             base_url='http://127.0.0.1:11434', #default, here to change easily if needed
-            temperature=0,
+            temperature=0.1,
             reasoning=False, #can be turned on but will be slower
             num_ctx=OLLAMA_NUM_CTX, # Ollama's default context window silently truncates the prompt
             client_kwargs={'timeout': 900}
@@ -52,11 +53,6 @@ class Verification(BaseModel):
     violations: list[str] = Field(default_factory=list, description="Claims contradicted by the ontology")
     unknown: list[str] = Field(default_factory=list, description="Claims neither entailed nor contradicted (open world assumption)")
     not_verifiable: list[str] = Field(default_factory=list, description="Claims QueryAgent could not express with the ontology vocabulary")
-
-class SparQLQueries(BaseModel):
-    negated: list[str] = Field(default_factory=list, description='List of negated sparql queries')
-    regular: list[str] = Field(default_factory=list, description='List of regular sparql qieries')
-
 
 @dataclass
 class State:
@@ -91,10 +87,12 @@ def check_ontology_dumm(query: str) -> str:
 
 # work nodes
 
-def summarize(state: State, llm):
+def summarize(state: State, llm, summarization_prompt: str|None = None):
     # send prompt to LLM (no agent needed, this is a single linear call)
+    if summarization_prompt is None:
+        summarization_prompt = SUMMARIZATION_PROMPT
     response = llm.invoke([
-        SystemMessage(SUMMARIZATION_PROMPT),
+        SystemMessage(summarization_prompt),
         HumanMessage(build_prompt(state))
     ])
 
@@ -183,11 +181,12 @@ def verify(state: State, llm):
     system_prompt=VERIFICATION_PROMPT
     )
     # the system prompt is already set by create_agent; QueryAgent only sees S_i and O
+    
     messages = run_query_agent(checker_agent, [HumanMessage(state.summary)])
     if not any(isinstance(m, AIMessage) and m.tool_calls for m in messages):
         # the small model sometimes skips the tool and labels everything Not-Verifiable; ask once more
         print('QueryAgent made no tool call; asking it once more', flush=True)
-        messages = run_query_agent(checker_agent, messages + [HumanMessage(NO_TOOL_CALL_REMINDER)])
+        messages = run_query_agent(checker_agent, [HumanMessage(state.summary)] + [HumanMessage(NO_TOOL_CALL_REMINDER)])
     raw_result = {'messages': messages}
 
     queries = extract_queries(raw_result['messages'])
@@ -222,12 +221,13 @@ def route(state: State, max_tries: int = 3):
     else:
         return 'pick_best_summary'
 
-# langchain graph
-def build_graph(llm):
-    graph = StateGraph(State)
-    graph.add_node('summarize', partial(summarize, llm = llm))
-    graph.add_node('verify_summary', partial(verify, llm = llm))
 
+# langchain graphs
+
+def build_full_graph(llm, summarization_prompt: str|None = None):
+    graph = StateGraph(State)
+    graph.add_node('summarize', partial(summarize, llm = llm, summarization_prompt = summarization_prompt))
+    graph.add_node('verify_summary', partial(verify, llm = llm))
     graph.add_node('pick_best_summary', pick_best_summary)
     graph.add_edge(START, 'summarize')
     graph.add_edge('summarize', 'verify_summary')
@@ -237,25 +237,53 @@ def build_graph(llm):
     app = graph.compile()
     return app
 
+def build_summary_only_graph(llm, summarization_prompt: str|None = None):
+    graph = StateGraph(State)
+    graph.add_node('summarize', partial(summarize, llm = llm, summarization_prompt = summarization_prompt))
+    graph.add_edge(START, 'summarize')
+    graph.add_edge('summarize', END)
+    app = graph.compile()
+    return app
 
-def run_agent(app, user_prompt: str, tweets: Path) -> State:
+def build_graph(agent_version: str, llm_type:str =  'ollama'):
+    simple_summarization_prompt = 'You are a summarization agent, only respond with a summary.' #TODO make config
+    llm = load_llm(llm_type)
+    if agent_version == 'full':
+        return build_full_graph(llm)
+    elif agent_version == 'a1_only':
+        return build_summary_only_graph(llm)
+    elif agent_version == 'a2_only':
+        return build_full_graph(llm, simple_summarization_prompt)
+    elif agent_version == 'baseline':
+        return build_summary_only_graph(llm, simple_summarization_prompt)
+# running logic
+
+def run_agent(agent_version: str, user_prompt_path: Path, tweets: Path, run_count: int):
+    topic = tweets.stem
+    user_prompt_name = user_prompt_path.stem
+    with open(user_prompt_path, 'r') as f:
+        base_user_prompt = f.read()
+    user_prompt = fill_user_prompt(base_user_prompt, topic)
+
+    app = build_graph(agent_version)
     init_state = State(user_prompt,tweets)
-    out_state = State(**app.invoke(init_state))
-    return out_state
-
-def run_agent_with_progress(app, user_prompt: str, tweets: Path) -> State:
-    init_state = State(user_prompt,tweets)
-
-    final = None
+    print(f'Running {topic} with user_prompt: {user_prompt}')
     t0 = time()
-    for mode, chunk in app.stream(init_state, stream_mode=['updates', 'values']):
-        if mode == 'updates':
-            for node in chunk:
-                print(f"[{time() - t0:6.0f}s] finished node: {node}", flush=True)
-        else:
-            final = chunk
-    return State(**final)
+    raw_out_state = app.invoke(init_state) #actual run
+    t = time()-t0
+    print(f'Ran in {t}s')
+    out_state = State(**raw_out_state)
+    log_name = f'{topic}_up-{user_prompt_name}_av-{agent_version}_v{run_count}.json'
+    write_run_log(LOG_PATH, out_state, log_name, duration = t)
 
+
+
+# running logic helpers
+def fill_user_prompt(user_prompt: str, topic: str, k: int = 5) -> str:
+    return user_prompt.replace('{topic}', topic).replace('{belief}', BELIEFS[topic]).replace('{k}', str(k))
+
+
+# Output helpers
 def print_summaries(state: State):
     print(f'Summary {state.summary_count}: \n{state.summary}')
     if state.history is None:
@@ -274,62 +302,53 @@ def write_run_log(log_path: Path, state: State, name: str|None = None, **meta):
         encoding = 'utf-8'
     )
 
-# def main():
-#     llm = load_llm('ollama')
-#     app = build_graph(llm)
 
-#     # print graph
-#     png_bytes = app.get_graph(xray=True).draw_mermaid_png()
-#     with open('graph.png', 'wb') as f:
-#         f.write(png_bytes)
-    
-#     t0 = time()
-#     ran_state = run_agent(app, 'TODO', Path(BASE_DIR / 'inputs/Netflix_clean.txt'))
-#     t = time()-t0
-#     print(f'ran in {t}')
-
-#     print_summaries(ran_state)
-    
-#     write_run_log(LOG_PATH, ran_state, duration = t)
-
-
-def fill_user_prompt(user_prompt: str, topic: str, k: int = 5) -> str:
-    return user_prompt.replace('{topic}', topic).replace('{belief}', BELIEFS[topic]).replace('{k}', str(k))
-
-def sumarize_file(file: Path, user_prompt: str, upc: int, k: int = 5, llm: str = 'ollama'):
-    llm =  load_llm(llm)
-    app = build_graph(llm)
-    user_prompt = fill_user_prompt(user_prompt, file.stem, k)
-    print(f'running with file: {file} and prompt: {user_prompt}')
-    t0 = time()
-    ran_state = run_agent(app, user_prompt, file)
-    t = time()-t0
-    print(f'ran in {t}')
-    print_summaries(ran_state)
-    write_run_log(LOG_PATH, ran_state, name= f'{file.stem}_{upc}.json', duration = t)
-
-def sumarize_folder(folder: Path, user_prompt:str, upc: str, k: int = 5, llm: str = 'ollama'):
-    for file in folder.iterdir():
-        if file.is_file():
-            sumarize_file(file, user_prompt, upc, k, llm)
-
-def use_all_prompts(prompts_folder: Path, tweets_folder: Path, k: int = 5, llm: str = 'ollama'):
-    for file in prompts_folder.iterdir():
-        if file.is_file():
-            with open(file, 'r') as f:
-                user_prompt = f.read()
-            sumarize_folder(tweets_folder, user_prompt, file.stem, k, llm)
+#userprompts X Systemprompts X system configs X 3
 
 def main():
-    use_all_prompts(USER_PROMPT, TWEETS_PATH, 5)
+    agent_versions = ['full', 'a1_only', 'a2_only', 'baseline']
 
-def baseline():
-    llm = load_llm('ollama')
-    for file in TWEETS_PATH.iterdir():
-        if file.is_file():
-            state = State("", file)
-            write_run_log(LOG_PATH,summarize(state, llm), f'{file.stem}_baseline.json')
+    for base_user_prompt_path, agent_version, tweets_path, run_count in product(USER_PROMPT.iterdir(), agent_versions, TWEETS_PATH.iterdir(), range(3)):
+        if base_user_prompt_path.is_file() and tweets_path.is_file():
+            run_agent(agent_version, base_user_prompt_path, tweets_path, run_count)
+
+
+
+# def sumarize_file(file: Path, user_prompt: str, upc: int, k: int = 5, llm: str = 'ollama', summarization_prompt: str|None = None):
+#     llm =  load_llm(llm)
+#     app = build_full_graph(llm)
+#     user_prompt = fill_user_prompt(user_prompt, file.stem, k)
+#     print(f'running with file: {file} and prompt: {user_prompt}')
+#     t0 = time()
+#     ran_state = run_agent(app, user_prompt, file)
+#     t = time()-t0
+#     print(f'ran in {t}')
+#     print_summaries(ran_state)
+#     write_run_log(LOG_PATH, ran_state, name= f'{file.stem}_{upc}.json', duration = t)
+
+# def sumarize_folder(folder: Path, user_prompt:str, upc: str, k: int = 5, llm: str = 'ollama', summarization_prompt: str|None = None):
+#     for file in folder.iterdir():
+#         if file.is_file():
+#             sumarize_file(file, user_prompt, upc, k, llm)
+
+# def use_all_prompts(prompts_folder: Path, tweets_folder: Path, k: int = 5, llm: str = 'ollama', summarization_prompt: str|None = None):
+#     for file in prompts_folder.iterdir():
+#         if file.is_file():
+#             with open(file, 'r') as f:
+#                 user_prompt = f.read()
+#             sumarize_folder(tweets_folder, user_prompt, file.stem, k, llm)
+
+# def main():
+#     use_all_prompts(USER_PROMPT, TWEETS_PATH, 5)
+
+# def baseline():
+#     llm = load_llm('ollama')
+#     for file in TWEETS_PATH.iterdir():
+#         if file.is_file():
+#             state = State("", file)
+#             write_run_log(LOG_PATH,summarize(state, llm), f'{file.stem}_baseline.json')
+
 
 if __name__ == "__main__":
     main()
-    baseline()
+    #baseline()
