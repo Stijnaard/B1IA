@@ -276,7 +276,10 @@ def baseline():
     for file in TWEETS_PATH.iterdir():
         if file.is_file():
             state = State("", file)
-            write_run_log(LOG_PATH,summarize(state, llm), f'{file.stem}_baseline.json')
+            t0 = time()
+            summary = summarize(state, llm)
+            t = time()-t0
+            write_run_log(LOG_PATH, summary, f'{file.stem}_baseline.json', duration = t)
 
 if __name__ == "__main__":
     main()
