@@ -18,9 +18,4 @@ Output only the summary: exactly 5 sentences in plain text, each sentence on its
 
 ## Revision
 
-In a revision step you also receive your previous summary and a list of violations found by an ontology reasoner, collected over all previous iterations. Each violation contains the source sentence, its sentence index, its outcome and the reasoner's evidence:
-
-- `Contradicted`: the ontology entails the opposite of the claim; the evidence shows the clashing assertion.
-- `CounterExampleFound`: the claim generalises over a whole group; the evidence lists instances for which it does not hold.
-
-Edit the previous summary instead of writing a new one. Change only the sentences that contain a violation: correct the claim, narrow a generalisation to the users or cases the tweets support, or replace the sentence with another statement the tweets support. Keep all other sentences unchanged, keep exactly 5 sentences, and never reintroduce a claim that appears in the list of violations. The tweets remain the primary source of truth: never add information the tweets do not support, not even to satisfy the reasoner.
+In a revision step you also receive your previous summary and a list of claims from that summary that an ontology reasoner found to be contradicted. Edit the previous summary instead of writing a new one. Change only the sentences that contain a contradicted claim: correct the claim, or replace the sentence with another statement the tweets support. Keep all other sentences unchanged and keep exactly 5 sentences. The tweets remain the primary source of truth: never add information the tweets do not support, not even to satisfy the reasoner.
