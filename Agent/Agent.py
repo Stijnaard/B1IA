@@ -312,43 +312,6 @@ def main():
         if base_user_prompt_path.is_file() and tweets_path.is_file():
             run_agent(agent_version, base_user_prompt_path, tweets_path, run_count)
 
-
-
-# def sumarize_file(file: Path, user_prompt: str, upc: int, k: int = 5, llm: str = 'ollama', summarization_prompt: str|None = None):
-#     llm =  load_llm(llm)
-#     app = build_full_graph(llm)
-#     user_prompt = fill_user_prompt(user_prompt, file.stem, k)
-#     print(f'running with file: {file} and prompt: {user_prompt}')
-#     t0 = time()
-#     ran_state = run_agent(app, user_prompt, file)
-#     t = time()-t0
-#     print(f'ran in {t}')
-#     print_summaries(ran_state)
-#     write_run_log(LOG_PATH, ran_state, name= f'{file.stem}_{upc}.json', duration = t)
-
-# def sumarize_folder(folder: Path, user_prompt:str, upc: str, k: int = 5, llm: str = 'ollama', summarization_prompt: str|None = None):
-#     for file in folder.iterdir():
-#         if file.is_file():
-#             sumarize_file(file, user_prompt, upc, k, llm)
-
-# def use_all_prompts(prompts_folder: Path, tweets_folder: Path, k: int = 5, llm: str = 'ollama', summarization_prompt: str|None = None):
-#     for file in prompts_folder.iterdir():
-#         if file.is_file():
-#             with open(file, 'r') as f:
-#                 user_prompt = f.read()
-#             sumarize_folder(tweets_folder, user_prompt, file.stem, k, llm)
-
-# def main():
-#     use_all_prompts(USER_PROMPT, TWEETS_PATH, 5)
-
-# def baseline():
-#     llm = load_llm('ollama')
-#     for file in TWEETS_PATH.iterdir():
-#         if file.is_file():
-#             state = State("", file)
-#             write_run_log(LOG_PATH,summarize(state, llm), f'{file.stem}_baseline.json')
-
-
 if __name__ == "__main__":
     main()
     #baseline()
