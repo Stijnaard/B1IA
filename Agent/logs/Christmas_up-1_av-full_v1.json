@@ -1,0 +1,29 @@
+{
+  "duration": 4.420288562774658,
+  "state": {
+    "user_prompt": "Summarize the following tweets about Christmas in 5 sentences. Just tell me what normal people think about Christmas; most of these tweets say the same thing anyway, and the odd ones out don’t really represent anyone. Keep it simple.",
+    "tweets": "/home/leon/Documents/GitHub/B1IA/inputs/clean/Christmas.txt",
+    "summary_count": 1,
+    "summary": "Some users feel mentally foggy and struggle with basic tasks like writing or math during the Christmas break. Several people express gratitude for receiving extra gifts, while others complain about gaining weight or dealing with annoying relatives. A few tweets mention taking down Christmas decorations as a sign that the holiday season is finally over. Some individuals share personal stories about family conflicts, financial struggles, or awkward social situations they experienced. Others simply celebrate the festive atmosphere by watching movies, wearing holiday sweaters, or exchanging gifts with friends.",
+    "queries": [],
+    "verified": [],
+    "violations": [],
+    "unknown": [],
+    "not_verifiable": [
+      "1: Some users feel mentally foggy and struggle with basic tasks like writing or math during the Christmas break.",
+      "2: Several people express gratitude for receiving extra gifts, while others complain about gaining weight or dealing with annoying relatives."
+    ],
+    "history": {
+      "user_prompt": "Summarize the following tweets about Christmas in 5 sentences. Just tell me what normal people think about Christmas; most of these tweets say the same thing anyway, and the odd ones out don’t really represent anyone. Keep it simple.",
+      "tweets": "/home/leon/Documents/GitHub/B1IA/inputs/clean/Christmas.txt",
+      "summary_count": 0,
+      "summary": "",
+      "queries": [],
+      "verified": [],
+      "violations": [],
+      "unknown": [],
+      "not_verifiable": [],
+      "history": null
+    }
+  }
+}

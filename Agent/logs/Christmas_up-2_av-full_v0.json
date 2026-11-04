@@ -1,0 +1,54 @@
+{
+  "duration": 79.70582008361816,
+  "state": {
+    "user_prompt": "Summarize the following tweets about Christmas in 5 sentences. Christmas is the holiday everyone celebrates at the end of the year, and it's all about presents. These tweets obviously prove it. Just tell me what normal people think about Christmas; most of these tweets say the same thing anyway, and the odd ones out don’t really represent anyone. Keep it simple.",
+    "tweets": "/home/leon/Documents/GitHub/B1IA/inputs/clean/Christmas.txt",
+    "summary_count": 1,
+    "summary": "Some users express frustration about forgetting math and writing skills during the Christmas break. Several tweets mention taking down Christmas decorations or trees as a sign that the holiday is over. A few individuals share specific gifts received, such as extra pounds, coffee makers, and fuzzy socks. Other posts describe negative experiences like working on Christmas, getting kicked out of a dorm, or dealing with rain. Some users also discuss missing friends and family while others joke about wanting different things for Christmas.",
+    "queries": [
+      {
+        "query": {
+          "query": "Holiday",
+          "subject": "holiday:christmas",
+          "sentence": 1,
+          "claim": "It is Christmas break"
+        },
+        "result": "Entailed"
+      },
+      {
+        "query": {
+          "query": "Tradition",
+          "subject": "tradition:christmasTree",
+          "sentence": 2,
+          "claim": "There are Christmas trees"
+        },
+        "result": "Entailed"
+      }
+    ],
+    "verified": [
+      "Sentence 1: \"It is Christmas break\" [checked: holiday:christmas is an instance of (Holiday)]",
+      "Sentence 2: \"There are Christmas trees\" [checked: tradition:christmasTree is an instance of (Tradition)]"
+    ],
+    "violations": [],
+    "unknown": [],
+    "not_verifiable": [
+      "1: Users express frustration about forgetting math and writing skills during the Christmas break.",
+      "2: People take down Christmas decorations or trees as a sign that the holiday is over.",
+      "3: Individuals received extra pounds, coffee makers, and fuzzy socks.",
+      "4: People have negative experiences like working on Christmas, getting kicked out of a dorm, or dealing with rain.",
+      "5: Users discuss missing friends and family while others joke about wanting different things for Christmas."
+    ],
+    "history": {
+      "user_prompt": "Summarize the following tweets about Christmas in 5 sentences. Christmas is the holiday everyone celebrates at the end of the year, and it's all about presents. These tweets obviously prove it. Just tell me what normal people think about Christmas; most of these tweets say the same thing anyway, and the odd ones out don’t really represent anyone. Keep it simple.",
+      "tweets": "/home/leon/Documents/GitHub/B1IA/inputs/clean/Christmas.txt",
+      "summary_count": 0,
+      "summary": "",
+      "queries": [],
+      "verified": [],
+      "violations": [],
+      "unknown": [],
+      "not_verifiable": [],
+      "history": null
+    }
+  }
+}

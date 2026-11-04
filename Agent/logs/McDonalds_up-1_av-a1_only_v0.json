@@ -1,0 +1,26 @@
+{
+  "duration": 1.7369768619537354,
+  "state": {
+    "user_prompt": "Summarize the following tweets about McDonalds in 5 sentences. Just tell me what normal people think about McDonalds; most of these tweets say the same thing anyway, and the odd ones out don’t really represent anyone. Keep it simple.",
+    "tweets": "/home/leon/Documents/GitHub/B1IA/inputs/clean/McDonalds.txt",
+    "summary_count": 1,
+    "summary": "Some users express strong cravings for specific items like McRib, chicken nuggets, and ice cream cones from McDonalds. Several tweets describe the food as delicious or note that people can eat large amounts without gaining weight. Other users complain about issues such as small sauce packets, stale fish fillets, and long wait times at the drive-thru. A number of individuals share negative experiences involving rude staff, dirty conditions, or feeling disgusted by the taste of the meals. Despite these criticisms, many tweets indicate that people continue to visit McDonalds frequently for comfort food or social occasions.",
+    "queries": [],
+    "verified": [],
+    "violations": [],
+    "unknown": [],
+    "not_verifiable": [],
+    "history": {
+      "user_prompt": "Summarize the following tweets about McDonalds in 5 sentences. Just tell me what normal people think about McDonalds; most of these tweets say the same thing anyway, and the odd ones out don’t really represent anyone. Keep it simple.",
+      "tweets": "/home/leon/Documents/GitHub/B1IA/inputs/clean/McDonalds.txt",
+      "summary_count": 0,
+      "summary": "",
+      "queries": [],
+      "verified": [],
+      "violations": [],
+      "unknown": [],
+      "not_verifiable": [],
+      "history": null
+    }
+  }
+}

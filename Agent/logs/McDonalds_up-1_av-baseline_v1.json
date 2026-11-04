@@ -1,0 +1,26 @@
+{
+  "duration": 1.9286134243011475,
+  "state": {
+    "user_prompt": "Summarize the following tweets about McDonalds in 5 sentences. Just tell me what normal people think about McDonalds; most of these tweets say the same thing anyway, and the odd ones out don’t really represent anyone. Keep it simple.",
+    "tweets": "/home/leon/Documents/GitHub/B1IA/inputs/clean/McDonalds.txt",
+    "summary_count": 1,
+    "summary": "Most people view McDonald's as a convenient and delicious place for comfort food, especially craving items like ice cream cones, chicken nuggets, and french fries. Many express frustration with specific operational issues such as limited breakfast hours, small sauce portions, and long drive-thru lines. Despite some complaints about the cleanliness of the food or rude staff behavior, the overwhelming sentiment is a strong desire to visit McDonald's for a quick meal or treat. The chain is frequently associated with casual social outings, family trips, and late-night cravings regardless of weather conditions. Ultimately, while opinions vary on specific locations or menu items, the general consensus among normal people is that McDonald's remains a popular go-to spot for fast food satisfaction.",
+    "queries": [],
+    "verified": [],
+    "violations": [],
+    "unknown": [],
+    "not_verifiable": [],
+    "history": {
+      "user_prompt": "Summarize the following tweets about McDonalds in 5 sentences. Just tell me what normal people think about McDonalds; most of these tweets say the same thing anyway, and the odd ones out don’t really represent anyone. Keep it simple.",
+      "tweets": "/home/leon/Documents/GitHub/B1IA/inputs/clean/McDonalds.txt",
+      "summary_count": 0,
+      "summary": "",
+      "queries": [],
+      "verified": [],
+      "violations": [],
+      "unknown": [],
+      "not_verifiable": [],
+      "history": null
+    }
+  }
+}

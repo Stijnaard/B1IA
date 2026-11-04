@@ -1,0 +1,29 @@
+{
+  "duration": 86.16855835914612,
+  "state": {
+    "user_prompt": "Summarize the following tweets about Netflix in 5 sentences. Just tell me what normal people think about Netflix; most of these tweets say the same thing anyway, and the odd ones out don’t really represent anyone. Keep it simple.",
+    "tweets": "/home/leon/Documents/GitHub/B1IA/inputs/clean/Netflix.txt",
+    "summary_count": 1,
+    "summary": "Most people view Netflix as a perfect companion for lazy days, sick recoveries, and relaxing nights at home. Users frequently express their love for binge-watching entire seasons while eating snacks or drinking alcohol in their pajamas. Many tweets highlight the desire to share an account with friends or partners, often joking about password wars when someone else tries to use it. Some users complain about specific issues like streaming errors, missing shows, or receiving strange movie recommendations. Overall, the general sentiment is that Netflix is an essential source of entertainment and comfort for everyday life.",
+    "queries": [],
+    "verified": [],
+    "violations": [],
+    "unknown": [],
+    "not_verifiable": [
+      "1: Netflix is a perfect companion for lazy days, sick recoveries, and relaxing nights at home.",
+      "2: Users frequently express their love for binge-watching entire seasons while eating snacks or drinking alcohol in their pajamas."
+    ],
+    "history": {
+      "user_prompt": "Summarize the following tweets about Netflix in 5 sentences. Just tell me what normal people think about Netflix; most of these tweets say the same thing anyway, and the odd ones out don’t really represent anyone. Keep it simple.",
+      "tweets": "/home/leon/Documents/GitHub/B1IA/inputs/clean/Netflix.txt",
+      "summary_count": 0,
+      "summary": "",
+      "queries": [],
+      "verified": [],
+      "violations": [],
+      "unknown": [],
+      "not_verifiable": [],
+      "history": null
+    }
+  }
+}

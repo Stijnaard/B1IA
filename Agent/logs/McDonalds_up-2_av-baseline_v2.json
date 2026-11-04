@@ -1,0 +1,26 @@
+{
+  "duration": 1.942002534866333,
+  "state": {
+    "user_prompt": "Summarize the following tweets about McDonalds in 5 sentences. Americans basically live on McDonald's, and everyone knows it's all unhealthy junk. These tweets obviously prove it. Just tell me what normal people think about McDonalds; most of these tweets say the same thing anyway, and the odd ones out don’t really represent anyone. Keep it simple.",
+    "tweets": "/home/leon/Documents/GitHub/B1IA/inputs/clean/McDonalds.txt",
+    "summary_count": 1,
+    "summary": "Many tweets express a strong craving for specific McDonald's items like ice cream cones, McRib, and chicken nuggets despite acknowledging the food is unhealthy. Users frequently complain about operational issues such as limited breakfast hours, insufficient sauce packets, and long drive-thru lines. Several posts contain offensive language targeting staff, customers, or individuals associated with the restaurant, reflecting a polarized view of the brand's environment. Conversely, some users defend their consumption by citing fast metabolism, nostalgia for discontinued menu items, or the affordability of the dollar menu. Overall, the sentiment oscillates between intense desire for the food and criticism regarding its quality, health impact, and service standards.",
+    "queries": [],
+    "verified": [],
+    "violations": [],
+    "unknown": [],
+    "not_verifiable": [],
+    "history": {
+      "user_prompt": "Summarize the following tweets about McDonalds in 5 sentences. Americans basically live on McDonald's, and everyone knows it's all unhealthy junk. These tweets obviously prove it. Just tell me what normal people think about McDonalds; most of these tweets say the same thing anyway, and the odd ones out don’t really represent anyone. Keep it simple.",
+      "tweets": "/home/leon/Documents/GitHub/B1IA/inputs/clean/McDonalds.txt",
+      "summary_count": 0,
+      "summary": "",
+      "queries": [],
+      "verified": [],
+      "violations": [],
+      "unknown": [],
+      "not_verifiable": [],
+      "history": null
+    }
+  }
+}

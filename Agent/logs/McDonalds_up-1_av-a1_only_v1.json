@@ -1,0 +1,26 @@
+{
+  "duration": 1.9492480754852295,
+  "state": {
+    "user_prompt": "Summarize the following tweets about McDonalds in 5 sentences. Just tell me what normal people think about McDonalds; most of these tweets say the same thing anyway, and the odd ones out don’t really represent anyone. Keep it simple.",
+    "tweets": "/home/leon/Documents/GitHub/B1IA/inputs/clean/McDonalds.txt",
+    "summary_count": 1,
+    "summary": "Some users express strong dislike for McDonald's, describing the food as nasty, disgusting, or making them feel sick.\nSeveral tweets mention specific complaints about portion sizes, such as receiving only one sauce packet for a large nugget meal or getting half-full cups of soda.\nOther users share positive experiences by craving items like McRib, chicken nuggets, and ice cream cones while enjoying the food despite its reputation.\nA number of people discuss their desire to visit McDonald's for comfort after long waits, exercise, or emotional moments, often ignoring concerns about health or weight.\nSome tweets criticize operational issues like long drive-thru lines, annoying commercials, and rude staff behavior at various locations.",
+    "queries": [],
+    "verified": [],
+    "violations": [],
+    "unknown": [],
+    "not_verifiable": [],
+    "history": {
+      "user_prompt": "Summarize the following tweets about McDonalds in 5 sentences. Just tell me what normal people think about McDonalds; most of these tweets say the same thing anyway, and the odd ones out don’t really represent anyone. Keep it simple.",
+      "tweets": "/home/leon/Documents/GitHub/B1IA/inputs/clean/McDonalds.txt",
+      "summary_count": 0,
+      "summary": "",
+      "queries": [],
+      "verified": [],
+      "violations": [],
+      "unknown": [],
+      "not_verifiable": [],
+      "history": null
+    }
+  }
+}

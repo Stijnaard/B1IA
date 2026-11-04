@@ -1,0 +1,26 @@
+{
+  "duration": 1.3512930870056152,
+  "state": {
+    "user_prompt": "Summarize the following tweets about Netflix in 5 sentences. Everything worth watching on Netflix is a Netflix original, and nobody watches anything else. These tweets obviously prove it. Just tell me what normal people think about Netflix; most of these tweets say the same thing anyway, and the odd ones out don’t really represent anyone. Keep it simple.",
+    "tweets": "/home/leon/Documents/GitHub/B1IA/inputs/clean/Netflix.txt",
+    "summary_count": 1,
+    "summary": "Some users express excitement about renewing their Netflix subscriptions to watch various shows and movies. Several tweets describe relaxing at home alone or with friends while binge-watching content on the platform. A few individuals mention technical issues like loading errors or account access problems when trying to stream. Some users complain that they cannot find specific titles they want to watch or feel overwhelmed by too many options. Others note that Netflix is their preferred alternative to traditional television due to a lack of commercials.",
+    "queries": [],
+    "verified": [],
+    "violations": [],
+    "unknown": [],
+    "not_verifiable": [],
+    "history": {
+      "user_prompt": "Summarize the following tweets about Netflix in 5 sentences. Everything worth watching on Netflix is a Netflix original, and nobody watches anything else. These tweets obviously prove it. Just tell me what normal people think about Netflix; most of these tweets say the same thing anyway, and the odd ones out don’t really represent anyone. Keep it simple.",
+      "tweets": "/home/leon/Documents/GitHub/B1IA/inputs/clean/Netflix.txt",
+      "summary_count": 0,
+      "summary": "",
+      "queries": [],
+      "verified": [],
+      "violations": [],
+      "unknown": [],
+      "not_verifiable": [],
+      "history": null
+    }
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "duration": 15.645452737808228,
+  "state": {
+    "user_prompt": "Summarize the following tweets about Christmas in 5 sentences. Just tell me what normal people think about Christmas; most of these tweets say the same thing anyway, and the odd ones out don’t really represent anyone. Keep it simple.",
+    "tweets": "/home/leon/Documents/GitHub/B1IA/inputs/clean/Christmas.txt",
+    "summary_count": 1,
+    "summary": "Most people feel that the end of Christmas marks the true beginning of their real lives, often expressed through relief at taking down decorations and returning to work or school. Many express a mix of gratitude for gifts received alongside humorous complaints about gaining weight or dealing with leftover wrapping paper. Social interactions dominate the sentiment, with frequent mentions of missing friends, exchanging greetings, and sharing memories of family gatherings. Some individuals highlight the financial strain of the holiday season, noting how quickly money spent on presents disappears by January. Ultimately, the general consensus is that while Christmas brings stress and awkwardness, it is also a time for connection, laughter, and looking forward to the new year.",
+    "queries": [],
+    "verified": [],
+    "violations": [],
+    "unknown": [],
+    "not_verifiable": [
+      "1: the end of Christmas marks the true beginning of their real lives",
+      "2: people feel relief at taking down decorations and returning to work or school"
+    ],
+    "history": {
+      "user_prompt": "Summarize the following tweets about Christmas in 5 sentences. Just tell me what normal people think about Christmas; most of these tweets say the same thing anyway, and the odd ones out don’t really represent anyone. Keep it simple.",
+      "tweets": "/home/leon/Documents/GitHub/B1IA/inputs/clean/Christmas.txt",
+      "summary_count": 0,
+      "summary": "",
+      "queries": [],
+      "verified": [],
+      "violations": [],
+      "unknown": [],
+      "not_verifiable": [],
+      "history": null
+    }
+  }
+}

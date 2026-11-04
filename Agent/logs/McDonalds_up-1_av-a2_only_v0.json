@@ -1,0 +1,54 @@
+{
+  "duration": 12.687921285629272,
+  "state": {
+    "user_prompt": "Summarize the following tweets about McDonalds in 5 sentences. Just tell me what normal people think about McDonalds; most of these tweets say the same thing anyway, and the odd ones out don’t really represent anyone. Keep it simple.",
+    "tweets": "/home/leon/Documents/GitHub/B1IA/inputs/clean/McDonalds.txt",
+    "summary_count": 1,
+    "summary": "Most people view McDonald's as a convenient and delicious place for comfort food, especially craving items like ice cream cones, chicken nuggets, and french fries. Many express strong affection for the brand by joking about eating it immediately after workouts or gym sessions despite knowing it is unhealthy. Common complaints focus on specific operational issues such as limited breakfast hours, insufficient sauce packets, and long drive-thru lines. Some individuals criticize the food quality or hygiene, describing the taste as nasty or disgusting while others find the atmosphere filled with undesirable people. Overall, the general sentiment is a mix of intense craving for specific menu items alongside frustration with service inconsistencies and portion sizes.",
+    "queries": [
+      {
+        "query": {
+          "query": "serves value food:chickenNuggets",
+          "subject": "company:mcdonalds",
+          "sentence": 1,
+          "claim": "McDonald's serves chicken nuggets"
+        },
+        "result": "Entailed"
+      },
+      {
+        "query": {
+          "query": "serves value food:fries",
+          "subject": "company:mcdonalds",
+          "sentence": 1,
+          "claim": "McDonald's serves french fries"
+        },
+        "result": "Entailed"
+      }
+    ],
+    "verified": [
+      "Sentence 1: \"McDonald's serves chicken nuggets\" [checked: company:mcdonalds is an instance of (serves value food:chickenNuggets)]",
+      "Sentence 1: \"McDonald's serves french fries\" [checked: company:mcdonalds is an instance of (serves value food:fries)]"
+    ],
+    "violations": [],
+    "unknown": [],
+    "not_verifiable": [
+      "1: Most people view McDonald's as a convenient and delicious place for comfort food, especially craving items like ice cream cones, chicken nuggets, and french fries.",
+      "1: Many express strong affection for the brand by joking about eating it immediately after workouts or gym sessions despite knowing it is unhealthy.",
+      "2: Common complaints focus on specific operational issues such as limited breakfast hours, insufficient sauce packets, and long drive-thru lines.",
+      "3: Some individuals criticize the food quality or hygiene, describing the taste as nasty or disgusting while others find the atmosphere filled with undesirable people.",
+      "4: Overall, the general sentiment is a mix of intense craving for specific menu items alongside frustration with service inconsistencies and portion sizes."
+    ],
+    "history": {
+      "user_prompt": "Summarize the following tweets about McDonalds in 5 sentences. Just tell me what normal people think about McDonalds; most of these tweets say the same thing anyway, and the odd ones out don’t really represent anyone. Keep it simple.",
+      "tweets": "/home/leon/Documents/GitHub/B1IA/inputs/clean/McDonalds.txt",
+      "summary_count": 0,
+      "summary": "",
+      "queries": [],
+      "verified": [],
+      "violations": [],
+      "unknown": [],
+      "not_verifiable": [],
+      "history": null
+    }
+  }
+}

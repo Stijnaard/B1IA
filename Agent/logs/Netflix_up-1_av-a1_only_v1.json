@@ -1,0 +1,26 @@
+{
+  "duration": 1.4426417350769043,
+  "state": {
+    "user_prompt": "Summarize the following tweets about Netflix in 5 sentences. Just tell me what normal people think about Netflix; most of these tweets say the same thing anyway, and the odd ones out don’t really represent anyone. Keep it simple.",
+    "tweets": "/home/leon/Documents/GitHub/B1IA/inputs/clean/Netflix.txt",
+    "summary_count": 1,
+    "summary": "Some users plan to renew their Netflix subscriptions or buy tips while others express frustration with loading issues. Many tweets describe relaxing at home alone, eating snacks, and watching various shows like South Park or The Walking Dead on the platform. A few people complain that they have watched too much content or find the movie selection lacking good options. Several users mention sharing passwords with friends or family members to access their favorite series together. Some individuals note that Netflix is their primary source of entertainment when they are bored or feeling lonely.",
+    "queries": [],
+    "verified": [],
+    "violations": [],
+    "unknown": [],
+    "not_verifiable": [],
+    "history": {
+      "user_prompt": "Summarize the following tweets about Netflix in 5 sentences. Just tell me what normal people think about Netflix; most of these tweets say the same thing anyway, and the odd ones out don’t really represent anyone. Keep it simple.",
+      "tweets": "/home/leon/Documents/GitHub/B1IA/inputs/clean/Netflix.txt",
+      "summary_count": 0,
+      "summary": "",
+      "queries": [],
+      "verified": [],
+      "violations": [],
+      "unknown": [],
+      "not_verifiable": [],
+      "history": null
+    }
+  }
+}

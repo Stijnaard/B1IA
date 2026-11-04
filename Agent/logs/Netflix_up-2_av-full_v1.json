@@ -1,0 +1,84 @@
+{
+  "duration": 212.62787199020386,
+  "state": {
+    "user_prompt": "Summarize the following tweets about Netflix in 5 sentences. Everything worth watching on Netflix is a Netflix original, and nobody watches anything else. These tweets obviously prove it. Just tell me what normal people think about Netflix; most of these tweets say the same thing anyway, and the odd ones out don’t really represent anyone. Keep it simple.",
+    "tweets": "/home/leon/Documents/GitHub/B1IA/inputs/clean/Netflix.txt",
+    "summary_count": 2,
+    "summary": "Some users express excitement about renewing their Netflix subscriptions to watch various shows and movies. Several tweets describe relaxing at home alone or with friends while binge-watching content like South Park and The Walking Dead, though one user notes they no longer have access to these titles. A few individuals complain about technical issues such as the app not loading or having trouble finding specific titles. Others mention sharing passwords, trading accounts, or feeling annoyed when others try to use their Netflix profiles without permission. Some users also note that they prefer Netflix over traditional TV due to a lack of commercials and better content variety.",
+    "queries": [
+      {
+        "query": {
+          "query": "availableOn value streamingServices:netflix tvserie:southPark or tvserie:theWalkingDead",
+          "subject": "tvserie:southPark",
+          "sentence": 2,
+          "claim": "Users are binge-watching South Park and The Walking Dead on Netflix."
+        },
+        "result": "Error: these terms do not exist in the ontology: streamingServices:netflix (did you mean: company:netflix, StreamingServices). Only use terms from the ontology structure, or label the claim Not-Verifiable."
+      },
+      {
+        "query": {
+          "query": "streams value tvserie:southPark streamingServices:netflix or streams value tvserie:theWalkingDead streamingServices:netflix",
+          "subject": "",
+          "sentence": 2,
+          "claim": "Netflix streams South Park and The Walking Dead."
+        },
+        "result": "Error: these terms do not exist in the ontology: streamingServices:netflix (did you mean: company:netflix, StreamingServices); streamingServices:netflix (did you mean: company:netflix, StreamingServices). Only use terms from the ontology structure, or label the claim Not-Verifiable."
+      }
+    ],
+    "verified": [],
+    "violations": [],
+    "unknown": [],
+    "not_verifiable": [
+      "2: Users are binge-watching South Park and The Walking Dead on Netflix.",
+      "2: Netflix streams South Park and The Walking Dead."
+    ],
+    "history": {
+      "user_prompt": "Summarize the following tweets about Netflix in 5 sentences. Everything worth watching on Netflix is a Netflix original, and nobody watches anything else. These tweets obviously prove it. Just tell me what normal people think about Netflix; most of these tweets say the same thing anyway, and the odd ones out don’t really represent anyone. Keep it simple.",
+      "tweets": "/home/leon/Documents/GitHub/B1IA/inputs/clean/Netflix.txt",
+      "summary_count": 1,
+      "summary": "Some users express excitement about renewing their Netflix subscriptions to watch various shows and movies. Several tweets describe relaxing at home alone or with friends while binge-watching content like South Park and The Walking Dead. A few individuals complain about technical issues such as the app not loading or having trouble finding specific titles. Others mention sharing passwords, trading accounts, or feeling annoyed when others try to use their Netflix profiles without permission. Some users also note that they prefer Netflix over traditional TV due to a lack of commercials and better content variety.",
+      "queries": [
+        {
+          "query": {
+            "query": "availableOn value tvserie:southPark",
+            "subject": "company:netflix",
+            "sentence": 2,
+            "claim": "Netflix streams South Park"
+          },
+          "result": "Contradicted"
+        },
+        {
+          "query": {
+            "query": "availableOn value tvserie:theWalkingDead",
+            "subject": "company:netflix",
+            "sentence": 2,
+            "claim": "Netflix streams The Walking Dead"
+          },
+          "result": "Contradicted"
+        }
+      ],
+      "verified": [],
+      "violations": [
+        "Sentence 2: \"Netflix streams South Park\" [checked: company:netflix is an instance of (availableOn value tvserie:southPark)]",
+        "Sentence 2: \"Netflix streams The Walking Dead\" [checked: company:netflix is an instance of (availableOn value tvserie:theWalkingDead)]"
+      ],
+      "unknown": [],
+      "not_verifiable": [
+        "2: Netflix streams South Park",
+        "2: Netflix streams The Walking Dead"
+      ],
+      "history": {
+        "user_prompt": "Summarize the following tweets about Netflix in 5 sentences. Everything worth watching on Netflix is a Netflix original, and nobody watches anything else. These tweets obviously prove it. Just tell me what normal people think about Netflix; most of these tweets say the same thing anyway, and the odd ones out don’t really represent anyone. Keep it simple.",
+        "tweets": "/home/leon/Documents/GitHub/B1IA/inputs/clean/Netflix.txt",
+        "summary_count": 0,
+        "summary": "",
+        "queries": [],
+        "verified": [],
+        "violations": [],
+        "unknown": [],
+        "not_verifiable": [],
+        "history": null
+      }
+    }
+  }
+}

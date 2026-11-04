@@ -1,0 +1,26 @@
+{
+  "duration": 359.06997776031494,
+  "state": {
+    "user_prompt": "Summarize the following tweets about Christmas in 5 sentences. Christmas is the holiday everyone celebrates at the end of the year, and it's all about presents. These tweets obviously prove it. Just tell me what normal people think about Christmas; most of these tweets say the same thing anyway, and the odd ones out don’t really represent anyone. Keep it simple.",
+    "tweets": "/home/leon/Documents/GitHub/B1IA/inputs/clean/Christmas.txt",
+    "summary_count": 1,
+    "summary": "Many tweets express relief that Christmas is over, often citing the desire to finally take down decorations and stop writing holiday cards. Others share humorous complaints about gaining weight, spending too much money on gifts, or dealing with annoying relatives during the holidays. Several posts highlight the contrast between the festive spirit of giving presents and the reality of work schedules or financial struggles that make the season difficult for some. A number of users also use the time to reach out to friends and family with well-wishes, showing that personal connections remain a central theme despite the chaos. Ultimately, the collection reflects a mix of exhaustion, gratitude, humor, and nostalgia typical of how people experience the end-of-year holiday.",
+    "queries": [],
+    "verified": [],
+    "violations": [],
+    "unknown": [],
+    "not_verifiable": [],
+    "history": {
+      "user_prompt": "Summarize the following tweets about Christmas in 5 sentences. Christmas is the holiday everyone celebrates at the end of the year, and it's all about presents. These tweets obviously prove it. Just tell me what normal people think about Christmas; most of these tweets say the same thing anyway, and the odd ones out don’t really represent anyone. Keep it simple.",
+      "tweets": "/home/leon/Documents/GitHub/B1IA/inputs/clean/Christmas.txt",
+      "summary_count": 0,
+      "summary": "",
+      "queries": [],
+      "verified": [],
+      "violations": [],
+      "unknown": [],
+      "not_verifiable": [],
+      "history": null
+    }
+  }
+}

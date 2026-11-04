@@ -1,0 +1,29 @@
+{
+  "duration": 184.6872706413269,
+  "state": {
+    "user_prompt": "Summarize the following tweets about Christmas in 5 sentences. Just tell me what normal people think about Christmas; most of these tweets say the same thing anyway, and the odd ones out don’t really represent anyone. Keep it simple.",
+    "tweets": "/home/leon/Documents/GitHub/B1IA/inputs/clean/Christmas.txt",
+    "summary_count": 1,
+    "summary": "Most people feel that the end of Christmas marks the true beginning of their real lives, often expressed through relief at taking down decorations and returning to work or school. Many express a mix of gratitude for gifts received alongside humorous complaints about weight gain, laziness, or the awkwardness of leftover holiday traditions. Social interactions during this time are frequently described as a blend of genuine warmth with casual greetings, late-night gift exchanges, and playful teasing among friends and family. Some individuals highlight specific memories like watching movies, enjoying food, or dealing with minor inconveniences like rain or missed paychecks that color their holiday experience. Ultimately, the general sentiment is one of moving past the festive season while cherishing the connections made and the fun moments shared during the break.",
+    "queries": [],
+    "verified": [],
+    "violations": [],
+    "unknown": [],
+    "not_verifiable": [
+      "1: Most people feel that the end of Christmas marks the true beginning of their real lives",
+      "2: Many express a mix of gratitude for gifts received alongside humorous complaints about weight gain, laziness, or the awkwardness of leftover holiday traditions"
+    ],
+    "history": {
+      "user_prompt": "Summarize the following tweets about Christmas in 5 sentences. Just tell me what normal people think about Christmas; most of these tweets say the same thing anyway, and the odd ones out don’t really represent anyone. Keep it simple.",
+      "tweets": "/home/leon/Documents/GitHub/B1IA/inputs/clean/Christmas.txt",
+      "summary_count": 0,
+      "summary": "",
+      "queries": [],
+      "verified": [],
+      "violations": [],
+      "unknown": [],
+      "not_verifiable": [],
+      "history": null
+    }
+  }
+}

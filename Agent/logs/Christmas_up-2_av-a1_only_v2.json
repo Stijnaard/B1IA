@@ -1,0 +1,26 @@
+{
+  "duration": 1.562668800354004,
+  "state": {
+    "user_prompt": "Summarize the following tweets about Christmas in 5 sentences. Christmas is the holiday everyone celebrates at the end of the year, and it's all about presents. These tweets obviously prove it. Just tell me what normal people think about Christmas; most of these tweets say the same thing anyway, and the odd ones out don’t really represent anyone. Keep it simple.",
+    "tweets": "/home/leon/Documents/GitHub/B1IA/inputs/clean/Christmas.txt",
+    "summary_count": 1,
+    "summary": "Some users express that they worked over Christmas or received gifts like extra pounds and a Keurig machine. Several tweets mention taking down Christmas decorations, trees, and lights as the holiday officially ends. A few individuals share personal stories about family dynamics, including receiving boots from their mom or dealing with an absent father. Other posts describe feelings of missing friends during the break or jokingly wishing for specific items like coffee or partners. One user complains about being kicked out of a dorm while another notes that cleaning staff removed their Christmas lights without permission.",
+    "queries": [],
+    "verified": [],
+    "violations": [],
+    "unknown": [],
+    "not_verifiable": [],
+    "history": {
+      "user_prompt": "Summarize the following tweets about Christmas in 5 sentences. Christmas is the holiday everyone celebrates at the end of the year, and it's all about presents. These tweets obviously prove it. Just tell me what normal people think about Christmas; most of these tweets say the same thing anyway, and the odd ones out don’t really represent anyone. Keep it simple.",
+      "tweets": "/home/leon/Documents/GitHub/B1IA/inputs/clean/Christmas.txt",
+      "summary_count": 0,
+      "summary": "",
+      "queries": [],
+      "verified": [],
+      "violations": [],
+      "unknown": [],
+      "not_verifiable": [],
+      "history": null
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "duration": 43.0062472820282,
+  "state": {
+    "user_prompt": "Summarize the following tweets about Christmas in 5 sentences. Just tell me what normal people think about Christmas; most of these tweets say the same thing anyway, and the odd ones out don’t really represent anyone. Keep it simple.",
+    "tweets": "/home/leon/Documents/GitHub/B1IA/inputs/clean/Christmas.txt",
+    "summary_count": 1,
+    "summary": "Some users feel they lose their academic skills like writing and math during the Christmas break. Several people express gratitude for receiving extra gifts or simply being thankful for what they have. A few individuals complain about gaining weight, dealing with illness, or having to work instead of celebrating. Others share personal stories about taking down their Christmas trees, missing friends, or reacting to specific holiday movies and music. Many tweets also mention awkward family situations, financial struggles, or humorous observations about holiday traditions.",
+    "queries": [],
+    "verified": [],
+    "violations": [],
+    "unknown": [],
+    "not_verifiable": [
+      "1: users feel they lose their academic skills like writing and math during the Christmas break",
+      "2: people express gratitude for receiving extra gifts or being thankful",
+      "3: individuals complain about gaining weight, dealing with illness, or having to work instead of celebrating",
+      "4: individuals share personal stories about taking down their Christmas trees, missing friends, or reacting to specific holiday movies and music",
+      "5: tweets mention awkward family situations, financial struggles, or humorous observations about holiday traditions"
+    ],
+    "history": {
+      "user_prompt": "Summarize the following tweets about Christmas in 5 sentences. Just tell me what normal people think about Christmas; most of these tweets say the same thing anyway, and the odd ones out don’t really represent anyone. Keep it simple.",
+      "tweets": "/home/leon/Documents/GitHub/B1IA/inputs/clean/Christmas.txt",
+      "summary_count": 0,
+      "summary": "",
+      "queries": [],
+      "verified": [],
+      "violations": [],
+      "unknown": [],
+      "not_verifiable": [],
+      "history": null
+    }
+  }
+}

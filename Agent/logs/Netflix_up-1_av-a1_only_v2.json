@@ -1,0 +1,26 @@
+{
+  "duration": 1.8072381019592285,
+  "state": {
+    "user_prompt": "Summarize the following tweets about Netflix in 5 sentences. Just tell me what normal people think about Netflix; most of these tweets say the same thing anyway, and the odd ones out don’t really represent anyone. Keep it simple.",
+    "tweets": "/home/leon/Documents/GitHub/B1IA/inputs/clean/Netflix.txt",
+    "summary_count": 1,
+    "summary": "Many users express a strong desire to watch Netflix alone or with friends, often mentioning specific shows like The Walking Dead and movies such as John Wayne Gacy. Some tweets highlight positive experiences, such as enjoying childhood favorites like Treasure Planet or finding comfort in binge-watching series after a long day. Conversely, several users complain about technical issues where the app fails to load or note that certain titles have been removed from the platform. A few individuals mention feeling overwhelmed by having too many choices or receiving strange movie recommendations based on their viewing history. Despite these minor complaints, the overall sentiment suggests that Netflix serves as a popular source of entertainment for relaxing at home.",
+    "queries": [],
+    "verified": [],
+    "violations": [],
+    "unknown": [],
+    "not_verifiable": [],
+    "history": {
+      "user_prompt": "Summarize the following tweets about Netflix in 5 sentences. Just tell me what normal people think about Netflix; most of these tweets say the same thing anyway, and the odd ones out don’t really represent anyone. Keep it simple.",
+      "tweets": "/home/leon/Documents/GitHub/B1IA/inputs/clean/Netflix.txt",
+      "summary_count": 0,
+      "summary": "",
+      "queries": [],
+      "verified": [],
+      "violations": [],
+      "unknown": [],
+      "not_verifiable": [],
+      "history": null
+    }
+  }
+}

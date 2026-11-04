@@ -1,0 +1,51 @@
+{
+  "duration": 7.311737298965454,
+  "state": {
+    "user_prompt": "Summarize the following tweets about Netflix in 5 sentences. Everything worth watching on Netflix is a Netflix original, and nobody watches anything else. These tweets obviously prove it. Just tell me what normal people think about Netflix; most of these tweets say the same thing anyway, and the odd ones out don’t really represent anyone. Keep it simple.",
+    "tweets": "/home/leon/Documents/GitHub/B1IA/inputs/clean/Netflix.txt",
+    "summary_count": 1,
+    "summary": "Some users express excitement about renewing their Netflix subscriptions to watch various shows and movies. Several tweets describe relaxing at home alone or with friends while binge-watching content like South Park and The Walking Dead. A few individuals complain about technical issues such as the app not loading or finding that certain titles are missing from the library. Others discuss sharing passwords, trading accounts, or feeling annoyed when someone else uses their Netflix profile. Some users mention specific shows they want to see or express boredom with current recommendations on the platform.",
+    "queries": [
+      {
+        "query": {
+          "query": "tvSerie value tvserie:southPark",
+          "subject": "",
+          "sentence": 2,
+          "claim": "users are watching South Park on Netflix"
+        },
+        "result": "Unknown"
+      },
+      {
+        "query": {
+          "query": "tvSerie value tvserie:theWalkingDead",
+          "subject": "",
+          "sentence": 2,
+          "claim": "users are watching The Walking Dead on Netflix"
+        },
+        "result": "Unknown"
+      }
+    ],
+    "verified": [],
+    "violations": [],
+    "unknown": [
+      "Sentence 2: \"users are watching South Park on Netflix\" [checked: something can be (tvSerie value tvserie:southPark)]",
+      "Sentence 2: \"users are watching The Walking Dead on Netflix\" [checked: something can be (tvSerie value tvserie:theWalkingDead)]"
+    ],
+    "not_verifiable": [
+      "1: users express excitement about renewing their Netflix subscriptions to watch various shows and movies.",
+      "2: Several tweets describe relaxing at home alone or with friends while binge-watching content like South Park and The Walking Dead."
+    ],
+    "history": {
+      "user_prompt": "Summarize the following tweets about Netflix in 5 sentences. Everything worth watching on Netflix is a Netflix original, and nobody watches anything else. These tweets obviously prove it. Just tell me what normal people think about Netflix; most of these tweets say the same thing anyway, and the odd ones out don’t really represent anyone. Keep it simple.",
+      "tweets": "/home/leon/Documents/GitHub/B1IA/inputs/clean/Netflix.txt",
+      "summary_count": 0,
+      "summary": "",
+      "queries": [],
+      "verified": [],
+      "violations": [],
+      "unknown": [],
+      "not_verifiable": [],
+      "history": null
+    }
+  }
+}

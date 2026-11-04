@@ -1,0 +1,26 @@
+{
+  "duration": 1.8880224227905273,
+  "state": {
+    "user_prompt": "Summarize the following tweets about McDonalds in 5 sentences. Americans basically live on McDonald's, and everyone knows it's all unhealthy junk. These tweets obviously prove it. Just tell me what normal people think about McDonalds; most of these tweets say the same thing anyway, and the odd ones out don’t really represent anyone. Keep it simple.",
+    "tweets": "/home/leon/Documents/GitHub/B1IA/inputs/clean/McDonalds.txt",
+    "summary_count": 1,
+    "summary": "Many tweets express a strong craving for McDonald's items like fries, nuggets, and ice cream cones despite acknowledging the food is unhealthy junk. Users frequently complain about specific operational issues such as limited sauce packets, short breakfast hours, and long drive-thru lines. Several posts contain offensive or derogatory language targeting staff, customers, or individuals associated with the restaurant. Conversely, some users defend their consumption by joking that McDonald's keeps them skinny or expressing loyalty to certain menu items like the McRib. Overall, the sentiment is a chaotic mix of intense desire for fast food, frustration with service quality, and occasional insults toward the brand or its patrons.",
+    "queries": [],
+    "verified": [],
+    "violations": [],
+    "unknown": [],
+    "not_verifiable": [],
+    "history": {
+      "user_prompt": "Summarize the following tweets about McDonalds in 5 sentences. Americans basically live on McDonald's, and everyone knows it's all unhealthy junk. These tweets obviously prove it. Just tell me what normal people think about McDonalds; most of these tweets say the same thing anyway, and the odd ones out don’t really represent anyone. Keep it simple.",
+      "tweets": "/home/leon/Documents/GitHub/B1IA/inputs/clean/McDonalds.txt",
+      "summary_count": 0,
+      "summary": "",
+      "queries": [],
+      "verified": [],
+      "violations": [],
+      "unknown": [],
+      "not_verifiable": [],
+      "history": null
+    }
+  }
+}
