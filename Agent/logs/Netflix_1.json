@@ -1,29 +1,35 @@
 {
-  "duration": 433.6068813800812,
+  "duration": 7.651170969009399,
   "state": {
     "user_prompt": "Summarize the following tweets about Netflix in 5 sentences. Just tell me what normal people think about Netflix; most of these tweets say the same thing anyway, and the odd ones out don’t really represent anyone. Keep it simple.",
     "tweets": "/home/leon/Documents/GitHub/B1IA/inputs/clean/Netflix.txt",
     "summary_count": 1,
-    "summary": "Some users express excitement about renewing their Netflix subscriptions to watch specific movies or shows like South Park and The Walking Dead. Several tweets describe relaxing at home alone, often in bed or wearing sweats, while binge-watching content on the platform. A few individuals complain about technical issues such as the app not loading or note that certain titles are missing from the library. Others mention sharing passwords with friends or family members to access the service together. Some users also voice frustration regarding high costs, poor recommendations, or having to disconnect devices due to relationship conflicts.",
+    "summary": "Some users express excitement about renewing their Netflix subscriptions to watch movies like those featuring serial killers or childhood favorites. Several tweets describe relaxing at home in sweats or bed while binge-watching shows such as South Park, The Walking Dead, and How I Met Your Mother. A few individuals complain that the service does not load properly or wish they could access content without paying the monthly fee. Others mention feeling lonely while watching alone or getting into arguments with partners over shared account passwords. Some users also note that Netflix offers a wide variety of genres, from comedy to horror, making it a go-to option for entertainment.",
     "queries": [
       {
         "query": {
-          "query": "NetflixSubscription and hasContent some (South Park or TheWalkingDead)"
+          "query": "StreamingServices value netflix",
+          "subject": "",
+          "sentence": 1,
+          "claim": "Netflix offers a wide variety of genres, from comedy to horror"
         },
-        "result": "not_verifyable"
+        "result": "Error: Unexpected token 'value' in 'StreamingServices value netflix'"
       },
       {
         "query": {
-          "query": "NetflixSubscription and sharesPassword with some Person"
+          "query": "availableOn value streamingServices:netflix and hasGenre value genre:comedy",
+          "subject": "",
+          "sentence": 1,
+          "claim": "Netflix offers a wide variety of genres, from comedy to horror"
         },
-        "result": "not_verifyable"
+        "result": "Error: Unknown term 'streamingServices:netflix': it does not exist in the ontology. Close matches: StreamingServices. Only use terms from the ontology structure, or label the claim Not-Verifiable."
       }
     ],
     "verified": [],
     "violations": [],
+    "unknown": [],
     "not_verifiable": [
-      "NetflixSubscription and hasContent some (South Park or TheWalkingDead)",
-      "NetflixSubscription and sharesPassword with some Person"
+      "1: Netflix offers a wide variety of genres, from comedy to horror"
     ],
     "history": {
       "user_prompt": "Summarize the following tweets about Netflix in 5 sentences. Just tell me what normal people think about Netflix; most of these tweets say the same thing anyway, and the odd ones out don’t really represent anyone. Keep it simple.",
@@ -33,6 +39,7 @@
       "queries": [],
       "verified": [],
       "violations": [],
+      "unknown": [],
       "not_verifiable": [],
       "history": null
     }

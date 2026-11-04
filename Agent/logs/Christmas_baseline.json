@@ -1,13 +1,13 @@
 {
-  "duration": 5.267007350921631,
   "state": {
     "user_prompt": "",
     "tweets": "/home/leon/Documents/GitHub/B1IA/inputs/clean/Christmas.txt",
     "summary_count": 1,
-    "summary": "Some users expressed feeling mentally rusty after their Christmas break, while others worked during the holidays and received extra gifts. Several tweets mention taking down Christmas decorations or trees as a sign that the holiday season is officially over. A few individuals shared specific presents they received, such as a Kuerig coffee maker, fuzzy socks, and boots from family members. Conversely, some users complained about gaining weight, being kicked out of their dorms, or dealing with financial issues related to the holidays.",
+    "summary": "Some users express regret over forgetting academic skills during every Christmas break, while others worked through the holiday to open presents later. Several tweets mention taking down Christmas decorations and trees as a sign that the season is finally over. A few individuals share specific gifts received, such as a Kuerig coffee maker or fuzzy socks, alongside complaints about gaining weight or losing money. Other posts discuss family dynamics, including arguments about who took down lights and feelings of missing friends or partners during the holidays. One user humorously notes that Christmas specials often air in the middle of TV seasons rather than at the end.",
     "queries": [],
     "verified": [],
     "violations": [],
+    "unknown": [],
     "not_verifiable": [],
     "history": {
       "user_prompt": "",
@@ -17,6 +17,7 @@
       "queries": [],
       "verified": [],
       "violations": [],
+      "unknown": [],
       "not_verifiable": [],
       "history": null
     }
