@@ -6,98 +6,122 @@ Implements Eq. 3 of the report:
            Contradicted  if O |= not Q(s)
            Unknown       otherwise
 
-O |= Q(s) holds exactly when O + {(not Q)(s)} is inconsistent, and
-O |= (not Q)(s) holds exactly when O + {Q(s)} is inconsistent. The tool therefore
-asserts the query and its complement for the subject s in two isolated copies of
-the ontology and lets HermiT check each copy for consistency. HermiT performs the
-tableau expansion (including the negation normal form) itself, so the query no
-longer has to pass through LLM nodes for the NNF and SPARQL translation.
+The query is parsed with the Manchester syntax parser of owlapy
+(https://github.com/dice-group/owlapy) and checked with HermiT through owlapy's
+SyncReasoner (OWL API). HermiT is a tableau reasoner: it computes the negation
+normal form and the tableau branches itself.
 
-Subjects:
+Subject:
   * an individual (e.g. company:mcdonalds): instance check, as in Table 2.
-  * no subject: a fresh anonymous individual is used, i.e. a satisfiability check
-    (Scenarios 2 and 5 in the report): Contradicted when Q is unsatisfiable.
-  * a class S: subsumption check, Entailed when S is a subclass of Q and
-    Contradicted when S and Q are disjoint.
+  * empty: satisfiability check (Scenarios 2 and 5): Contradicted when nothing
+    can be an instance of Q.
 """
 from __future__ import annotations
 
-import uuid
-from functools import lru_cache
+import difflib
+import os
+import re
+import threading
+from pathlib import Path
 
-import owlready2
 from langchain.tools import tool
-from owlready2 import World, OwlReadyInconsistentOntologyError, Not, Thing, sync_reasoner
 
-from configs import ONTOLOGY_PATH, BASE_DIR, JAVA_EXE
-from manchester import ManchesterError, parse_class_expression, resolve_subject
+from configs import BASE_DIR, ONTOLOGY_PATH, JAVA_EXE, ONTOLOGY_NAMES, INDIVIDUAL_NAMES
 
+# owlapy starts a Java VM through JPype, which finds Java via JAVA_HOME
 if JAVA_EXE:
-    owlready2.JAVA_EXE = JAVA_EXE
+    os.environ['JAVA_HOME'] = str(Path(JAVA_EXE).resolve().parent.parent)
+# hide the OWL API's INFO messages about every parsed axiom
+os.environ.setdefault('JAVA_TOOL_OPTIONS', '-Dorg.slf4j.simpleLogger.defaultLogLevel=warn')
+
+import jpype.config
+# Java is started from a LangGraph worker thread; shutting it down at exit then hangs forever,
+# so let the operating system clean it up when Python exits.
+jpype.config.destroy_jvm = False
+
+from owlapy.class_expression import OWLObjectComplementOf
+from owlapy.iri import IRI
+from owlapy.owl_axiom import OWLClassAssertionAxiom
+from owlapy.owl_individual import OWLNamedIndividual
+from owlapy.owl_reasoner import SyncReasoner
+from owlapy.parser import ManchesterOWLSyntaxParser
 
 ENTAILED = 'Entailed'
 CONTRADICTED = 'Contradicted'
 UNKNOWN = 'Unknown'
 ERROR = 'Error'
 
+ONTOLOGY_FILE = BASE_DIR / ONTOLOGY_PATH
+NAMESPACE = 'http://www.semanticweb.org/stijnroos/ontologies/2026/8/IAOntology#'
 
-def _load_world():
-    world = World()
-    onto = world.get_ontology(str(BASE_DIR / ONTOLOGY_PATH)).load()
-    return world, onto
+# Individuals are named like "food:burger". The parser reads "food:" as a prefix, so every such
+# prefix is mapped to NAMESPACE + "food:", which gives back the full IRI of the individual.
+PREFIXES = {name.split(':')[0]: NAMESPACE + name.split(':')[0] + ':'
+            for name in INDIVIDUAL_NAMES if ':' in name}
 
+MANCHESTER_KEYWORDS = {'and', 'or', 'not', 'some', 'only', 'value', 'min', 'max', 'exactly',
+                       'inverse', 'self', 'that', 'thing', 'nothing', 'true', 'false',
+                       'integer', 'int', 'float', 'double', 'decimal', 'string', 'boolean'}
 
-def _is_consistent(world) -> bool:
-    try:
-        sync_reasoner(world, infer_property_values=False, debug=0)
-    except OwlReadyInconsistentOntologyError:
-        return False
-    return True
-
-
-@lru_cache(maxsize=1)
-def _check_base_ontology():
-    world, _ = _load_world()
-    if not _is_consistent(world):
-        raise RuntimeError('The base ontology is inconsistent; fix it in Protege before running the agent.')
-    return True
+_parser = ManchesterOWLSyntaxParser(NAMESPACE, prefixes=PREFIXES)
+_reasoner = None
+_lock = threading.Lock()  # tool calls run in parallel threads; HermiT is not thread-safe
 
 
-def _consistent_with(query: str, subject: str, negate: bool) -> bool:
-    """Assert (not) query for the subject in a fresh copy of the ontology and check consistency."""
-    world, onto = _load_world()
-    expr = parse_class_expression(query, onto)
-    with onto:
-        if subject:
-            entity, kind = resolve_subject(subject, onto)
-        else:
-            entity, kind = Thing, 'class'
-        if kind == 'individual':
-            target = entity
-        else:
-            # fresh individual that is a member of the subject class
-            target = Thing(f'query_subject_{uuid.uuid4().hex[:8]}', namespace=onto)
-            if entity is not Thing:
-                target.is_a.append(entity)
-        target.is_a.append(Not(expr) if negate else expr)
-    return _is_consistent(world)
+def get_reasoner() -> SyncReasoner:
+    """Load the ontology and HermiT once, and check that the base ontology is consistent."""
+    global _reasoner
+    if _reasoner is None:
+        _reasoner = SyncReasoner(ontology=str(ONTOLOGY_FILE), reasoner='HermiT')
+        if not _reasoner.has_consistent_ontology():
+            raise RuntimeError('The base ontology is inconsistent; fix it in Protege before running the agent.')
+    return _reasoner
+
+
+def unknown_terms(text: str) -> list[str]:
+    """Names in the query or subject that do not exist in the ontology.
+
+    The parser accepts any name and would treat a made-up term as a new, empty entity,
+    which always gives Unknown. Checking the names first lets the QueryAgent correct them.
+    """
+    words = re.findall(r"[A-Za-z_][\w:'.\-]*", re.sub(r'"[^"]*"', '', text))
+    return [w for w in words if w.lower() not in MANCHESTER_KEYWORDS
+            and not w.startswith('xsd:') and w not in ONTOLOGY_NAMES]
 
 
 def evaluate_query(query: str, subject: str = '') -> str:
-    """Return ENTAILED, CONTRADICTED or UNKNOWN; raises ManchesterError on invalid queries."""
-    _check_base_ontology()
-    query, subject = query.strip(), (subject or '').strip()
-    # parse once up front so syntax errors are reported before the reasoner runs
-    _, onto = _load_world()
-    parse_class_expression(query, onto)
-    if subject:
-        resolve_subject(subject, onto)
+    """Return ENTAILED, CONTRADICTED or UNKNOWN, or an 'Error: ...' message for invalid input."""
+    query, subject = query.strip().strip('`'), (subject or '').strip().strip('`')
 
-    if not _consistent_with(query, subject, negate=False):
-        return CONTRADICTED          # O |= not Q(s)
-    if not _consistent_with(query, subject, negate=True):
-        return ENTAILED              # O |= Q(s)
-    return UNKNOWN                   # open world: neither follows
+    unknown = unknown_terms(query + ' ' + subject)
+    if unknown:
+        hints = []
+        for w in unknown:
+            close = difflib.get_close_matches(w, ONTOLOGY_NAMES, 3)
+            hints.append(f"{w} (did you mean: {', '.join(close)})" if close else w)
+        return (f"{ERROR}: these terms do not exist in the ontology: {'; '.join(hints)}. "
+                "Only use terms from the ontology structure, or label the claim Not-Verifiable.")
+    if subject and subject not in INDIVIDUAL_NAMES:
+        return f"{ERROR}: the subject {subject!r} is not an individual. Use an individual or leave the subject empty."
+    try:
+        expression = _parser.parse_expression(query)
+    except Exception as e:
+        return f"{ERROR}: invalid Manchester syntax in {query!r}: {str(e).splitlines()[0]}"
+
+    with _lock:
+        reasoner = get_reasoner()
+        if subject:
+            individual = OWLNamedIndividual(IRI.create(NAMESPACE + subject))
+            if reasoner.is_entailed(OWLClassAssertionAxiom(individual, expression)):
+                return ENTAILED
+            if reasoner.is_entailed(OWLClassAssertionAxiom(individual, OWLObjectComplementOf(expression))):
+                return CONTRADICTED
+        else:
+            if not reasoner.is_satisfiable(expression):
+                return CONTRADICTED   # nothing can be an instance of Q
+            if not reasoner.is_satisfiable(OWLObjectComplementOf(expression)):
+                return ENTAILED       # everything is an instance of Q
+    return UNKNOWN
 
 
 @tool
@@ -117,16 +141,6 @@ def check_ontology(query: str, subject: str = '', sentence: int = 0, claim: str 
     invalid; in that case fix the query and call the tool again.
     """
     print(f'checking query: subject={subject!r} query={query!r}', flush=True)
-    # Environment problems (no Java, inconsistent base ontology) must stop the run instead of
-    # silently turning every claim into an error or an Unknown.
-    _check_base_ontology()
-    try:
-        outcome = evaluate_query(query, subject)
-    except ManchesterError as e:
-        result = f'{ERROR}: {e}'
-    except Exception as e:  # never crash the agent; report the problem so it can retry
-        result = f'{ERROR}: {type(e).__name__}: {e}'
-    else:
-        result = outcome
+    result = evaluate_query(query, subject)
     print(f'  -> {result}', flush=True)
     return result

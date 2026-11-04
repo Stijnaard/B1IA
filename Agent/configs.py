@@ -5,7 +5,7 @@ from owlready2 import World
 config = ConfigParser()
 
 BASE_DIR = Path(__file__).resolve().parent.parent # root dir of repo
-config.read(BASE_DIR / "config.ini")
+config.read(BASE_DIR / "config.ini", encoding="utf-8")
 GROQ_API_KEY = config['GROQ']['GROQ_API_KEY']
 CROQ_MODEL = config['GROQ']['MODEL']
 
@@ -32,26 +32,29 @@ def _signature(prop) -> str:
     return prop.name
 
 
-def read_ontology() -> str:
-    """Ontology structure O (classes, properties and individuals) given to the QueryAgent."""
+def read_ontology():
+    """Ontology structure O (classes, properties and individuals) given to the QueryAgent,
+    plus the sets of names that the ontology tool accepts."""
     world = World()
     world.get_ontology(str(BASE_DIR / ONTOLOGY_PATH)).load()
     classes = sorted(c.name for c in world.classes())
-    object_properties = sorted(_signature(p) for p in world.object_properties())
-    data_properties = sorted(_signature(p) for p in world.data_properties())
+    object_properties = list(world.object_properties())
+    data_properties = list(world.data_properties())
     individuals = sorted(i.name for i in world.individuals())
-    return ('## Ontology structure\n\n'
-            f'Classes: {", ".join(classes)}\n\n'
-            f'Object properties (domain -> range): {"; ".join(object_properties)}\n\n'
-            f'Data properties (domain -> range): {"; ".join(data_properties)}\n\n'
-            f'Individuals: {", ".join(individuals)}\n')
+    structure = ('## Ontology structure\n\n'
+                 f'Classes: {", ".join(classes)}\n\n'
+                 f'Object properties (domain -> range): {"; ".join(sorted(_signature(p) for p in object_properties))}\n\n'
+                 f'Data properties (domain -> range): {"; ".join(sorted(_signature(p) for p in data_properties))}\n\n'
+                 f'Individuals: {", ".join(individuals)}\n')
+    names = set(classes) | {p.name for p in object_properties + data_properties} | set(individuals)
+    return structure, names, set(individuals)
 
 
-ONTOLOGY_STRUCTURE = read_ontology()
+ONTOLOGY_STRUCTURE, ONTOLOGY_NAMES, INDIVIDUAL_NAMES = read_ontology()
 VERIFICATION_PROMPT += f'\n\n{ONTOLOGY_STRUCTURE}'
 
-# Optional path to a java executable for the HermiT reasoner (e.g. the JRE bundled with Protege).
-# Leave empty to use `java` from the PATH.
+# Optional path to a java executable for the HermiT reasoner (e.g. the JRE bundled with Protégé).
+# owlapy starts Java through JAVA_HOME; leave empty to use the JAVA_HOME already set.
 JAVA_EXE = config.get('REASONER', 'JAVA', fallback='').strip()
 
 # Context window for Ollama; its default (2048-4096 tokens) silently truncates the tweets and
