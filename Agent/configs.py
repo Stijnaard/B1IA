@@ -26,7 +26,7 @@ def read_ontology():
     properties = list(world.properties())
     data_properties = list(world.data_properties())
     return f'The ontology has the following classes:\n{classes}\nThe following properties:\n{properties}\nAnd the following data properties:\n{data_properties}'
-VERIFICATION_PROMPT += f'\n{read_ontology}'
+VERIFICATION_PROMPT += f'\n{read_ontology()}'
 
 TRANSLATION_PROMPT = config['PROMPTS']['TRANSLATION']
 
