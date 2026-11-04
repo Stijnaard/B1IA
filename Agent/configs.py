@@ -5,7 +5,7 @@ from owlready2 import World
 config = ConfigParser()
 
 BASE_DIR = Path(__file__).resolve().parent.parent # root dir of repo
-config.read(BASE_DIR / "config.ini")
+config.read(BASE_DIR / "config.ini", encoding="utf-8")
 GROQ_API_KEY = config['GROQ']['GROQ_API_KEY']
 CROQ_MODEL = config['GROQ']['MODEL']
 
