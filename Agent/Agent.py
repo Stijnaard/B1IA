@@ -155,7 +155,7 @@ def extract_not_verifiable(messages) -> list[str]:
         return []
     claims = []
     for line in final.content.splitlines():
-        line = line.strip().lstrip('-* ')
+        line = line.replace('**', '').replace('`', '').strip().lstrip('-* ')
         if line.upper().startswith('NOT-VERIFIABLE:'):
             claims.append(line.split(':', 1)[1].strip())
     return claims

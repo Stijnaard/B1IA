@@ -44,4 +44,8 @@ Manchester OWL Syntax uses `and`, `or`, `not`, `some`, `only`, `value`, `min`, `
 
 If the tool answers `Error`, correct the query using the message (for example the suggested term) and call the tool again. If the claim still cannot be expressed, label it `Not-Verifiable`.
 
-When you are done, reply with one line per `Not-Verifiable` claim in the form `NOT-VERIFIABLE: <sentence number>: <claim>`, and nothing else.
+## Procedure
+
+1. Most sentences in the summary report what users say or feel. Look inside them for the embedded facts about entities that exist in the ontology. Example: "Some users crave chicken nuggets from McDonalds" contains the claim "McDonald's serves chicken nuggets": subject `company:mcdonalds`, query `serves value food:chickenNuggets`.
+2. Pick the 2 most informative of these claims and call `check_ontology` for each of them. You must call the tool before giving your final answer; a final answer without any tool call is wrong unless no sentence mentions any individual or class of the ontology.
+3. Only after the tool calls, reply with one line per `Not-Verifiable` claim in the form `NOT-VERIFIABLE: <sentence number>: <claim>`, and nothing else. A Not-Verifiable claim is the extracted claim, not the whole sentence.
