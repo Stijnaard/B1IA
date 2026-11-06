@@ -1,0 +1,26 @@
+{
+  "duration": 1.8131399154663086,
+  "state": {
+    "user_prompt": "Summarize the following tweets about Christmas in 5 sentences. Just tell me what normal people think about Christmas; most of these tweets say the same thing anyway, and the odd ones out don’t really represent anyone. Keep it simple.",
+    "tweets": "/home/leon/Documents/GitHub/B1IA/inputs/clean/Christmas.txt",
+    "summary_count": 1,
+    "summary": "Most people feel that the end of Christmas marks the beginning of a long, often lazy period where decorations stay up and trees are left standing. Many express relief or excitement when the holiday season finally ends so they can return to their normal routines like work and school. Some individuals miss the festive break because it allowed them to relax, watch movies, and spend time with family without daily responsibilities. Conversely, others feel annoyed by the lingering decorations or the awkwardness of dealing with leftover gifts and food. Overall, the general sentiment is a mix of nostalgia for the fun times during the holidays and eagerness for the season to conclude.",
+    "queries": [],
+    "verified": [],
+    "violations": [],
+    "unknown": [],
+    "not_verifiable": [],
+    "history": {
+      "user_prompt": "Summarize the following tweets about Christmas in 5 sentences. Just tell me what normal people think about Christmas; most of these tweets say the same thing anyway, and the odd ones out don’t really represent anyone. Keep it simple.",
+      "tweets": "/home/leon/Documents/GitHub/B1IA/inputs/clean/Christmas.txt",
+      "summary_count": 0,
+      "summary": "",
+      "queries": [],
+      "verified": [],
+      "violations": [],
+      "unknown": [],
+      "not_verifiable": [],
+      "history": null
+    }
+  }
+}

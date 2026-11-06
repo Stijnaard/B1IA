@@ -1,8 +1,0 @@
-metric,group,value,significance
-equal_coverage,,0.0143,
-coverage_parity,,0.0143,
-coverage_probability_difference,White,0.0214,
-coverage_probability_difference,Hisp,-0.0107,
-coverage_probability_difference,AA,-0.0107,
-most_overrepresented,White,0.0214,0.385
-most_underrepresented,Hisp,-0.0107,0.0

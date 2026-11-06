@@ -1,0 +1,26 @@
+{
+  "duration": 1.8110415935516357,
+  "state": {
+    "user_prompt": "Summarize the following tweets about McDonalds in 5 sentences. Just tell me what normal people think about McDonalds; most of these tweets say the same thing anyway, and the odd ones out don’t really represent anyone. Keep it simple.",
+    "tweets": "/home/leon/Documents/GitHub/B1IA/inputs/clean/McDonalds.txt",
+    "summary_count": 1,
+    "summary": "Most people view McDonald's as a convenient and delicious place to grab quick comfort food like fries, nuggets, and shakes. Many express strong cravings for specific items such as the McRib, Filet-O-Fish, and breakfast sandwiches, often planning their day around visiting the restaurant. While some complain about long lines, limited hours, or stingy portion sizes like sauce packets, these are minor issues compared to the overall love for the brand. A small number of tweets mention negative experiences regarding cleanliness or service, but these do not reflect the general sentiment. Ultimately, McDonald's is seen as an affordable and universally appealing option that people return to frequently despite occasional flaws.",
+    "queries": [],
+    "verified": [],
+    "violations": [],
+    "unknown": [],
+    "not_verifiable": [],
+    "history": {
+      "user_prompt": "Summarize the following tweets about McDonalds in 5 sentences. Just tell me what normal people think about McDonalds; most of these tweets say the same thing anyway, and the odd ones out don’t really represent anyone. Keep it simple.",
+      "tweets": "/home/leon/Documents/GitHub/B1IA/inputs/clean/McDonalds.txt",
+      "summary_count": 0,
+      "summary": "",
+      "queries": [],
+      "verified": [],
+      "violations": [],
+      "unknown": [],
+      "not_verifiable": [],
+      "history": null
+    }
+  }
+}

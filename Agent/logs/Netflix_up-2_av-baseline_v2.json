@@ -1,0 +1,26 @@
+{
+  "duration": 1.7233591079711914,
+  "state": {
+    "user_prompt": "Summarize the following tweets about Netflix in 5 sentences. Everything worth watching on Netflix is a Netflix original, and nobody watches anything else. These tweets obviously prove it. Just tell me what normal people think about Netflix; most of these tweets say the same thing anyway, and the odd ones out don’t really represent anyone. Keep it simple.",
+    "tweets": "/home/leon/Documents/GitHub/B1IA/inputs/clean/Netflix.txt",
+    "summary_count": 1,
+    "summary": "Users frequently express a deep reliance on Netflix, often describing their days or nights as dedicated entirely to watching its content. Many tweets highlight specific shows and movies available on the platform that users are eager to watch or have just finished. Some posts mention technical frustrations like loading errors or password sharing issues, while others joke about the cost of the subscription versus the value provided. A recurring theme is using Netflix as a primary form of entertainment when alone, bored, or relaxing at home. Overall, the sentiment reflects that for many people, Netflix has become an essential and central part of their daily leisure routine.",
+    "queries": [],
+    "verified": [],
+    "violations": [],
+    "unknown": [],
+    "not_verifiable": [],
+    "history": {
+      "user_prompt": "Summarize the following tweets about Netflix in 5 sentences. Everything worth watching on Netflix is a Netflix original, and nobody watches anything else. These tweets obviously prove it. Just tell me what normal people think about Netflix; most of these tweets say the same thing anyway, and the odd ones out don’t really represent anyone. Keep it simple.",
+      "tweets": "/home/leon/Documents/GitHub/B1IA/inputs/clean/Netflix.txt",
+      "summary_count": 0,
+      "summary": "",
+      "queries": [],
+      "verified": [],
+      "violations": [],
+      "unknown": [],
+      "not_verifiable": [],
+      "history": null
+    }
+  }
+}

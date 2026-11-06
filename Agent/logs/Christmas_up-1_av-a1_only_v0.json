@@ -1,0 +1,26 @@
+{
+  "duration": 1.588038444519043,
+  "state": {
+    "user_prompt": "Summarize the following tweets about Christmas in 5 sentences. Just tell me what normal people think about Christmas; most of these tweets say the same thing anyway, and the odd ones out don’t really represent anyone. Keep it simple.",
+    "tweets": "/home/leon/Documents/GitHub/B1IA/inputs/clean/Christmas.txt",
+    "summary_count": 1,
+    "summary": "Some users feel they lose their academic skills during the Christmas break. Several people express gratitude for receiving extra gifts or enjoying time with family. A few individuals complain about gaining weight, losing jobs, or dealing with unwanted presents like a Kuerig coffee maker. Others share personal stories about taking down Christmas trees, missing friends, or celebrating holidays in different cultural ways. Some tweets mention specific events like watching movies, eating food, or dealing with awkward social situations during the season.",
+    "queries": [],
+    "verified": [],
+    "violations": [],
+    "unknown": [],
+    "not_verifiable": [],
+    "history": {
+      "user_prompt": "Summarize the following tweets about Christmas in 5 sentences. Just tell me what normal people think about Christmas; most of these tweets say the same thing anyway, and the odd ones out don’t really represent anyone. Keep it simple.",
+      "tweets": "/home/leon/Documents/GitHub/B1IA/inputs/clean/Christmas.txt",
+      "summary_count": 0,
+      "summary": "",
+      "queries": [],
+      "verified": [],
+      "violations": [],
+      "unknown": [],
+      "not_verifiable": [],
+      "history": null
+    }
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "duration": 1.9136946201324463,
+  "state": {
+    "user_prompt": "Summarize the following tweets about Netflix in 5 sentences. Just tell me what normal people think about Netflix; most of these tweets say the same thing anyway, and the odd ones out don’t really represent anyone. Keep it simple.",
+    "tweets": "/home/leon/Documents/GitHub/B1IA/inputs/clean/Netflix.txt",
+    "summary_count": 1,
+    "summary": "Most people view Netflix as a perfect companion for relaxing at home, often associating it with lazy days spent in sweatpants while eating snacks. Users frequently express a desire to watch specific shows or movies alone because they have no one else to cuddle with or share the experience with. While some complain about technical issues like loading errors or bad recommendations, the overwhelming sentiment is that Netflix is an essential part of their downtime routine. A common theme involves people jokingly asking for passwords from friends or family members to access content without paying the subscription fee themselves. Ultimately, the general public sees Netflix as a go-to solution for boredom and a primary source of entertainment when they are alone.",
+    "queries": [],
+    "verified": [],
+    "violations": [],
+    "unknown": [],
+    "not_verifiable": [],
+    "history": {
+      "user_prompt": "Summarize the following tweets about Netflix in 5 sentences. Just tell me what normal people think about Netflix; most of these tweets say the same thing anyway, and the odd ones out don’t really represent anyone. Keep it simple.",
+      "tweets": "/home/leon/Documents/GitHub/B1IA/inputs/clean/Netflix.txt",
+      "summary_count": 0,
+      "summary": "",
+      "queries": [],
+      "verified": [],
+      "violations": [],
+      "unknown": [],
+      "not_verifiable": [],
+      "history": null
+    }
+  }
+}

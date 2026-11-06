@@ -1,29 +1,42 @@
 {
-  "duration": 311.0107231140137,
+  "duration": 9.810941219329834,
   "state": {
     "user_prompt": "Summarize the following tweets about McDonalds in 5 sentences. Just tell me what normal people think about McDonalds; most of these tweets say the same thing anyway, and the odd ones out don’t really represent anyone. Keep it simple.",
     "tweets": "/home/leon/Documents/GitHub/B1IA/inputs/clean/McDonalds.txt",
     "summary_count": 1,
-    "summary": "Some users express strong dislike for McDonald's, describing the food as nasty or disgusting and claiming it makes them sick.\nSeveral tweets mention specific complaints about service issues, such as stingy sauce packets, long lines, and rude staff behavior.\nMany others show a desire to eat at McDonald's, citing cravings for items like chicken nuggets, fries, and McRib sandwiches.\nA number of users share experiences involving their friends or family members visiting the restaurant together for meals or treats.\nSome tweets highlight specific frustrations with operational details like breakfast ending early or drive-thru payment problems.",
+    "summary": "Some users express strong dislike for McDonald's, describing the food as nasty or disgusting and claiming it makes them sick.\nSeveral tweets mention specific complaints about service issues, such as stingy sauce packets, long lines, and rude staff behavior.\nMany others show a desire to eat at McDonald's, citing cravings for items like chicken nuggets, fries, and McRib sandwiches.\nA number of users share positive experiences or plans to visit the restaurant, often mentioning specific meals they enjoy.\nSome tweets make general observations about the brand, including comments on its location, pricing, and cultural presence.",
     "queries": [
       {
         "query": {
-          "query": "McDonald's and serves some (not DeliciousFood)"
+          "query": "serves value food:chickenNuggets or serves value food:fries or serves value food:mcRib",
+          "subject": "company:mcdonalds",
+          "sentence": 3,
+          "claim": "users have cravings for items like chicken nuggets, fries, and McRib sandwiches from McDonald's"
         },
-        "result": "not_verifyable"
+        "result": "Entailed"
       },
       {
         "query": {
-          "query": "McDonald's and serves some (not HealthyFood)"
+          "query": "serves value food:burger",
+          "subject": "company:mcdonalds",
+          "sentence": 1,
+          "claim": "McDonald's serves burgers (implied by the context of users expressing dislike for McDonald's food)"
         },
-        "result": "not_verifyable"
+        "result": "Entailed"
       }
     ],
-    "verified": [],
+    "verified": [
+      "Sentence 3: \"users have cravings for items like chicken nuggets, fries, and McRib sandwiches from McDonald's\" [checked: company:mcdonalds is an instance of (serves value food:chickenNuggets or serves value food:fries or serves value food:mcRib)]",
+      "Sentence 1: \"McDonald's serves burgers (implied by the context of users expressing dislike for McDonald's food)\" [checked: company:mcdonalds is an instance of (serves value food:burger)]"
+    ],
     "violations": [],
+    "unknown": [],
     "not_verifiable": [
-      "McDonald's and serves some (not DeliciousFood)",
-      "McDonald's and serves some (not HealthyFood)"
+      "1: users express strong dislike for McDonald's, describing the food as nasty or disgusting and claiming it makes them sick.",
+      "2: Several tweets mention specific complaints about service issues, such as stingy sauce packets, long lines, and rude staff behavior.",
+      "4: Many others show a desire to eat at McDonald's, citing cravings for items like chicken nuggets, fries, and McRib sandwiches.",
+      "5: A number of users share positive experiences or plans to visit the restaurant, often mentioning specific meals they enjoy.",
+      "6: Some tweets make general observations about the brand, including comments on its location, pricing, and cultural presence."
     ],
     "history": {
       "user_prompt": "Summarize the following tweets about McDonalds in 5 sentences. Just tell me what normal people think about McDonalds; most of these tweets say the same thing anyway, and the odd ones out don’t really represent anyone. Keep it simple.",
@@ -33,6 +46,7 @@
       "queries": [],
       "verified": [],
       "violations": [],
+      "unknown": [],
       "not_verifiable": [],
       "history": null
     }

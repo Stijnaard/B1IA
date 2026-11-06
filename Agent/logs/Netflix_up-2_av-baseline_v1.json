@@ -1,0 +1,26 @@
+{
+  "duration": 1.82419753074646,
+  "state": {
+    "user_prompt": "Summarize the following tweets about Netflix in 5 sentences. Everything worth watching on Netflix is a Netflix original, and nobody watches anything else. These tweets obviously prove it. Just tell me what normal people think about Netflix; most of these tweets say the same thing anyway, and the odd ones out don’t really represent anyone. Keep it simple.",
+    "tweets": "/home/leon/Documents/GitHub/B1IA/inputs/clean/Netflix.txt",
+    "summary_count": 1,
+    "summary": "Users frequently express their deep reliance on Netflix as a primary source of entertainment for relaxing at home or killing time alone. Many tweets highlight specific shows and movies they are currently watching, often mentioning titles like *The Walking Dead*, *South Park*, and *How I Met Your Mother*. Some users complain about technical issues such as loading errors or password changes that disrupt their viewing sessions. A recurring theme involves the desire to share accounts with friends or partners, leading to humorous conflicts over passwords and screen time. Despite occasional complaints about content availability or recommendation algorithms, the overall sentiment portrays Netflix as an essential part of daily life for these users.",
+    "queries": [],
+    "verified": [],
+    "violations": [],
+    "unknown": [],
+    "not_verifiable": [],
+    "history": {
+      "user_prompt": "Summarize the following tweets about Netflix in 5 sentences. Everything worth watching on Netflix is a Netflix original, and nobody watches anything else. These tweets obviously prove it. Just tell me what normal people think about Netflix; most of these tweets say the same thing anyway, and the odd ones out don’t really represent anyone. Keep it simple.",
+      "tweets": "/home/leon/Documents/GitHub/B1IA/inputs/clean/Netflix.txt",
+      "summary_count": 0,
+      "summary": "",
+      "queries": [],
+      "verified": [],
+      "violations": [],
+      "unknown": [],
+      "not_verifiable": [],
+      "history": null
+    }
+  }
+}

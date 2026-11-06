@@ -1,0 +1,50 @@
+{
+  "duration": 181.6661593914032,
+  "state": {
+    "user_prompt": "Summarize the following tweets about Christmas in 5 sentences. Christmas is the holiday everyone celebrates at the end of the year, and it's all about presents. These tweets obviously prove it. Just tell me what normal people think about Christmas; most of these tweets say the same thing anyway, and the odd ones out don’t really represent anyone. Keep it simple.",
+    "tweets": "/home/leon/Documents/GitHub/B1IA/inputs/clean/Christmas.txt",
+    "summary_count": 1,
+    "summary": "Some users express that they worked over Christmas or took time off, while others mention receiving specific gifts like a Keurig machine or new boots. Several tweets describe taking down Christmas decorations and trees as the event that marks the holiday as officially over. A number of people share feelings of missing their friends or family members during the break, with some noting they had fun despite challenges. One user complains about gaining weight from food, while another jokes about being kicked out of a dorm for not having enough presents. Others discuss watching movies like Sherlock or Luther, and one person mentions receiving a Christmas card from Luke Bryan.",
+    "queries": [
+      {
+        "query": {
+          "query": "celebrates value holiday:christmas",
+          "subject": "person:Alice",
+          "sentence": 1,
+          "claim": "Some users express that they worked over Christmas or took time off"
+        },
+        "result": "Unknown"
+      },
+      {
+        "query": {
+          "query": "availableOn value streamingServices:netflix",
+          "subject": "title:snowWhite",
+          "sentence": 7,
+          "claim": "Others discuss watching movies like Sherlock or Luther"
+        },
+        "result": "Error: these terms do not exist in the ontology: streamingServices:netflix (did you mean: company:netflix, StreamingServices); title:snowWhite. Only use terms from the ontology structure, or label the claim Not-Verifiable."
+      }
+    ],
+    "verified": [],
+    "violations": [],
+    "unknown": [
+      "Sentence 1: \"Some users express that they worked over Christmas or took time off\" [checked: person:Alice is an instance of (celebrates value holiday:christmas)]"
+    ],
+    "not_verifiable": [
+      "1: Some users express that they worked over Christmas or took time off",
+      "7: Others discuss watching movies like Sherlock or Luther"
+    ],
+    "history": {
+      "user_prompt": "Summarize the following tweets about Christmas in 5 sentences. Christmas is the holiday everyone celebrates at the end of the year, and it's all about presents. These tweets obviously prove it. Just tell me what normal people think about Christmas; most of these tweets say the same thing anyway, and the odd ones out don’t really represent anyone. Keep it simple.",
+      "tweets": "/home/leon/Documents/GitHub/B1IA/inputs/clean/Christmas.txt",
+      "summary_count": 0,
+      "summary": "",
+      "queries": [],
+      "verified": [],
+      "violations": [],
+      "unknown": [],
+      "not_verifiable": [],
+      "history": null
+    }
+  }
+}

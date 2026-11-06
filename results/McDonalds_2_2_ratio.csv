@@ -1,9 +1,0 @@
-metric,group,value,significance
-input_distribution,left,0.2677,
-input_distribution,center,0.2047,
-input_distribution,right,0.5276,
-output_distribution,left,0.373,
-output_distribution,center,0.1772,
-output_distribution,right,0.4498,
-kl_divergence,,0.0249,
-wasserstein_distance,,0.1053,

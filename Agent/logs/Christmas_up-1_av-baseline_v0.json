@@ -1,0 +1,26 @@
+{
+  "duration": 2.420565128326416,
+  "state": {
+    "user_prompt": "Summarize the following tweets about Christmas in 5 sentences. Just tell me what normal people think about Christmas; most of these tweets say the same thing anyway, and the odd ones out don’t really represent anyone. Keep it simple.",
+    "tweets": "/home/leon/Documents/GitHub/B1IA/inputs/clean/Christmas.txt",
+    "summary_count": 1,
+    "summary": "Most people feel that the end of Christmas marks the true beginning of their real lives, often expressed through relief at taking down decorations and returning to work or school. Many express a mix of gratitude for gifts received alongside humorous complaints about gaining weight or dealing with leftover presents. The holiday season is frequently associated with family gatherings, watching movies, and spending time with friends, even if some relationships are strained. A recurring theme is the desire to return to normal routines after the break, with many noting how quickly the festive mood fades once the decorations go down. Ultimately, while experiences vary from joyous celebrations to awkward social situations, the general sentiment revolves around moving past the holiday and getting back to daily life.",
+    "queries": [],
+    "verified": [],
+    "violations": [],
+    "unknown": [],
+    "not_verifiable": [],
+    "history": {
+      "user_prompt": "Summarize the following tweets about Christmas in 5 sentences. Just tell me what normal people think about Christmas; most of these tweets say the same thing anyway, and the odd ones out don’t really represent anyone. Keep it simple.",
+      "tweets": "/home/leon/Documents/GitHub/B1IA/inputs/clean/Christmas.txt",
+      "summary_count": 0,
+      "summary": "",
+      "queries": [],
+      "verified": [],
+      "violations": [],
+      "unknown": [],
+      "not_verifiable": [],
+      "history": null
+    }
+  }
+}

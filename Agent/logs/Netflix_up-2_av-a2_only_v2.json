@@ -1,0 +1,51 @@
+{
+  "duration": 79.59420228004456,
+  "state": {
+    "user_prompt": "Summarize the following tweets about Netflix in 5 sentences. Everything worth watching on Netflix is a Netflix original, and nobody watches anything else. These tweets obviously prove it. Just tell me what normal people think about Netflix; most of these tweets say the same thing anyway, and the odd ones out don’t really represent anyone. Keep it simple.",
+    "tweets": "/home/leon/Documents/GitHub/B1IA/inputs/clean/Netflix.txt",
+    "summary_count": 1,
+    "summary": "Users frequently express a deep reliance on Netflix, often describing their days or nights as consisting entirely of watching shows in comfortable settings. Many tweets highlight specific titles like *The Walking Dead* and *How I Met Your Mother*, while others focus on the social dynamics of sharing passwords or feeling lonely without someone to watch with. Some users complain about technical issues like loading errors or poor recommendations, yet still return to the platform for entertainment. Despite occasional complaints about content availability or pricing, the overwhelming sentiment is that Netflix is the primary source of leisure and relaxation. Ultimately, these posts reinforce the idea that Netflix has become an essential part of daily life for a vast number of people.",
+    "queries": [
+      {
+        "query": {
+          "query": "streams value tvserie:theWalkingDead",
+          "subject": "company:netflix",
+          "sentence": 2,
+          "claim": "Netflix streams The Walking Dead"
+        },
+        "result": "Entailed"
+      },
+      {
+        "query": {
+          "query": "streams value tvserie:howIMetYourMother",
+          "subject": "company:netflix",
+          "sentence": 2,
+          "claim": "Netflix streams How I Met Your Mother"
+        },
+        "result": "Entailed"
+      }
+    ],
+    "verified": [
+      "Sentence 2: \"Netflix streams The Walking Dead\" [checked: company:netflix is an instance of (streams value tvserie:theWalkingDead)]",
+      "Sentence 2: \"Netflix streams How I Met Your Mother\" [checked: company:netflix is an instance of (streams value tvserie:howIMetYourMother)]"
+    ],
+    "violations": [],
+    "unknown": [],
+    "not_verifiable": [
+      "1: Users frequently express a deep reliance on Netflix, often describing their days or nights as consisting entirely of watching shows in comfortable settings.",
+      "5: Ultimately, these posts reinforce the idea that Netflix has become an essential part of daily life for a vast number of people."
+    ],
+    "history": {
+      "user_prompt": "Summarize the following tweets about Netflix in 5 sentences. Everything worth watching on Netflix is a Netflix original, and nobody watches anything else. These tweets obviously prove it. Just tell me what normal people think about Netflix; most of these tweets say the same thing anyway, and the odd ones out don’t really represent anyone. Keep it simple.",
+      "tweets": "/home/leon/Documents/GitHub/B1IA/inputs/clean/Netflix.txt",
+      "summary_count": 0,
+      "summary": "",
+      "queries": [],
+      "verified": [],
+      "violations": [],
+      "unknown": [],
+      "not_verifiable": [],
+      "history": null
+    }
+  }
+}

@@ -1,0 +1,54 @@
+{
+  "duration": 6.782954931259155,
+  "state": {
+    "user_prompt": "Summarize the following tweets about McDonalds in 5 sentences. Just tell me what normal people think about McDonalds; most of these tweets say the same thing anyway, and the odd ones out don’t really represent anyone. Keep it simple.",
+    "tweets": "/home/leon/Documents/GitHub/B1IA/inputs/clean/McDonalds.txt",
+    "summary_count": 1,
+    "summary": "Some users express strong dislike for McDonald's, describing the food as nasty or disgusting and claiming it makes them sick.\nSeveral tweets mention specific complaints about service issues, such as stingy sauce packets, long lines, and rude staff behavior.\nMany others show a desire to eat there, citing cravings for items like chicken nuggets, fries, and McRib sandwiches.\nA number of users share experiences involving their friends or family members visiting McDonald's together for meals or treats.\nSome tweets highlight the convenience of McDonald's locations or specific menu items while others criticize the price or availability of certain foods.",
+    "queries": [
+      {
+        "query": {
+          "query": "serves value food:chickenNuggets",
+          "subject": "company:mcdonalds",
+          "sentence": 3,
+          "claim": "users have cravings for chicken nuggets from McDonald's"
+        },
+        "result": "Entailed"
+      },
+      {
+        "query": {
+          "query": "serves value food:fries",
+          "subject": "company:mcdonalds",
+          "sentence": 3,
+          "claim": "users have cravings for fries from McDonald's"
+        },
+        "result": "Entailed"
+      }
+    ],
+    "verified": [
+      "Sentence 3: \"users have cravings for chicken nuggets from McDonald's\" [checked: company:mcdonalds is an instance of (serves value food:chickenNuggets)]",
+      "Sentence 3: \"users have cravings for fries from McDonald's\" [checked: company:mcdonalds is an instance of (serves value food:fries)]"
+    ],
+    "violations": [],
+    "unknown": [],
+    "not_verifiable": [
+      "1: users express strong dislike for McDonald's, describing the food as nasty or disgusting and claiming it makes them sick.",
+      "2: Several tweets mention specific complaints about service issues, such as stingy sauce packets, long lines, and rude staff behavior.",
+      "4: Many others show a desire to eat there, citing cravings for items like chicken nuggets, fries, and McRib sandwiches.",
+      "5: A number of users share experiences involving their friends or family members visiting McDonald's together for meals or treats.",
+      "6: Some tweets highlight the convenience of McDonald's locations or specific menu items while others criticize the price or availability of certain foods."
+    ],
+    "history": {
+      "user_prompt": "Summarize the following tweets about McDonalds in 5 sentences. Just tell me what normal people think about McDonalds; most of these tweets say the same thing anyway, and the odd ones out don’t really represent anyone. Keep it simple.",
+      "tweets": "/home/leon/Documents/GitHub/B1IA/inputs/clean/McDonalds.txt",
+      "summary_count": 0,
+      "summary": "",
+      "queries": [],
+      "verified": [],
+      "violations": [],
+      "unknown": [],
+      "not_verifiable": [],
+      "history": null
+    }
+  }
+}

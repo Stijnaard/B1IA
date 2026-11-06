@@ -3,22 +3,24 @@ from __future__ import annotations #allows for recursive type annotations
 import json
 import traceback
 from configparser import ConfigParser
-from dataclasses import dataclass, field, asdict
+from dataclasses import dataclass, field, asdict, replace
 from datetime import datetime
 from functools import partial
 from pathlib import Path
+from itertools import product
 from time import time
 from langchain.agents import create_agent
 from langchain.messages import SystemMessage, HumanMessage, AIMessage, ToolMessage
 from langchain_groq import ChatGroq
 from langchain_ollama import ChatOllama
 from langchain.tools import tool
+from langgraph.errors import GraphRecursionError
 from langgraph.graph import StateGraph, START, END
 from owlready2 import World, sync_reasoner, OwlReadyInconsistentOntologyError
 from pydantic import BaseModel, Field
 
-from configs import BASE_DIR, GROQ_API_KEY, CROQ_MODEL, OLLAMA_MODEL, SUMMARIZATION_PROMPT, VERIFICATION_PROMPT, ONTOLOGY_PATH, TRANSLATION_PROMPT, LOG_PATH, TWEETS_PATH, USER_PROMPT, BELIEFS
-from tool import check_ontology
+from configs import BASE_DIR, GROQ_API_KEY, CROQ_MODEL, OLLAMA_MODEL, OLLAMA_NUM_CTX, SUMMARIZATION_PROMPT, VERIFICATION_PROMPT, ONTOLOGY_PATH, LOG_PATH, TWEETS_PATH, USER_PROMPT, BELIEFS
+from tool import check_ontology, ENTAILED, CONTRADICTED, UNKNOWN, ERROR
 
 
 # setup llm connection
@@ -34,8 +36,9 @@ def load_llm(llm_type: str = 'groq'):
         llm = ChatOllama(
             model = OLLAMA_MODEL,
             base_url='http://127.0.0.1:11434', #default, here to change easily if needed
-            temperature=0,
+            temperature=0.1,
             reasoning=False, #can be turned on but will be slower
+            num_ctx=OLLAMA_NUM_CTX, # Ollama's default context window silently truncates the prompt
             client_kwargs={'timeout': 900}
         )
 
@@ -46,14 +49,10 @@ def load_llm(llm_type: str = 'groq'):
 # setup dataclasses
 
 class Verification(BaseModel):
-    verified: list[str] = Field(default_factory=list, description="Claims verified to hold in the ontology")
-    violations: list[str] = Field(default_factory=list, description="Claims where a contradiction or counterexample exists")
-    not_verifiable: list[str] = Field(default_factory=list, description="Claims that hold only due to the open world assumption")
-
-class SparQLQueries(BaseModel):
-    negated: list[str] = Field(default_factory=list, description='List of negated sparql queries')
-    regular: list[str] = Field(default_factory=list, description='List of regular sparql qieries')
-
+    verified: list[str] = Field(default_factory=list, description="Claims entailed by the ontology")
+    violations: list[str] = Field(default_factory=list, description="Claims contradicted by the ontology")
+    unknown: list[str] = Field(default_factory=list, description="Claims neither entailed nor contradicted (open world assumption)")
+    not_verifiable: list[str] = Field(default_factory=list, description="Claims QueryAgent could not express with the ontology vocabulary")
 
 @dataclass
 class State:
@@ -64,6 +63,7 @@ class State:
     queries: list[str] = field(default_factory=list)
     verified: list[str] = field(default_factory=list)
     violations: list[str] = field(default_factory=list)
+    unknown: list[str] = field(default_factory=list)
     not_verifiable: list[str] = field(default_factory=list)
     history: State|None = None
     # ^turns state into a linked list, bad for performance but will be fine for small sizes like here
@@ -87,10 +87,12 @@ def check_ontology_dumm(query: str) -> str:
 
 # work nodes
 
-def summarize(state: State, llm):
+def summarize(state: State, llm, summarization_prompt: str|None = None):
     # send prompt to LLM (no agent needed, this is a single linear call)
+    if summarization_prompt is None:
+        summarization_prompt = SUMMARIZATION_PROMPT
     response = llm.invoke([
-        SystemMessage(SUMMARIZATION_PROMPT),
+        SystemMessage(summarization_prompt),
         HumanMessage(build_prompt(state))
     ])
 
@@ -105,10 +107,12 @@ def build_prompt(state: State):
 
     res = f"{state.user_prompt}\n{tweets}"
     if len(state.violations) != 0 and state.summary_count != 0:
-        res += f"\nThe previous sumary was:\n{state.history.summary}"
-        res += f"\nIn the previous itteration the following counterfactual statements were found:"
+        # state is the verified state of the previous iteration: its summary is S_i and its
+        # violations are C_i (Eq. 4 in the report)
+        res += f"\n\nYour previous summary was:\n{state.summary}"
+        res += "\n\nThe ontology reasoner found the following claims in the previous summary to be contradicted:"
         for violation in state.violations:
-            res += f"\n{violation}"
+            res += f"\n- {violation}"
     return res
 
 def extract_queries(messages) -> list[dict]:
@@ -119,17 +123,56 @@ def extract_queries(messages) -> list[dict]:
         for tc in m.tool_calls
     ]
 
+def describe_claim(args: dict) -> str:
+    """Readable description of a checked claim, used in the state and in the revision prompt."""
+    query = args.get('query', '')
+    subject = args.get('subject') or ''
+    check = f'{subject} is an instance of ({query})' if subject else f'something can be ({query})'
+    text = f'"{args["claim"]}" ' if args.get('claim') else ''
+    sentence = f'Sentence {args["sentence"]}: ' if args.get('sentence') else ''
+    return f'{sentence}{text}[checked: {check}]'
+
 def classify_queries(queries: list[dict]) -> Verification:
     res = Verification()
     for q in queries:
-        query = str(q['query'].get('query', q['query']))
-        if q['result'] == 'verified':
-            res.verified.append(query)
-        elif q['result'] == 'violation':
-            res.violations.append(query)
-        elif q['result'] == 'not_verifyable':
-            res.not_verifiable.append(query)
+        args = q['query'] if isinstance(q['query'], dict) else {'query': str(q['query'])}
+        result = str(q['result'] or '')
+        if result.startswith(ENTAILED):
+            res.verified.append(describe_claim(args))
+        elif result.startswith(CONTRADICTED):
+            res.violations.append(describe_claim(args))
+        elif result.startswith(UNKNOWN):
+            res.unknown.append(describe_claim(args))
+        # results starting with ERROR are retried by the QueryAgent and stay visible in `queries`
     return res
+
+def extract_not_verifiable(messages) -> list[str]:
+    """Not-Verifiable claims listed by the QueryAgent in its final answer."""
+    final = next((m for m in reversed(messages) if isinstance(m, AIMessage) and not m.tool_calls), None)
+    if final is None or not isinstance(final.content, str):
+        return []
+    claims = []
+    for line in final.content.splitlines():
+        line = line.replace('**', '').replace('`', '').strip().lstrip('-* ')
+        if line.upper().startswith('NOT-VERIFIABLE:'):
+            claims.append(line.split(':', 1)[1].strip())
+    return claims
+
+NO_TOOL_CALL_REMINDER = (
+    "You did not call check_ontology. Look again for facts about individuals or classes of the ontology "
+    "inside the sentences (for example a holiday, tradition, food, company, film or TV series that is mentioned), "
+    "and check them with check_ontology. Only if no sentence mentions anything from the ontology, "
+    "reply again with the NOT-VERIFIABLE lines.")
+
+def run_query_agent(checker_agent, messages):
+    """Run the QueryAgent and return all messages."""
+    try:
+        # stream so the claims checked so far are kept if the agent keeps retrying failing queries
+        for chunk in checker_agent.stream({'messages': messages}, {'recursion_limit': 10}, stream_mode='values'):
+            messages = chunk['messages']
+    except GraphRecursionError:
+        print('QueryAgent hit the recursion limit; using the queries checked so far', flush=True)
+    return messages
 
 def verify(state: State, llm):
     checker_agent = create_agent(
@@ -137,17 +180,23 @@ def verify(state: State, llm):
     tools=[check_ontology],
     system_prompt=VERIFICATION_PROMPT
     )
-    raw_result = checker_agent.invoke({'messages': [
-            SystemMessage(VERIFICATION_PROMPT),
-            HumanMessage(state.summary)
-        ]})
+    # the system prompt is already set by create_agent; QueryAgent only sees S_i and O
+    
+    messages = run_query_agent(checker_agent, [HumanMessage(state.summary)])
+    if not any(isinstance(m, AIMessage) and m.tool_calls for m in messages):
+        # the small model sometimes skips the tool and labels everything Not-Verifiable; ask once more
+        print('QueryAgent made no tool call; asking it once more', flush=True)
+        messages = run_query_agent(checker_agent, [HumanMessage(state.summary)] + [HumanMessage(NO_TOOL_CALL_REMINDER)])
+    raw_result = {'messages': messages}
 
-    result = classify_queries(extract_queries(raw_result['messages']))
+    queries = extract_queries(raw_result['messages'])
+    result = classify_queries(queries)
     return {
         'verified': result.verified,
         'violations': result.violations,
-        'not_verifiable': result.not_verifiable,
-        'queries': extract_queries(raw_result['messages']),
+        'unknown': result.unknown,
+        'not_verifiable': extract_not_verifiable(raw_result['messages']),
+        'queries': queries,
     }
 
 def pick_best_summary(state: State):
@@ -159,7 +208,9 @@ def pick_best_summary(state: State):
             return helper(current_state.history, current_state)
         else:
             return helper(current_state.history, best_state)
-    return helper(state, state)
+    best = helper(state, state)
+    # keep every iteration in the history (the log would otherwise lose the later summaries)
+    return replace(best, history=state)
 
 def route(state: State, max_tries: int = 3): 
     "both routing diamonds in fig 1"
@@ -170,12 +221,13 @@ def route(state: State, max_tries: int = 3):
     else:
         return 'pick_best_summary'
 
-# langchain graph
-def build_graph(llm):
-    graph = StateGraph(State)
-    graph.add_node('summarize', partial(summarize, llm = llm))
-    graph.add_node('verify_summary', partial(verify, llm = llm))
 
+# langchain graphs
+
+def build_full_graph(llm, summarization_prompt: str|None = None):
+    graph = StateGraph(State)
+    graph.add_node('summarize', partial(summarize, llm = llm, summarization_prompt = summarization_prompt))
+    graph.add_node('verify_summary', partial(verify, llm = llm))
     graph.add_node('pick_best_summary', pick_best_summary)
     graph.add_edge(START, 'summarize')
     graph.add_edge('summarize', 'verify_summary')
@@ -185,25 +237,55 @@ def build_graph(llm):
     app = graph.compile()
     return app
 
+def build_summary_only_graph(llm, summarization_prompt: str|None = None):
+    graph = StateGraph(State)
+    graph.add_node('summarize', partial(summarize, llm = llm, summarization_prompt = summarization_prompt))
+    graph.add_edge(START, 'summarize')
+    graph.add_edge('summarize', END)
+    app = graph.compile()
+    return app
 
-def run_agent(app, user_prompt: str, tweets: Path) -> State:
+def build_graph(agent_version: str, llm_type:str =  'ollama'):
+    simple_summarization_prompt = 'You are a summarization agent, only respond with a summary.' #TODO make config
+    llm = load_llm(llm_type)
+    if agent_version == 'full':
+        return build_full_graph(llm)
+    elif agent_version == 'a1_only':
+        return build_summary_only_graph(llm)
+    elif agent_version == 'a2_only':
+        return build_full_graph(llm, simple_summarization_prompt)
+    elif agent_version == 'baseline':
+        return build_summary_only_graph(llm, simple_summarization_prompt)
+    else:
+        raise NotImplementedError
+# running logic
+
+def run_agent(agent_version: str, user_prompt_path: Path, tweets: Path, run_count: int):
+    topic = tweets.stem
+    user_prompt_name = user_prompt_path.stem
+    with open(user_prompt_path, 'r') as f:
+        base_user_prompt = f.read()
+    user_prompt = fill_user_prompt(base_user_prompt, topic)
+
+    app = build_graph(agent_version).with_config(recursion_limit=10)
     init_state = State(user_prompt,tweets)
-    out_state = State(**app.invoke(init_state))
-    return out_state
-
-def run_agent_with_progress(app, user_prompt: str, tweets: Path) -> State:
-    init_state = State(user_prompt,tweets)
-
-    final = None
+    print(f'Running {agent_version} on {topic} with user_prompt: {user_prompt}. Version: {run_count}')
     t0 = time()
-    for mode, chunk in app.stream(init_state, steam_mode=['updates', 'values']):
-        if mode == 'updates':
-            for node in chunk:
-                print(f"[{time.time() - t0:6.0f}s] finished node: {node}", flush=True)
-        else:
-            final = chunk
-    return State(**final)
+    raw_out_state = app.invoke(init_state) #actual run
+    t = time()-t0
+    print(f'Ran in {t}s')
+    out_state = State(**raw_out_state)
+    log_name = f'{topic}_up-{user_prompt_name}_av-{agent_version}_v{run_count}.json'
+    write_run_log(LOG_PATH, out_state, log_name, duration = t)
 
+
+
+# running logic helpers
+def fill_user_prompt(user_prompt: str, topic: str, k: int = 5) -> str:
+    return user_prompt.replace('{topic}', topic).replace('{belief}', BELIEFS[topic]).replace('{k}', str(k))
+
+
+# Output helpers
 def print_summaries(state: State):
     print(f'Summary {state.summary_count}: \n{state.summary}')
     if state.history is None:
@@ -222,51 +304,8 @@ def write_run_log(log_path: Path, state: State, name: str|None = None, **meta):
         encoding = 'utf-8'
     )
 
-# def main():
-#     llm = load_llm('ollama')
-#     app = build_graph(llm)
 
-#     # print graph
-#     png_bytes = app.get_graph(xray=True).draw_mermaid_png()
-#     with open('graph.png', 'wb') as f:
-#         f.write(png_bytes)
-    
-#     t0 = time()
-#     ran_state = run_agent(app, 'TODO', Path(BASE_DIR / 'inputs/Netflix_clean.txt'))
-#     t = time()-t0
-#     print(f'ran in {t}')
-
-#     print_summaries(ran_state)
-    
-#     write_run_log(LOG_PATH, ran_state, duration = t)
-
-
-def fill_user_prompt(user_prompt: str, topic: str, k: int = 5) -> str:
-    return user_prompt.replace('{topic}', topic).replace('{belief}', BELIEFS[topic]).replace('{k}', str(k))
-
-def sumarize_file(file: Path, user_prompt: str, upc: int, k: int = 5, llm: str = 'ollama'):
-    llm =  load_llm(llm)
-    app = build_graph(llm)
-    user_prompt = fill_user_prompt(user_prompt, file.stem, k)
-    print(f'running with file: {file} and prompt: {user_prompt}')
-    t0 = time()
-    ran_state = run_agent(app, user_prompt, file)
-    t = time()-t0
-    print(f'ran in {t}')
-    print_summaries(ran_state)
-    write_run_log(LOG_PATH, ran_state, name= f'{file.stem}_{upc}.json', duration = t)
-
-def sumarize_folder(folder: Path, user_prompt:str, upc: str, k: int = 5, llm: str = 'ollama'):
-    for file in folder.iterdir():
-        if file.is_file():
-            sumarize_file(file, user_prompt, upc, k, llm)
-
-def use_all_prompts(prompts_folder: Path, tweets_folder: Path, k: int = 5, llm: str = 'ollama'):
-    for file in prompts_folder.iterdir():
-        if file.is_file():
-            with open(file, 'r') as f:
-                user_prompt = f.read()
-            sumarize_folder(tweets_folder, user_prompt, file.stem, k, llm)
+#userprompts X Systemprompts X system configs X 3
 
 def main():
     use_all_prompts(USER_PROMPT, TWEETS_PATH, 5)
@@ -282,5 +321,6 @@ def baseline():
             write_run_log(LOG_PATH, summary, f'{file.stem}_baseline.json', duration = t)
 
 if __name__ == "__main__":
+    t0 = time()
     main()
-    baseline()
+    print(f'total run time: {time()-t0} s')

@@ -1,0 +1,48 @@
+{
+  "duration": 34.18419003486633,
+  "state": {
+    "user_prompt": "Summarize the following tweets about Netflix in 5 sentences. Just tell me what normal people think about Netflix; most of these tweets say the same thing anyway, and the odd ones out don’t really represent anyone. Keep it simple.",
+    "tweets": "/home/leon/Documents/GitHub/B1IA/inputs/clean/Netflix.txt",
+    "summary_count": 1,
+    "summary": "Many users express a strong desire to watch Netflix, often planning their days or nights around streaming shows like The Walking Dead and South Park. Some tweets highlight specific content preferences, such as enjoying childhood movies on Treasure Planet or horror films featuring real-life serial killers. A few individuals mention technical frustrations, including issues with the app not loading or confusion over missing titles like Super Troopers. Several users also discuss social dynamics related to Netflix, such as sharing passwords with friends or feeling lonely while watching alone in bed. Despite occasional complaints about recommendations or pricing, the overall sentiment reflects a deep reliance on Netflix for entertainment and relaxation.",
+    "queries": [
+      {
+        "query": {
+          "query": "availableOn value StreamingServices:netflix and hasGenre value genre:scifi",
+          "subject": "movie:hungerGames",
+          "sentence": 1,
+          "claim": "users enjoy watching The Walking Dead and South Park on Netflix"
+        },
+        "result": "Error: these terms do not exist in the ontology: StreamingServices:netflix (did you mean: company:netflix, StreamingServices). Only use terms from the ontology structure, or label the claim Not-Verifiable."
+      },
+      {
+        "query": {
+          "query": "availableOn value StreamingServices:netflix and hasGenre value genre:horror",
+          "subject": "movie:treasurePlanet",
+          "sentence": 2,
+          "claim": "users enjoy childhood movies on Treasure Planet or horror films featuring real-life serial killers"
+        },
+        "result": "Error: these terms do not exist in the ontology: StreamingServices:netflix (did you mean: company:netflix, StreamingServices); genre:horror (did you mean: genre:drama). Only use terms from the ontology structure, or label the claim Not-Verifiable."
+      }
+    ],
+    "verified": [],
+    "violations": [],
+    "unknown": [],
+    "not_verifiable": [
+      "1: users enjoy watching The Walking Dead and South Park on Netflix",
+      "2: users enjoy childhood movies on Treasure Planet or horror films featuring real-life serial killers"
+    ],
+    "history": {
+      "user_prompt": "Summarize the following tweets about Netflix in 5 sentences. Just tell me what normal people think about Netflix; most of these tweets say the same thing anyway, and the odd ones out don’t really represent anyone. Keep it simple.",
+      "tweets": "/home/leon/Documents/GitHub/B1IA/inputs/clean/Netflix.txt",
+      "summary_count": 0,
+      "summary": "",
+      "queries": [],
+      "verified": [],
+      "violations": [],
+      "unknown": [],
+      "not_verifiable": [],
+      "history": null
+    }
+  }
+}

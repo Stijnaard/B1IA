@@ -1,0 +1,54 @@
+{
+  "duration": 16.402055501937866,
+  "state": {
+    "user_prompt": "Summarize the following tweets about McDonalds in 5 sentences. Just tell me what normal people think about McDonalds; most of these tweets say the same thing anyway, and the odd ones out don’t really represent anyone. Keep it simple.",
+    "tweets": "/home/leon/Documents/GitHub/B1IA/inputs/clean/McDonalds.txt",
+    "summary_count": 1,
+    "summary": "Some users express strong love for McDonald's, citing specific items like the McRib, chicken nuggets, and ice cream cones as delicious treats they crave.\nSeveral tweets describe negative experiences with the food quality, mentioning that some meals taste nasty or make people feel sick to their stomachs.\nCritics also complain about service issues such as stingy sauce portions, long drive-thru lines, and rude behavior from staff members.\nA number of users share personal anecdotes involving family trips, birthday treats, or using McDonald's as a convenient stop after other activities.\nWhile some posts make offensive generalizations about people at the restaurant, others simply state that they would eat there regardless of negative facts about the food.",
+    "queries": [
+      {
+        "query": {
+          "query": "serves value food:mcRib",
+          "subject": "company:mcdonalds",
+          "sentence": 1,
+          "claim": "McDonald's serves McRib."
+        },
+        "result": "Entailed"
+      },
+      {
+        "query": {
+          "query": "serves value food:chickenNuggets",
+          "subject": "company:mcdonalds",
+          "sentence": 1,
+          "claim": "McDonald's serves chicken nuggets."
+        },
+        "result": "Entailed"
+      }
+    ],
+    "verified": [
+      "Sentence 1: \"McDonald's serves McRib.\" [checked: company:mcdonalds is an instance of (serves value food:mcRib)]",
+      "Sentence 1: \"McDonald's serves chicken nuggets.\" [checked: company:mcdonalds is an instance of (serves value food:chickenNuggets)]"
+    ],
+    "violations": [],
+    "unknown": [],
+    "not_verifiable": [
+      "1: McDonald's serves ice cream cones.",
+      "2: Some meals taste nasty or make people feel sick to their stomachs.",
+      "3: Service issues such as stingy sauce portions, long drive-thru lines, and rude behavior from staff members.",
+      "4: A number of users share personal anecdotes involving family trips, birthday treats, or using McDonald's as a convenient stop after other activities.",
+      "5: While some posts make offensive generalizations about people at the restaurant, others simply state that they would eat there regardless of negative facts about the food."
+    ],
+    "history": {
+      "user_prompt": "Summarize the following tweets about McDonalds in 5 sentences. Just tell me what normal people think about McDonalds; most of these tweets say the same thing anyway, and the odd ones out don’t really represent anyone. Keep it simple.",
+      "tweets": "/home/leon/Documents/GitHub/B1IA/inputs/clean/McDonalds.txt",
+      "summary_count": 0,
+      "summary": "",
+      "queries": [],
+      "verified": [],
+      "violations": [],
+      "unknown": [],
+      "not_verifiable": [],
+      "history": null
+    }
+  }
+}
