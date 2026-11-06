@@ -1,12 +1,19 @@
-Run `python Agent/Agent.py` (from the repo root or `Agent/`). It runs the agent for every user prompt in
-`user_prompts/` on every topic in `inputs/clean/`, then the baseline (SummaryAgent without a user prompt).
-Logs go to `Agent/logs/`. 
-HermiT runs through [owlapy](https://github.com/dice-group/owlapy) and needs Java:
-either `JAVA_HOME` set, or `[REASONER] JAVA` in `config.ini`.
-Results are stored in the log folder (change in the config.ini)
-Testsed on Python 3.14.8
+# Group 9
+
+## Training
+- run `agent.py` from any folder
+- edit configs in config.ini
+- Ensure you have Java installed, on mac see config.ini comments to enable
+- tested on 3.14
+- uses `requirements.txt` in the main folder
 
 
-Run `python run_all.py` (from the Agent_evaluation) to run the evaluation.
-Needs to run on python 3.11
-Reads files in the outputs folder
+
+## Evaluation
+To run the evaluation make sure you:
+- run python 3.11
+- run from the `Agent_evaluation` folder
+- run `run_all.py` to eval
+- uses requirements.txt in the `Agent_evaluation` folder
+
+The eval uses all files in the `outputs` folder
