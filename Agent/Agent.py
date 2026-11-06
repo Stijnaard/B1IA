@@ -168,7 +168,7 @@ def run_query_agent(checker_agent, messages):
     """Run the QueryAgent and return all messages."""
     try:
         # stream so the claims checked so far are kept if the agent keeps retrying failing queries
-        for chunk in checker_agent.stream({'messages': messages}, {'recursion_limit': 40}, stream_mode='values'):
+        for chunk in checker_agent.stream({'messages': messages}, {'recursion_limit': 10}, stream_mode='values'):
             messages = chunk['messages']
     except GraphRecursionError:
         print('QueryAgent hit the recursion limit; using the queries checked so far', flush=True)
@@ -256,6 +256,8 @@ def build_graph(agent_version: str, llm_type:str =  'ollama'):
         return build_full_graph(llm, simple_summarization_prompt)
     elif agent_version == 'baseline':
         return build_summary_only_graph(llm, simple_summarization_prompt)
+    else:
+        raise NotImplementedError
 # running logic
 
 def run_agent(agent_version: str, user_prompt_path: Path, tweets: Path, run_count: int):
@@ -265,9 +267,9 @@ def run_agent(agent_version: str, user_prompt_path: Path, tweets: Path, run_coun
         base_user_prompt = f.read()
     user_prompt = fill_user_prompt(base_user_prompt, topic)
 
-    app = build_graph(agent_version)
+    app = build_graph(agent_version).with_config(recursion_limit=10)
     init_state = State(user_prompt,tweets)
-    print(f'Running {topic} with user_prompt: {user_prompt}')
+    print(f'Running {agent_version} on {topic} with user_prompt: {user_prompt}. Version: {run_count}')
     t0 = time()
     raw_out_state = app.invoke(init_state) #actual run
     t = time()-t0
@@ -308,10 +310,11 @@ def write_run_log(log_path: Path, state: State, name: str|None = None, **meta):
 def main():
     agent_versions = ['full', 'a1_only', 'a2_only', 'baseline']
 
-    for base_user_prompt_path, agent_version, tweets_path, run_count in product(USER_PROMPT.iterdir(), agent_versions, TWEETS_PATH.iterdir(), range(3)):
+    for base_user_prompt_path, agent_version, tweets_path, run_count in product(USER_PROMPT.iterdir(), agent_versions, TWEETS_PATH.iterdir(), range(5)):
         if base_user_prompt_path.is_file() and tweets_path.is_file():
             run_agent(agent_version, base_user_prompt_path, tweets_path, run_count)
 
 if __name__ == "__main__":
+    t0 = time()
     main()
-    #baseline()
+    print(f'total run time: {time()-t0} s')
